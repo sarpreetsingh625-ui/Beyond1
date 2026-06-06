@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond1 — Owner Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080a;--bg2:#0d0f13;--bg3:#13161d;--card:#171b24;--blue:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--white:#f1f5f9;--muted:#64748b;--bdr:rgba(255,255,255,.08);--r:12px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--white);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer}
+input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.1),transparent 60%)}
+.login-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:2.5rem;width:100%;max-width:400px;text-align:center}
+.login-logo{font-size:2rem;font-weight:900;letter-spacing:-.03em;margin-bottom:.3rem}
+.login-logo span{color:var(--blue)}
+.login-sub{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem}
+.login-label{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;text-align:left;margin-bottom:.35rem}
+.login-input{width:100%;background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:.85rem 1rem;color:var(--white);font-size:1.2rem;letter-spacing:.3em;text-align:center;outline:none;margin-bottom:1rem;transition:border-color .2s}
+.login-input:focus{border-color:rgba(59,130,246,.5)}
+.login-btn{width:100%;padding:1rem;background:var(--blue);color:#fff;border:none;border-radius:9px;font-size:.9rem;font-weight:700;transition:all .2s}
+.login-btn:hover{background:#60a5fa}
+.login-err{font-size:.78rem;color:var(--red);margin-top:.5rem;display:none}
+.login-note{font-size:.68rem;color:var(--muted);margin-top:1rem;line-height:1.6}
+
+/* DASHBOARD */
+.dash{display:none;min-height:100vh}
+.dash-nav{background:var(--card);border-bottom:1px solid var(--bdr);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:sticky;top:0;z-index:100}
+.dash-logo{font-size:1.4rem;font-weight:900;letter-spacing:-.02em}
+.dash-logo span{color:var(--blue)}
+.dash-badge{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.25);color:var(--blue);padding:.25rem .65rem;border-radius:20px;margin-left:.5rem}
+.dash-nav-right{display:flex;gap:.6rem;flex-wrap:wrap}
+.nav-tab{font-size:.75rem;font-weight:700;padding:.5rem 1.1rem;border-radius:8px;border:none;background:var(--bg3);color:var(--muted);transition:all .2s}
+.nav-tab.active,.nav-tab:hover{background:var(--blue);color:#fff}
+.logout-btn{font-size:.75rem;font-weight:700;padding:.5rem 1.1rem;border-radius:8px;border:1px solid var(--bdr);background:transparent;color:var(--muted);transition:all .2s}
+.logout-btn:hover{color:var(--red);border-color:rgba(239,68,68,.3)}
+.dash-body{padding:2rem;max-width:1200px;margin:0 auto}
+
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem 1.5rem}
+.stat-num{font-size:2rem;font-weight:900;letter-spacing:-.03em;color:var(--blue);line-height:1}
+.stat-lbl{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+/* BOOKINGS TABLE */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
+.section-title{font-size:1.1rem;font-weight:800;letter-spacing:-.02em}
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.filter-btn{font-size:.7rem;font-weight:700;padding:.38rem .85rem;border-radius:6px;border:1px solid var(--bdr);background:var(--bg3);color:var(--muted);transition:all .2s}
+.filter-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.bk-list{display:flex;flex-direction:column;gap:.75rem}
+.bk-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.bk-card.pending{border-left:3px solid var(--amber)}
+.bk-card.confirmed{border-left:3px solid var(--green)}
+.bk-card.declined{border-left:3px solid var(--red);opacity:.6}
+.bk-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;gap:.75rem;flex-wrap:wrap;cursor:pointer}
+.bk-head:hover{background:rgba(255,255,255,.02)}
+.bk-name{font-size:.9rem;font-weight:700}
+.bk-meta{font-size:.72rem;color:var(--muted)}
+.bk-status{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .6rem;border-radius:4px}
+.bk-status.pending{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
+.bk-status.confirmed{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.bk-status.declined{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.bk-detail{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--bdr)}
+.bk-detail.open{display:block}
+.bk-detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem;margin:.9rem 0}
+.bk-field{background:var(--bg3);border-radius:8px;padding:.65rem .85rem}
+.bk-field-label{font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
+.bk-field-val{font-size:.8rem;color:var(--white)}
+.bk-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+.act-btn{font-size:.75rem;font-weight:700;padding:.55rem 1.25rem;border-radius:8px;border:none;transition:all .2s}
+.act-btn.confirm{background:var(--green);color:#fff}
+.act-btn.confirm:hover{background:#16a34a}
+.act-btn.decline{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+.act-btn.decline:hover{background:rgba(239,68,68,.25)}
+.act-btn.wa{background:var(--bg3);border:1px solid var(--bdr);color:var(--muted)}
+.act-btn.wa:hover{border-color:rgba(34,197,94,.4);color:var(--green)}
+.act-btn.del{background:var(--bg3);border:1px solid var(--bdr);color:var(--muted);margin-left:auto}
+.act-btn.del:hover{border-color:rgba(239,68,68,.3);color:var(--red)}
+.no-bookings{text-align:center;padding:3rem;color:var(--muted);font-size:.88rem}
+
+/* SETTINGS PANEL */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:700px){.settings-grid{grid-template-columns:1fr}}
+.settings-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.5rem}
+.settings-card-title{font-size:.88rem;font-weight:800;letter-spacing:-.01em;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:.5rem}
+.s-field{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.75rem}
+.s-field label{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.s-field input,.s-field select{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:.65rem .88rem;color:var(--white);font-size:.85rem;outline:none;transition:border-color .2s;width:100%}
+.s-field input:focus,.s-field select:focus{border-color:rgba(59,130,246,.5)}
+.save-btn{font-size:.8rem;font-weight:700;padding:.68rem 1.5rem;background:var(--blue);color:#fff;border:none;border-radius:8px;transition:all .2s;margin-top:.5rem}
+.save-btn:hover{background:#60a5fa}
+.saved-msg{font-size:.72rem;color:var(--green);margin-left:.75rem;display:none}
+
+/* CALENDAR */
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.cal-nav-btn{font-size:.8rem;font-weight:700;padding:.5rem 1rem;border-radius:8px;border:1px solid var(--bdr);background:var(--bg3);color:var(--muted);transition:all .2s}
+.cal-nav-btn:hover{border-color:rgba(59,130,246,.4);color:var(--blue)}
+.cal-month{font-size:1.1rem;font-weight:800}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem}
+.cal-dow{text-align:center;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.5rem 0}
+.cal-day{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:.6rem .4rem;min-height:70px;cursor:pointer;transition:all .2s;position:relative}
+.cal-day:hover{border-color:rgba(59,130,246,.3)}
+.cal-day.today{border-color:rgba(59,130,246,.5)}
+.cal-day.empty{background:transparent;border-color:transparent}
+.cal-day-num{font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
+.cal-day.today .cal-day-num{color:var(--blue)}
+.cal-event{font-size:.58rem;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.3);color:var(--blue);border-radius:4px;padding:.15rem .3rem;margin-bottom:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-event.confirmed{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.3);color:var(--green)}
+.hours-bar{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.1rem 1.4rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.hb-label{font-size:.72rem;color:var(--muted)}
+.hb-used{font-size:1.1rem;font-weight:800;color:var(--blue)}
+.hb-bar{flex:1;min-width:120px;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.hb-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .4s}
+.hb-fill.warn{background:var(--amber)}
+.hb-fill.full{background:var(--red)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--green);color:#fff;font-size:.82rem;font-weight:700;padding:.85rem 1.5rem;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:999;transform:translateY(100px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.error{background:var(--red)}
+
+/* UTIL */
+.divider{height:1px;background:var(--bdr);margin:1.5rem 0}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">Beyond<span>1</span></div>
+    <div class="login-sub">Owner Portal — Secure Access</div>
+    <label class="login-label">Enter Your 4-Digit PIN</label>
+    <input type="password" class="login-input" id="pinInput" maxlength="4" placeholder="••••" onkeyup="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Access Dashboard →</button>
+    <div class="login-err" id="loginErr">Incorrect PIN. Try again.</div>
+    <div class="login-note">PIN is set to <strong>8756</strong> by default. Change it in Settings after first login.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash" id="dash">
+  <nav class="dash-nav">
+    <div>
+      <span class="dash-logo">Beyond<span>1</span></span>
+      <span class="dash-badge">Owner Portal</span>
+    </div>
+    <div class="dash-nav-right">
+      <button class="nav-tab active" onclick="showPanel('bookings',this)">📋 Bookings</button>
+      <button class="nav-tab" onclick="showPanel('calendar',this)">📅 Calendar</button>
+      <button class="nav-tab" onclick="showPanel('settings',this)">⚙️ Settings</button>
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <div class="dash-body">
+
+    <!-- STATS -->
+    <div class="stats-row" id="statsRow"></div>
+
+    <!-- BOOKINGS PANEL -->
+    <div class="panel active" id="panel-bookings">
+      <div class="section-head">
+        <div class="section-title">All Bookings</div>
+        <div class="filter-row">
+          <button class="filter-btn active" onclick="filterBk('all',this)">All</button>
+          <button class="filter-btn" onclick="filterBk('pending',this)">Pending</button>
+          <button class="filter-btn" onclick="filterBk('confirmed',this)">Confirmed</button>
+          <button class="filter-btn" onclick="filterBk('declined',this)">Declined</button>
+        </div>
+      </div>
+      <div class="bk-list" id="bkList"></div>
+    </div>
+
+    <!-- CALENDAR PANEL -->
+    <div class="panel" id="panel-calendar">
+      <div class="hours-bar" id="hoursBar">
+        <div class="hb-label">Today's booked hours:</div>
+        <div class="hb-used" id="todayHours">0</div>
+        <div style="font-size:.72rem;color:var(--muted)">/ <span id="maxHours">14</span>h max</div>
+        <div class="hb-bar"><div class="hb-fill" id="hoursFill" style="width:0%"></div></div>
+        <div style="font-size:.68rem;color:var(--muted)">Remaining: <strong id="hoursLeft" style="color:var(--green)">14h</strong></div>
+      </div>
+      <div class="cal-head">
+        <button class="cal-nav-btn" onclick="calNav(-1)">← Prev</button>
+        <div class="cal-month" id="calMonth"></div>
+        <button class="cal-nav-btn" onclick="calNav(1)">Next →</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <!-- SETTINGS PANEL -->
+    <div class="panel" id="panel-settings">
+      <div class="settings-grid">
+
+        <!-- Pricing -->
+        <div class="settings-card">
+          <div class="settings-card-title">💰 Service Pricing</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Update prices below. Changes reflect on your price list immediately. Reload the customer website to see updates.</div>
+          <div class="s-field"><label>Regular — Sedan (from)</label><input type="number" id="p_rs" placeholder="65"></div>
+          <div class="s-field"><label>Regular — SUV 5-Seat (from)</label><input type="number" id="p_r5" placeholder="75"></div>
+          <div class="s-field"><label>Regular — SUV 7-Seat (from)</label><input type="number" id="p_r7" placeholder="85"></div>
+          <div class="s-field"><label>Standard — Sedan (from)</label><input type="number" id="p_ss" placeholder="130"></div>
+          <div class="s-field"><label>Standard — SUV 5-Seat (from)</label><input type="number" id="p_s5" placeholder="150"></div>
+          <div class="s-field"><label>Standard — SUV 7-Seat (from)</label><input type="number" id="p_s7" placeholder="170"></div>
+          <div class="s-field"><label>Premium — Sedan (from)</label><input type="number" id="p_ps" placeholder="210"></div>
+          <div class="s-field"><label>Premium — SUV 5-Seat (from)</label><input type="number" id="p_p5" placeholder="245"></div>
+          <div class="s-field"><label>Premium — SUV 7-Seat (from)</label><input type="number" id="p_p7" placeholder="275"></div>
+          <button class="save-btn" onclick="savePrices()">Save Prices</button>
+          <span class="saved-msg" id="price-saved">✓ Saved</span>
+        </div>
+
+        <!-- Hours & Schedule -->
+        <div class="settings-card">
+          <div class="settings-card-title">⏱️ Hours & Scheduling</div>
+          <div class="s-field"><label>Max Work Hours Per Day</label><input type="number" id="h_max" min="1" max="16" placeholder="14"></div>
+          <div class="s-field"><label>Regular Wash — Estimated Hours</label><select id="h_reg"><option value="1">1 hour</option><option value="1.5" selected>1.5 hours</option><option value="2">2 hours</option></select></div>
+          <div class="s-field"><label>Standard Detail — Estimated Hours</label><select id="h_std"><option value="2">2 hours</option><option value="2.5" selected>2.5 hours</option><option value="3">3 hours</option></select></div>
+          <div class="s-field"><label>Premium Detail — Estimated Hours</label><select id="h_prem"><option value="3">3 hours</option><option value="4" selected>4 hours</option><option value="5">5 hours</option></select></div>
+          <div class="s-field"><label>Each Add-On — Estimated Hours</label><select id="h_ao"><option value="0.5">30 mins</option><option value="1" selected>1 hour</option><option value="1.5">1.5 hours</option></select></div>
+          <button class="save-btn" onclick="saveHours()">Save Hours</button>
+          <span class="saved-msg" id="hours-saved">✓ Saved</span>
+          <div class="divider"></div>
+          <div class="settings-card-title" style="border:none;padding:0;margin-bottom:1rem">🔐 Change PIN</div>
+          <div class="s-field"><label>New 4-Digit PIN</label><input type="password" id="new_pin" maxlength="4" placeholder="Enter new PIN"></div>
+          <div class="s-field"><label>Confirm New PIN</label><input type="password" id="confirm_pin" maxlength="4" placeholder="Confirm PIN"></div>
+          <button class="save-btn" onclick="changePin()">Update PIN</button>
+          <span class="saved-msg" id="pin-saved">✓ PIN Updated</span>
+        </div>
+
+        <!-- Business Info -->
+        <div class="settings-card">
+          <div class="settings-card-title">📋 Business Info</div>
+          <div class="s-field"><label>Business Name</label><input type="text" id="b_name" value="Beyond1 Mobile Detailing"></div>
+          <div class="s-field"><label>Primary WhatsApp</label><input type="tel" id="b_wa1" value="(647) 646-8756"></div>
+          <div class="s-field"><label>Secondary Phone</label><input type="tel" id="b_wa2" value="(437) 226-6769"></div>
+          <div class="s-field"><label>Service Area</label><input type="text" id="b_area" value="Brampton, Mississauga & GTA"></div>
+          <div class="s-field"><label>Distance Charge Note</label><input type="text" id="b_dist" value="May apply outside Brampton — confirmed before booking"></div>
+          <button class="save-btn" onclick="saveBiz()">Save Info</button>
+          <span class="saved-msg" id="biz-saved">✓ Saved</span>
+        </div>
+
+        <!-- Export & Tools -->
+        <div class="settings-card">
+          <div class="settings-card-title">🛠️ Tools</div>
+          <div style="display:flex;flex-direction:column;gap:.75rem">
+            <button class="save-btn" style="background:var(--bg3);border:1px solid var(--bdr);color:var(--muted)" onclick="exportCSV()">📥 Export Bookings as CSV</button>
+            <button class="save-btn" style="background:var(--bg3);border:1px solid var(--bdr);color:var(--muted)" onclick="clearOld()">🗑️ Clear Declined Bookings</button>
+            <button class="save-btn" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:var(--red)" onclick="if(confirm('Clear ALL bookings? This cannot be undone.'))clearAll()">⚠️ Clear All Bookings</button>
+            <div style="font-size:.72rem;color:var(--muted);line-height:1.6;padding:.85rem;background:var(--bg3);border-radius:8px">
+              <strong style="color:var(--white)">Worker Access:</strong> Share this file (beyond1-admin.html) with your workers and give them the PIN. They can view and confirm bookings from any device.
+            </div>
+            <a href="index.html" class="save-btn" style="text-align:center;background:var(--bg3);border:1px solid var(--bdr);color:var(--muted);display:block">← Back to Customer Website</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── AUTH ──
+let PIN=localStorage.getItem('b1_pin')||'8756';
+function doLogin(){
+  const v=document.getElementById('pinInput').value;
+  if(v===PIN){
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('dash').style.display='block';
+    loadAll();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('pinInput').value='';
+  }
+}
+function doLogout(){
+  document.getElementById('loginWrap').style.display='flex';
+  document.getElementById('dash').style.display='none';
+  document.getElementById('pinInput').value='';
+}
+function changePin(){
+  const np=document.getElementById('new_pin').value;
+  const cp=document.getElementById('confirm_pin').value;
+  if(np.length!==4||isNaN(np)){showToast('PIN must be exactly 4 digits','error');return;}
+  if(np!==cp){showToast('PINs do not match','error');return;}
+  PIN=np;localStorage.setItem('b1_pin',PIN);
+  showSaved('pin-saved');showToast('PIN updated successfully');
+  document.getElementById('new_pin').value='';document.getElementById('confirm_pin').value='';
+}
+
+// ── DATA ──
+function getBookings(){try{return JSON.parse(localStorage.getItem('b1_bookings')||'[]');}catch{return[];}}
+function saveBookings(b){localStorage.setItem('b1_bookings',JSON.stringify(b));}
+function getSettings(){try{return JSON.parse(localStorage.getItem('b1_settings')||'{}');}catch{return {};}}
+function saveSettings(s){localStorage.setItem('b1_settings',JSON.stringify(s));}
+
+// ── LOAD ALL ──
+function loadAll(){
+  loadStats();loadBookings('all');loadCalendar();loadSettings();
+}
+
+// ── STATS ──
+function loadStats(){
+  const bk=getBookings();
+  const pending=bk.filter(b=>b.status==='pending').length;
+  const confirmed=bk.filter(b=>b.status==='confirmed').length;
+  const total=bk.length;
+  const todayStr=new Date().toISOString().split('T')[0];
+  const todayBk=bk.filter(b=>b.status==='confirmed'&&(b.slot1||'').includes(todayStr));
+  document.getElementById('statsRow').innerHTML=`
+    <div class="stat-card"><div class="stat-num" style="color:var(--amber)">${pending}</div><div class="stat-lbl">Pending Confirmation</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--green)">${confirmed}</div><div class="stat-lbl">Confirmed Bookings</div></div>
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Total Bookings</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--blue)">${todayBk.length}</div><div class="stat-lbl">Today's Jobs</div></div>
+  `;
+}
+
+// ── BOOKINGS ──
+let currentFilter='all';
+function filterBk(f,el){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  loadBookings(f);
+}
+function loadBookings(filter){
+  const bk=getBookings().sort((a,b)=>new Date(b.created)-new Date(a.created));
+  const filtered=filter==='all'?bk:bk.filter(b=>b.status===filter);
+  const list=document.getElementById('bkList');
+  if(!filtered.length){list.innerHTML='<div class="no-bookings">No bookings found.</div>';return;}
+  list.innerHTML=filtered.map(b=>`
+    <div class="bk-card ${b.status}" id="bk_${b.id}">
+      <div class="bk-head" onclick="toggleBk('${b.id}')">
+        <div>
+          <div class="bk-name">${b.name}</div>
+          <div class="bk-meta">${b.pkg||'No package'} · ${b.slot1||'No time set'} · ${b.addr||''}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+          <div class="bk-status ${b.status}">${b.status.toUpperCase()}</div>
+          <div style="font-size:.7rem;color:var(--muted)">${timeAgo(b.created)}</div>
+          <div style="font-size:.9rem">▾</div>
+        </div>
+      </div>
+      <div class="bk-detail" id="bd_${b.id}">
+        <div class="bk-detail-grid">
+          <div class="bk-field"><div class="bk-field-label">Phone</div><div class="bk-field-val">${b.phone||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Address</div><div class="bk-field-val">${b.addr||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Package</div><div class="bk-field-val">${b.pkg||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Cars</div><div class="bk-field-val">${b.cars||'1'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Condition</div><div class="bk-field-val">${b.condition||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Add-ons</div><div class="bk-field-val">${b.addons||'None'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Slot 1 (preferred)</div><div class="bk-field-val" style="color:var(--green)">${b.slot1||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Slot 2</div><div class="bk-field-val">${b.slot2||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Slot 3</div><div class="bk-field-val">${b.slot3||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Payment</div><div class="bk-field-val">${b.pay||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Fragrance</div><div class="bk-field-val">${b.frag||'No preference'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Car</div><div class="bk-field-val">${b.brand||''} ${b.model||''}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Exterior / Interior</div><div class="bk-field-val">${b.extcol||'—'} / ${b.intcol||'—'}</div></div>
+          <div class="bk-field"><div class="bk-field-label">Seats / Mats</div><div class="bk-field-val">${b.seat||'—'} / ${b.mat||'—'}</div></div>
+        </div>
+        ${b.notes&&b.notes!=='None'?`<div class="bk-field" style="margin-top:0"><div class="bk-field-label">Notes</div><div class="bk-field-val">${b.notes}</div></div>`:''}
+        <div class="bk-actions">
+          ${b.status!=='confirmed'?`<button class="act-btn confirm" onclick="updateBk('${b.id}','confirmed')">✓ Confirm Booking</button>`:''}
+          ${b.status!=='declined'?`<button class="act-btn decline" onclick="updateBk('${b.id}','declined')">✗ Decline</button>`:''}
+          <button class="act-btn wa" onclick="waReply('${b.phone}','${b.name}','${b.slot1}','${b.status}')">📲 WhatsApp Customer</button>
+          <button class="act-btn del" onclick="deleteBk('${b.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+function toggleBk(id){
+  const d=document.getElementById('bd_'+id);
+  d.classList.toggle('open');
+}
+function updateBk(id,status){
+  const bk=getBookings();
+  const idx=bk.findIndex(b=>String(b.id)===String(id));
+  if(idx===-1)return;
+  bk[idx].status=status;
+  saveBookings(bk);
+  loadAll();
+  showToast(status==='confirmed'?'Booking confirmed!':'Booking declined');
+}
+function deleteBk(id){
+  if(!confirm('Delete this booking?'))return;
+  saveBookings(getBookings().filter(b=>String(b.id)!==String(id)));
+  loadAll();showToast('Booking deleted');
+}
+function waReply(phone,name,slot,status){
+  const ph=phone.replace(/\D/g,'');
+  const msg=status==='confirmed'?
+    `Hi ${name}! Your Beyond1 booking is *confirmed* for ${slot}. We'll be at your location on time. Let us know if you have any questions! — Beyond1 Team 📲`:
+    `Hi ${name}, thanks for booking Beyond1! Unfortunately the slot you requested isn't available. Please WhatsApp us at (647) 646-8756 to arrange an alternative time.`;
+  window.open(`https://wa.me/1${ph}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ── CALENDAR ──
+let calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
+function calNav(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}loadCalendar();}
+function loadCalendar(){
+  const bk=getBookings().filter(b=>b.status==='confirmed');
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonth').textContent=`${monthNames[calMonth]} ${calYear}`;
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const today=new Date();
+  const todayStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  const dows=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  for(let i=0;i<firstDay;i++)html+=`<div class="cal-day empty"></div>`;
+  const cfg=getSettings();const maxH=parseInt(cfg.maxHours||14);
+  for(let d=1;d<=daysInMonth;d++){
+    const dStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dayBk=bk.filter(b=>(b.slot1||'').includes(dStr));
+    const isToday=dStr===todayStr;
+    let evHTML=dayBk.slice(0,3).map(b=>`<div class="cal-event confirmed">${b.name.split(' ')[0]} · ${(b.slot1||'').split(' at ')[1]||''}</div>`).join('');
+    if(dayBk.length>3)evHTML+=`<div style="font-size:.55rem;color:var(--muted)">+${dayBk.length-3} more</div>`;
+    html+=`<div class="cal-day${isToday?' today':''}"><div class="cal-day-num">${d}</div>${evHTML}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML=html;
+  // hours bar for today
+  const todayBk=bk.filter(b=>(b.slot1||'').includes(todayStr));
+  const usedH=todayBk.reduce((sum,b)=>{
+    const pkg=(b.pkg||'').toLowerCase();
+    if(pkg.includes('premium'))return sum+parseInt(cfg.hPrem||4);
+    if(pkg.includes('standard'))return sum+parseInt(cfg.hStd||2.5);
+    return sum+parseInt(cfg.hReg||1.5);
+  },0);
+  const pct=Math.min(100,Math.round((usedH/maxH)*100));
+  document.getElementById('todayHours').textContent=usedH+'h';
+  document.getElementById('maxHours').textContent=maxH;
+  document.getElementById('hoursLeft').textContent=(maxH-usedH)+'h';
+  document.getElementById('hoursFill').style.width=pct+'%';
+  const fill=document.getElementById('hoursFill');
+  fill.className='hb-fill'+(pct>=100?' full':pct>=75?' warn':'');
+}
+
+// ── SETTINGS LOAD ──
+function loadSettings(){
+  const s=getSettings();
+  const fields={p_rs:s.p_rs||65,p_r5:s.p_r5||75,p_r7:s.p_r7||85,p_ss:s.p_ss||130,p_s5:s.p_s5||150,p_s7:s.p_s7||170,p_ps:s.p_ps||210,p_p5:s.p_p5||245,p_p7:s.p_p7||275,h_max:s.maxHours||14};
+  Object.entries(fields).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
+  const hreg=document.getElementById('h_reg');if(hreg)hreg.value=s.hReg||1.5;
+  const hstd=document.getElementById('h_std');if(hstd)hstd.value=s.hStd||2.5;
+  const hprem=document.getElementById('h_prem');if(hprem)hprem.value=s.hPrem||4;
+  const hao=document.getElementById('h_ao');if(hao)hao.value=s.hAo||1;
+}
+function savePrices(){
+  const s=getSettings();
+  ['p_rs','p_r5','p_r7','p_ss','p_s5','p_s7','p_ps','p_p5','p_p7'].forEach(id=>{
+    const e=document.getElementById(id);if(e&&e.value)s[id]=parseInt(e.value);
+  });
+  saveSettings(s);showSaved('price-saved');showToast('Prices saved!');
+}
+function saveHours(){
+  const s=getSettings();
+  const hmax=document.getElementById('h_max');if(hmax&&hmax.value)s.maxHours=parseInt(hmax.value);
+  const hreg=document.getElementById('h_reg');if(hreg)s.hReg=parseFloat(hreg.value);
+  const hstd=document.getElementById('h_std');if(hstd)s.hStd=parseFloat(hstd.value);
+  const hprem=document.getElementById('h_prem');if(hprem)s.hPrem=parseFloat(hprem.value);
+  const hao=document.getElementById('h_ao');if(hao)s.hAo=parseFloat(hao.value);
+  saveSettings(s);showSaved('hours-saved');showToast('Hours saved!');loadCalendar();
+}
+function saveBiz(){saveSettings({...getSettings(),updated:Date.now()});showSaved('biz-saved');showToast('Business info saved!');}
+
+// ── TOOLS ──
+function exportCSV(){
+  const bk=getBookings();
+  if(!bk.length){showToast('No bookings to export','error');return;}
+  const headers=['Name','Phone','Address','Package','Cars','Condition','Add-ons','Slot1','Slot2','Slot3','Payment','Fragrance','Car Brand','Car Model','Ext Color','Int Color','Seat Type','Mats','Notes','Status','Created'];
+  const rows=bk.map(b=>[b.name,b.phone,b.addr,b.pkg,b.cars,b.condition,b.addons,b.slot1,b.slot2,b.slot3,b.pay,b.frag,b.brand,b.model,b.extcol,b.intcol,b.seat,b.mat,b.notes,b.status,b.created].map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv=[headers.join(','),...rows].join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='beyond1-bookings.csv';a.click();
+  showToast('CSV exported!');
+}
+function clearOld(){
+  saveBookings(getBookings().filter(b=>b.status!=='declined'));
+  loadAll();showToast('Declined bookings cleared');
+}
+function clearAll(){saveBookings([]);loadAll();showToast('All bookings cleared');}
+
+// ── PANEL SWITCH ──
+function showPanel(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(id==='calendar')loadCalendar();
+}
+
+// ── UI HELPERS ──
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(type?' '+type:'');
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+function showSaved(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.style.display='inline';setTimeout(()=>el.style.display='none',2500);
+}
+function timeAgo(iso){
+  if(!iso)return '';
+  const diff=(Date.now()-new Date(iso))/1000;
+  if(diff<60)return 'just now';
+  if(diff<3600)return `${Math.floor(diff/60)}m ago`;
+  if(diff<86400)return `${Math.floor(diff/3600)}h ago`;
+  return `${Math.floor(diff/86400)}d ago`;
+}
+</script>
+</body>
+</html>
