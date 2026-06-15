@@ -20,6 +20,8 @@
 </script>
 <meta name="description" content="Beyond1 Auto & Home Care — Premium mobile detailing in Brampton & GTA. We come to you. Interior, exterior & home care services.">
 <title>Beyond1 Auto & Home Care — Premium Mobile Detailing Brampton & GTA</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('iM6gnSVI_OR-NFyG4');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -2035,6 +2037,23 @@ ${bk.notes?`*Notes:* ${bk.notes}`:''}`;
     },
     body:JSON.stringify(bookingData)
   }).then(()=>{
+    // Send email notification via EmailJS
+    const svcLabel2=bk.svcOpt==='interior'?'Interior Only':bk.svcOpt==='exterior'?'Exterior Only':'Full Service';
+    emailjs.send('service_sx766qn','template_36lco3h',{
+      to_email:'sarpreetsingh625@gmail.com',
+      customer_name: bk.fname+' '+bk.lname,
+      customer_phone: bk.phone,
+      customer_email: bk.email||'N/A',
+      package: bk.pkg,
+      service: svcLabel2,
+      vehicle: bk.vehType,
+      booking_date: bk.date||'TBD',
+      booking_time: bk.time||'TBD',
+      address: (bk.addr||'')+', '+(bk.city||'')+' '+(bk.postal||''),
+      total: '$'+total,
+      notes: bk.notes||'None',
+      message: 'New booking from '+bk.fname+' '+bk.lname+' for '+bk.pkg+' on '+(bk.date||'TBD')+'. Total: $'+total+'. Phone: '+bk.phone
+    }).catch(e=>console.warn('EmailJS error:',e));
     showBookingSuccess(bk);
   }).catch(err=>{
     console.warn('Supabase save failed:',err);
