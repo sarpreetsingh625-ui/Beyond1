@@ -2,994 +2,1657 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beyond1 — Mobile Detailing · More Than You Expected</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Beyond1 Auto & Home Care — Premium mobile detailing in Brampton & GTA. We come to you. Interior, exterior & home care services.">
+<title>Beyond1 Auto & Home Care — Premium Mobile Detailing Brampton & GTA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+/* ── RESET & VARIABLES ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue:#38bdf8;--blue2:rgba(56,189,248,.15);--blue3:rgba(56,189,248,.07);
-  --green:#4ade80;--amber:#fbbf24;--red:#f87171;
-  --white:#ffffff;--off:#e2e8f0;--muted:rgba(255,255,255,.55);
-  --glass:rgba(5,8,15,.72);--glass2:rgba(5,8,15,.55);--glass3:rgba(5,8,15,.35);
-  --border:rgba(255,255,255,.12);--r:16px;
+  --black:#0a0a0a;
+  --surface:#111111;
+  --raised:#1a1a1a;
+  --border:#2a2a2a;
+  --amber:#E8891A;
+  --amber-light:#F5A030;
+  --amber-dim:rgba(232,137,26,.15);
+  --white:#ffffff;
+  --off:#c8c8c8;
+  --muted:#666;
+  --green:#34C97A;
+  --blue:#60a5fa;
+  --font:'Inter',sans-serif;
+  --radius:14px;
+  --radius-sm:8px;
+  --shadow:0 4px 24px rgba(0,0,0,.5);
+  --shadow-lg:0 12px 48px rgba(0,0,0,.7);
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:#050810;color:var(--white);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--black);color:var(--white);line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
-button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer}
-.wrap{max-width:1140px;margin:0 auto;padding:0 1.75rem}
+button{cursor:pointer;font-family:var(--font);border:none;outline:none}
 
-/* ── PHOTO SECTIONS ──────────────────── */
-.photo-sec{position:relative;overflow:hidden}
-.photo-sec .photo-bg{
-  position:absolute;inset:0;
-  background-size:cover;background-position:center;background-attachment:fixed;
-  z-index:0;transition:transform .6s ease;
-}
-.photo-sec:hover .photo-bg{transform:scale(1.02)}
-.photo-sec .photo-overlay{position:absolute;inset:0;z-index:1}
-.photo-sec>*:not(.photo-bg):not(.photo-overlay){position:relative;z-index:2}
+/* ── SCROLLBAR ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--amber);border-radius:3px}
 
-/* ── GLASS CARD ──────────────────────── */
-.glass{
-  background:var(--glass);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid var(--border);border-radius:var(--r);
-}
-.glass-light{
-  background:var(--glass2);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border:1px solid var(--border);border-radius:var(--r);
-}
-.glass-dark{
-  background:rgba(3,6,12,.85);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid var(--border);border-radius:var(--r);
-}
+/* ── UTILITY ───────────────────────────────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.amber{color:var(--amber)}
+.section-label{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.15;margin-bottom:1rem}
+.section-sub{color:var(--off);font-size:1rem;max-width:560px;line-height:1.7}
 
-/* ── TYPOGRAPHY ──────────────────────── */
-.eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:.6rem}
-.display{font-size:clamp(2.6rem,6vw,5rem);font-weight:900;line-height:1.05;letter-spacing:-.03em;text-shadow:0 4px 30px rgba(0,0,0,.5)}
-.display span{color:var(--blue)}
-.heading{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;text-shadow:0 2px 20px rgba(0,0,0,.4)}
-.subtext{font-size:.92rem;color:var(--muted);line-height:1.8;max-width:520px}
-.subtext strong{color:var(--white);font-weight:600}
+/* ── REVEAL ANIMATION ──────────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.12s}
+.reveal-delay-2{transition-delay:.24s}
+.reveal-delay-3{transition-delay:.36s}
 
-/* ── NAV ──────────────────────────────── */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.9rem 2rem;gap:1rem;flex-wrap:wrap;
-  background:rgba(3,5,10,.9);backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-.nav-logo{font-size:1.6rem;font-weight:900;letter-spacing:-.03em}
-.nav-logo span{color:var(--blue)}
-.nav-logo small{display:block;font-size:.5rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:.05rem}
-.nav-links{display:flex;gap:1.75rem;list-style:none}
-.nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.5);transition:color .2s}
+/* ── NAVIGATION ────────────────────────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.9rem 0;transition:background .3s,backdrop-filter .3s,box-shadow .3s}
+.nav.scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(18px);box-shadow:0 2px 24px rgba(0,0,0,.6)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-logo{font-size:1.05rem;font-weight:900;letter-spacing:-.01em;white-space:nowrap}
+.nav-logo span{color:var(--amber)}
+.nav-logo small{display:block;font-size:.55rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--off);margin-top:-2px}
+.nav-links{display:flex;align-items:center;gap:1.8rem;list-style:none}
+.nav-links a{font-size:.82rem;font-weight:500;color:var(--off);transition:color .2s;letter-spacing:.02em}
 .nav-links a:hover{color:var(--white)}
-.nav-btns{display:flex;gap:.5rem;flex-wrap:wrap}
-.nb{font-size:.75rem;font-weight:700;padding:.5rem 1.1rem;border-radius:9px;border:none;transition:all .2s;white-space:nowrap}
-.nb.p{background:var(--blue);color:#050810}
-.nb.p:hover{background:#7dd3fc;transform:translateY(-1px)}
-.nb.g{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
-.nb.g:hover{background:rgba(255,255,255,.15);color:var(--white)}
-@media(max-width:700px){.nav-links{display:none}}
+.nav-links a.active{color:var(--white);border-bottom:2px solid var(--amber);padding-bottom:2px}
+.nav-actions{display:flex;align-items:center;gap:.7rem}
+.nav-phone{font-size:.8rem;font-weight:600;color:var(--off);display:flex;align-items:center;gap:.35rem}
+.nav-phone svg{width:14px;height:14px;stroke:var(--amber);fill:none;stroke-width:2}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1.3rem;border-radius:50px;font-size:.82rem;font-weight:700;letter-spacing:.03em;transition:all .2s;white-space:nowrap}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--off)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--white)}
+.btn-primary{background:var(--amber);color:#000}
+.btn-primary:hover{background:var(--amber-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,137,26,.35)}
+.btn-outline{background:transparent;border:1.5px solid var(--amber);color:var(--amber)}
+.btn-outline:hover{background:var(--amber);color:#000}
+.btn-lg{padding:.85rem 2rem;font-size:.92rem;border-radius:50px}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;padding:.4rem}
+.nav-hamburger span{width:22px;height:2px;background:var(--white);border-radius:2px;transition:.3s}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,.98);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:1.4rem;font-weight:700;color:var(--off);transition:color .2s}
+.mobile-menu a:hover{color:var(--amber)}
+.mobile-close{position:absolute;top:1.2rem;right:1.5rem;font-size:1.8rem;color:var(--off);background:none;font-weight:300}
 
-/* ── HERO ─────────────────────────────── */
-.hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding:7rem 0 4rem;
+/* ── HERO ──────────────────────────────────────────────────────────── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-image:url('hero-car.png');background-size:cover;background-position:center 30%;background-repeat:no-repeat}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(100deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.75) 42%,rgba(10,10,10,.25) 70%,rgba(10,10,10,.05) 100%)}
+.hero-content{position:relative;z-index:2;padding:8rem 0 5rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,137,26,.12);border:1px solid rgba(232,137,26,.3);border-radius:50px;padding:.35rem .9rem;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--amber);border-radius:50%;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-title{font-size:clamp(3rem,7vw,5.5rem);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-bottom:1.2rem}
+.hero-title .line-amber{color:var(--amber);display:block}
+.hero-sub{font-size:1.05rem;color:var(--off);max-width:440px;line-height:1.7;margin-bottom:2.2rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
+.hero-trust{display:flex;flex-wrap:wrap;gap:1.5rem}
+.trust-item{display:flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:600;color:var(--off)}
+.trust-item svg{width:16px;height:16px;stroke:var(--amber);fill:none;stroke-width:2;flex-shrink:0}
+
+/* ── FEATURES BAR ──────────────────────────────────────────────────── */
+.features-bar{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2rem 0}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.feature-item{display:flex;align-items:flex-start;gap:.9rem}
+.feature-icon{width:40px;height:40px;background:var(--amber-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feature-icon svg{width:18px;height:18px;stroke:var(--amber);fill:none;stroke-width:2}
+.feature-title{font-size:.85rem;font-weight:700;margin-bottom:.2rem}
+.feature-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
+
+/* ── PACKAGES SECTION ──────────────────────────────────────────────── */
+.packages-section{padding:6rem 0;background:var(--black)}
+.packages-intro{text-align:center;margin-bottom:3.5rem}
+.packages-intro .section-sub{margin:0 auto}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:start}
+.pkg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative}
+.pkg-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(232,137,26,.3)}
+.pkg-card.featured{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber),var(--shadow)}
+.pkg-card.featured:hover{box-shadow:0 0 0 1px var(--amber-light),var(--shadow-lg)}
+.pkg-popular{position:absolute;top:0;left:50%;transform:translateX(-50%);background:var(--amber);color:#000;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem 1rem;border-radius:0 0 8px 8px}
+.pkg-header{padding:2rem 1.75rem 1.5rem;border-bottom:1px solid var(--border)}
+.pkg-tier{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem}
+.pkg-name{font-size:1.4rem;font-weight:800;margin-bottom:.4rem}
+.pkg-tagline{font-size:.8rem;color:var(--muted);line-height:1.5;margin-bottom:1.2rem}
+.pkg-price-block{display:flex;align-items:baseline;gap:.3rem;flex-wrap:wrap}
+.pkg-from{font-size:.72rem;color:var(--muted);font-weight:500}
+.pkg-price{font-size:2rem;font-weight:900;color:var(--white);line-height:1}
+.pkg-price-suffix{font-size:.78rem;color:var(--muted)}
+.pkg-body{padding:1.5rem 1.75rem}
+.pkg-service-tabs{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.pkg-tab{font-size:.7rem;font-weight:600;padding:.3rem .75rem;border-radius:50px;border:1.5px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s;background:none}
+.pkg-tab.active{background:var(--amber);border-color:var(--amber);color:#000}
+.pkg-tab:hover:not(.active){border-color:var(--amber);color:var(--amber)}
+.pkg-service-note{font-size:.72rem;color:var(--muted);margin-bottom:1rem;font-style:italic}
+.pkg-features{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem}
+.pkg-features li{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--off)}
+.pkg-features li::before{content:'';width:16px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8891A' stroke-width='2.5'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;flex-shrink:0;margin-top:2px}
+.pkg-price-range{background:var(--raised);border-radius:var(--radius-sm);padding:.9rem 1rem;margin-bottom:1.2rem;font-size:.78rem}
+.pkg-price-range-title{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
+.pkg-price-row{display:flex;justify-content:space-between;align-items:center;padding:.2rem 0}
+.pkg-price-row+.pkg-price-row{border-top:1px solid var(--border)}
+.pkg-price-label{color:var(--off);font-size:.78rem}
+.pkg-price-val{font-weight:700;color:var(--amber);font-size:.85rem}
+.pkg-cta{width:100%;padding:.85rem;border-radius:var(--radius-sm);font-size:.85rem;font-weight:700;letter-spacing:.03em;transition:all .2s}
+.pkg-cta-main{background:var(--amber);color:#000}
+.pkg-cta-main:hover{background:var(--amber-light);transform:translateY(-1px)}
+.pkg-cta-ghost{background:transparent;border:1.5px solid var(--border);color:var(--off)}
+.pkg-cta-ghost:hover{border-color:var(--amber);color:var(--white)}
+.pkg-note{text-align:center;margin-top:2rem;font-size:.78rem;color:var(--muted)}
+.pkg-note strong{color:var(--amber)}
+
+/* ── HOW IT WORKS ──────────────────────────────────────────────────── */
+.hiw-section{padding:5.5rem 0;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.hiw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem}
+.hiw-step{text-align:center;position:relative}
+.hiw-step:not(:last-child)::after{content:'';position:absolute;top:28px;right:-1rem;width:2rem;height:1px;background:var(--border)}
+.hiw-num{width:56px;height:56px;background:var(--amber-dim);border:1.5px solid rgba(232,137,26,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:var(--amber);margin:0 auto 1rem}
+.hiw-title{font-size:.95rem;font-weight:700;margin-bottom:.5rem}
+.hiw-desc{font-size:.8rem;color:var(--muted);line-height:1.6}
+
+/* ── SERVICES SECTION ──────────────────────────────────────────────── */
+.services-section{padding:5.5rem 0;background:var(--black)}
+.services-tabs{display:flex;gap:.5rem;margin-bottom:2.5rem;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:.35rem;width:fit-content}
+.svc-tab{padding:.55rem 1.4rem;border-radius:50px;font-size:.82rem;font-weight:600;color:var(--muted);background:none;transition:all .2s}
+.svc-tab.active{background:var(--amber);color:#000}
+.svc-tab:hover:not(.active){color:var(--white)}
+.svc-panel{display:none}
+.svc-panel.on{display:block}
+.svc-img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:1.5rem}
+.svc-img-card{border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;aspect-ratio:4/3}
+.svc-img-card img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.svc-img-card:hover img{transform:scale(1.05)}
+.svc-img-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:1.2rem 1rem .9rem}
+.svc-img-name{font-size:.9rem;font-weight:700;margin-bottom:.2rem}
+.svc-img-price{font-size:.8rem;color:var(--amber);font-weight:600}
+.home-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.home-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .25s,border-color .25s}
+.home-card:hover{transform:translateY(-4px);border-color:rgba(232,137,26,.3)}
+.home-card-img{width:100%;height:140px;object-fit:cover}
+.home-card-body{padding:1.1rem}
+.home-card-name{font-size:.9rem;font-weight:700;margin-bottom:.2rem}
+.home-card-price{font-size:.78rem;color:var(--amber);font-weight:600;margin-bottom:.4rem}
+.home-card-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
+.home-note{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--amber-dim);border:1px solid rgba(232,137,26,.2);border-radius:var(--radius-sm);font-size:.8rem;color:var(--off);line-height:1.6}
+
+/* ── PRODUCTS SECTION ──────────────────────────────────────────────── */
+.products-section{padding:5.5rem 0;background:var(--surface);border-top:1px solid var(--border)}
+.products-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:center}
+.products-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--amber-dim);border:1px solid rgba(232,137,26,.25);border-radius:50px;padding:.3rem .85rem;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem}
+.products-notice{margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(232,137,26,.06);border-left:3px solid var(--amber);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.82rem;color:var(--off);line-height:1.6}
+.products-notice strong{color:var(--amber);display:block;margin-bottom:.25rem}
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.product-card{background:var(--raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .25s,border-color .25s}
+.product-card:hover{transform:translateY(-4px);border-color:rgba(232,137,26,.3)}
+.product-card img{width:100%;height:160px;object-fit:cover}
+.product-card-body{padding:1rem}
+.product-card-name{font-size:.88rem;font-weight:700;margin-bottom:.25rem}
+.product-card-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
+.product-card-tag{display:inline-block;margin-top:.5rem;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);background:var(--amber-dim);padding:.2rem .6rem;border-radius:4px}
+
+/* ── STATS BAR ─────────────────────────────────────────────────────── */
+.stats-bar{background:var(--raised);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2.5rem 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
+.stat-icon{width:44px;height:44px;background:var(--amber-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto .7rem}
+.stat-icon svg{width:20px;height:20px;stroke:var(--amber);fill:none;stroke-width:2}
+.stat-num{font-size:2rem;font-weight:900;color:var(--white);line-height:1}
+.stat-label{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+/* ── REVIEWS ───────────────────────────────────────────────────────── */
+.reviews-section{padding:5.5rem 0;background:var(--black)}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.review-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:transform .25s,border-color .25s}
+.review-card:hover{transform:translateY(-4px);border-color:rgba(232,137,26,.25)}
+.review-stars{display:flex;gap:3px;margin-bottom:1rem}
+.review-stars span{color:var(--amber);font-size:1rem}
+.review-text{font-size:.88rem;color:var(--off);line-height:1.7;margin-bottom:1.2rem;font-style:italic}
+.review-author{display:flex;align-items:center;gap:.75rem}
+.review-avatar{width:38px;height:38px;background:var(--amber-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;color:var(--amber);flex-shrink:0}
+.review-name{font-size:.85rem;font-weight:700}
+.review-meta{font-size:.72rem;color:var(--muted)}
+
+/* ── SERVICE AREAS ─────────────────────────────────────────────────── */
+.areas-section{padding:5rem 0;background:var(--surface);border-top:1px solid var(--border)}
+.areas-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:3rem}
+.area-pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
+.area-pill{padding:.45rem 1rem;background:var(--raised);border:1px solid var(--border);border-radius:50px;font-size:.8rem;font-weight:600;color:var(--off);transition:all .2s}
+.area-pill:hover{border-color:var(--amber);color:var(--amber)}
+.travel-table{width:100%;border-collapse:collapse;margin-top:1.2rem}
+.travel-table th{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--border)}
+.travel-table td{padding:.7rem .8rem;font-size:.82rem;color:var(--off);border-bottom:1px solid rgba(255,255,255,.04)}
+.travel-table td:last-child{font-weight:700;color:var(--amber)}
+.travel-table tr:last-child td{border-bottom:none}
+.travel-waiver{margin-top:.9rem;font-size:.75rem;color:var(--muted);padding:.6rem .8rem;background:rgba(52,201,122,.06);border-left:2px solid var(--green);border-radius:0 4px 4px 0}
+.travel-waiver strong{color:var(--green)}
+
+/* ── CTA SECTION ───────────────────────────────────────────────────── */
+.cta-section{padding:5.5rem 0;background:var(--black);text-align:center}
+.cta-inner{max-width:640px;margin:0 auto}
+.cta-title{font-size:clamp(2rem,4.5vw,3rem);font-weight:900;line-height:1.15;margin-bottom:1rem}
+.cta-sub{color:var(--off);font-size:1rem;line-height:1.7;margin-bottom:2.5rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ── CONTACT SECTION ───────────────────────────────────────────────── */
+.contact-section{padding:5rem 0;background:var(--surface);border-top:1px solid var(--border)}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.contact-card{background:var(--raised);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;text-align:center}
+.contact-card-icon{width:52px;height:52px;background:var(--amber-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.contact-card-icon svg{width:22px;height:22px;stroke:var(--amber);fill:none;stroke-width:2}
+.contact-card-title{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.contact-card-val{font-size:1rem;font-weight:700;color:var(--white)}
+.contact-card-sub{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+
+/* ── FOOTER ────────────────────────────────────────────────────────── */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:3.5rem 0 1.5rem}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem}
+.footer-brand-name{font-size:1rem;font-weight:900;margin-bottom:.3rem}
+.footer-brand-name span{color:var(--amber)}
+.footer-brand-sub{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
+.footer-brand-desc{font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:1.2rem;max-width:220px}
+.footer-socials{display:flex;gap:.6rem}
+.footer-social{width:32px;height:32px;background:var(--raised);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.footer-social:hover{background:var(--amber-dim);border-color:var(--amber)}
+.footer-social svg{width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;transition:stroke .2s}
+.footer-social:hover svg{stroke:var(--amber)}
+.footer-col-title{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.footer-links a{font-size:.8rem;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--amber)}
+.footer-contact-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:.55rem}
+.footer-contact-item svg{width:14px;height:14px;stroke:var(--amber);fill:none;stroke-width:2;flex-shrink:0}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.footer-copy{font-size:.75rem;color:var(--muted)}
+.footer-legal{display:flex;gap:1.5rem}
+.footer-legal a{font-size:.75rem;color:var(--muted);transition:color .2s}
+.footer-legal a:hover{color:var(--amber)}
+
+/* ── BOOKING MODAL ─────────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:640px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-header{padding:1.5rem 1.75rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:1}
+.modal-title{font-size:1rem;font-weight:800}
+.modal-close{width:32px;height:32px;background:var(--raised);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--muted);transition:all .2s}
+.modal-close:hover{background:var(--border);color:var(--white)}
+.modal-progress{padding:.75rem 1.75rem;background:var(--raised);border-bottom:1px solid var(--border)}
+.modal-progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.modal-progress-fill{height:100%;background:var(--amber);border-radius:2px;transition:width .4s ease}
+.modal-progress-text{font-size:.68rem;color:var(--muted);margin-top:.4rem}
+.modal-body{padding:1.75rem}
+.step{display:none}
+.step.active{display:block}
+.step-title{font-size:1.1rem;font-weight:800;margin-bottom:.3rem}
+.step-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.5}
+.opt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}
+.opt-grid-3{grid-template-columns:repeat(3,1fr)}
+.opt{background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:1rem;cursor:pointer;transition:all .2s;text-align:left}
+.opt:hover{border-color:rgba(232,137,26,.4)}
+.opt.selected{border-color:var(--amber);background:var(--amber-dim)}
+.opt-icon{font-size:1.4rem;margin-bottom:.5rem}
+.opt-name{font-size:.88rem;font-weight:700;margin-bottom:.2rem}
+.opt-desc{font-size:.72rem;color:var(--muted);line-height:1.4}
+.opt-price{font-size:.8rem;font-weight:700;color:var(--amber);margin-top:.4rem}
+.form-group{margin-bottom:1.2rem}
+.form-label{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:block}
+.form-input{width:100%;background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.75rem 1rem;font-size:.88rem;color:var(--white);font-family:var(--font);transition:border-color .2s}
+.form-input:focus{outline:none;border-color:var(--amber)}
+.form-input::placeholder{color:var(--muted)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center;background-size:16px;padding-right:2.5rem}
+.travel-box{margin-top:.6rem;padding:.6rem .8rem;border-radius:var(--radius-sm);background:var(--raised);font-size:.8rem;display:none}
+.addon-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.addon-item{background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.8rem;cursor:pointer;transition:all .2s}
+.addon-item:hover{border-color:rgba(232,137,26,.4)}
+.addon-item.selected{border-color:var(--amber);background:var(--amber-dim)}
+.addon-name{font-size:.82rem;font-weight:700;margin-bottom:.15rem}
+.addon-price{font-size:.75rem;color:var(--amber);font-weight:600}
+.addon-save{font-size:.68rem;color:var(--green)}
+.summary-box{background:var(--raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.2rem;margin-bottom:1.5rem}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;font-size:.82rem;color:var(--off)}
+.summary-row+.summary-row{border-top:1px solid var(--border)}
+.summary-row.total{font-weight:800;color:var(--white);font-size:.95rem}
+.summary-row.total span:last-child{color:var(--amber)}
+.modal-footer{padding:1.25rem 1.75rem;border-top:1px solid var(--border);display:flex;gap:.75rem;position:sticky;bottom:0;background:var(--surface)}
+.modal-btn{flex:1;padding:.85rem;border-radius:var(--radius-sm);font-size:.88rem;font-weight:700;transition:all .2s}
+.modal-btn-back{background:var(--raised);border:1.5px solid var(--border);color:var(--off)}
+.modal-btn-back:hover{border-color:var(--amber);color:var(--white)}
+.modal-btn-next{background:var(--amber);color:#000}
+.modal-btn-next:hover{background:var(--amber-light)}
+.modal-btn-next:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
+.upload-area{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:2rem;text-align:center;cursor:pointer;transition:border-color .2s}
+.upload-area:hover{border-color:var(--amber)}
+.upload-icon{font-size:2rem;margin-bottom:.5rem}
+.upload-text{font-size:.82rem;color:var(--muted)}
+.upload-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+.condition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.condition-opt{background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.9rem .7rem;cursor:pointer;transition:all .2s;text-align:center}
+.condition-opt:hover{border-color:rgba(232,137,26,.4)}
+.condition-opt.selected{border-color:var(--amber);background:var(--amber-dim)}
+.condition-icon{font-size:1.3rem;margin-bottom:.35rem}
+.condition-name{font-size:.78rem;font-weight:700}
+.condition-desc{font-size:.68rem;color:var(--muted);margin-top:.2rem;line-height:1.3}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────── */
+@media(max-width:1024px){
+  .pkg-grid{grid-template-columns:1fr 1fr}
+  .pkg-card:last-child{grid-column:1/-1;max-width:500px;margin:0 auto;width:100%}
+  .products-layout{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr 1fr}
 }
-.hero .photo-bg{
-  background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=90&auto=format&fit=crop');
+@media(max-width:768px){
+  .nav-links,.nav-phone{display:none}
+  .nav-hamburger{display:flex}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .pkg-grid{grid-template-columns:1fr}
+  .pkg-card:last-child{max-width:100%;grid-column:auto}
+  .hiw-grid{grid-template-columns:1fr 1fr}
+  .hiw-step:nth-child(2)::after,.hiw-step:nth-child(4)::after{display:none}
+  .svc-img-grid{grid-template-columns:1fr}
+  .home-grid{grid-template-columns:1fr 1fr}
+  .products-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .reviews-grid{grid-template-columns:1fr}
+  .areas-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .opt-grid-3{grid-template-columns:1fr 1fr}
 }
-.hero .photo-overlay{
-  background:linear-gradient(135deg,rgba(3,5,15,.82) 0%,rgba(3,5,15,.55) 50%,rgba(3,5,15,.78) 100%);
+@media(max-width:480px){
+  .features-grid{grid-template-columns:1fr}
+  .hiw-grid{grid-template-columns:1fr}
+  .hiw-step::after{display:none!important}
+  .home-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .hero-ctas{flex-direction:column;align-items:flex-start}
+  .cta-btns{flex-direction:column;align-items:center}
+  .opt-grid{grid-template-columns:1fr}
+  .opt-grid-3{grid-template-columns:1fr}
+  .addon-grid{grid-template-columns:1fr}
+  .condition-grid{grid-template-columns:1fr 1fr}
 }
-.hero-inner{display:grid;grid-template-columns:1fr 400px;gap:3.5rem;align-items:center}
-.hero-pill{
-  display:inline-flex;align-items:center;gap:.4rem;
-  background:rgba(56,189,248,.2);border:1px solid rgba(56,189,248,.35);
-  border-radius:20px;padding:.32rem .9rem;
-  font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--blue);margin-bottom:1.25rem;backdrop-filter:blur(8px);
-}
-.hero-tagline{font-size:1rem;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin:.6rem 0 1.1rem}
-.hero-p{font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.8;max-width:460px;margin-bottom:2rem;text-shadow:0 1px 8px rgba(0,0,0,.4)}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
-.hbtn{font-size:.88rem;font-weight:700;padding:.88rem 2rem;border-radius:11px;transition:all .2s;display:inline-block;border:none;cursor:pointer}
-.hbtn.a{background:var(--blue);color:#050810;box-shadow:0 4px 20px rgba(56,189,248,.35)}
-.hbtn.a:hover{background:#7dd3fc;transform:translateY(-2px)}
-.hbtn.b{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--white);backdrop-filter:blur(8px)}
-.hbtn.b:hover{background:rgba(255,255,255,.18);border-color:var(--blue)}
-.hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
-.hs-n{font-size:1.9rem;font-weight:900;color:var(--blue);line-height:1;letter-spacing:-.02em;text-shadow:0 0 30px rgba(56,189,248,.4)}
-.hs-l{font-size:.63rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:.2rem}
-
-/* hero compare card */
-.hcard{padding:1.75rem}
-.hcard-title{font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1rem}
-.hc-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.08);gap:.5rem}
-.hc-row:last-child{border:none}
-.hc-svc{font-size:.8rem;color:rgba(255,255,255,.6)}
-.hc-right{display:flex;align-items:center;gap:.45rem;flex-shrink:0}
-.hc-mkt{font-size:.72rem;color:rgba(255,255,255,.35);text-decoration:line-through}
-.hc-price{font-size:1.05rem;font-weight:800;color:var(--white)}
-.hc-save{font-size:.58rem;font-weight:700;color:var(--green);background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.2);padding:.15rem .4rem;border-radius:4px;white-space:nowrap}
-@media(max-width:860px){.hero-inner{grid-template-columns:1fr}.hcard{margin-top:1.5rem}}
-
-/* ── PACKAGES ─────────────────────────── */
-.packages-sec{padding:5.5rem 0}
-.packages-sec .photo-bg{
-  background-image:url('https://images.unsplash.com/photo-1507136566006-cfc505b114fc?w=1920&q=80&auto=format&fit=crop');
-}
-.packages-sec .photo-overlay{
-  background:linear-gradient(180deg,rgba(3,5,15,.78) 0%,rgba(3,5,15,.6) 50%,rgba(3,5,15,.82) 100%);
-}
-.vtabs-wrap{display:flex;gap:.4rem;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);padding:.35rem;border-radius:11px;width:fit-content;margin-bottom:2rem;border:1px solid rgba(255,255,255,.1)}
-.vt{font-size:.73rem;font-weight:700;letter-spacing:.06em;padding:.5rem 1.25rem;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.5);transition:all .2s;cursor:pointer}
-.vt.on{background:var(--blue);color:#050810;box-shadow:0 2px 12px rgba(56,189,248,.3)}
-.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-@media(max-width:860px){.pkg-grid{grid-template-columns:1fr}}
-
-/* Each card has its own background photo */
-.pkg{display:flex;flex-direction:column;overflow:hidden;transition:transform .25s,border-color .25s;border:1px solid rgba(255,255,255,.12)}
-.pkg:hover{transform:translateY(-5px);border-color:rgba(56,189,248,.35)}
-.pkg.pop{border-color:rgba(56,189,248,.4)}
-
-.pkg-photo{
-  height:160px;position:relative;background-size:cover;background-position:center;
-  display:flex;flex-direction:column;justify-content:flex-end;
-}
-.pkg-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(3,5,15,.2) 0%,rgba(3,5,15,.75) 100%)}
-.pkg-photo-label{position:relative;z-index:1;padding:.9rem 1.25rem}
-.pkg-photo-name{font-size:1.2rem;font-weight:900;letter-spacing:-.02em;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-.pkg-photo-sub{font-size:.68rem;color:rgba(255,255,255,.6);margin-top:.15rem}
-.pkg-pop-badge{position:absolute;top:.75rem;right:.85rem;z-index:1;font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--blue);color:#050810;padding:.22rem .6rem;border-radius:20px}
-
-.pkg-body{padding:1.4rem;flex:1;display:flex;flex-direction:column}
-.pkg-from{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.2rem}
-.pkg-price{font-size:2.2rem;font-weight:900;color:var(--white);line-height:1;letter-spacing:-.03em}
-.pkg-price small{font-size:.78rem;font-weight:400;color:rgba(255,255,255,.4)}
-.pkg-mkt{font-size:.7rem;color:rgba(255,255,255,.35);text-decoration:line-through;margin-top:.2rem}
-.pkg-save-pill{display:inline-flex;align-items:center;font-size:.6rem;font-weight:700;color:var(--green);background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.2);padding:.2rem .5rem;border-radius:4px;margin-top:.4rem;margin-bottom:.9rem}
-.pkg-dur{font-size:.68rem;color:var(--amber);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.18);border-radius:6px;padding:.28rem .65rem;margin-bottom:.85rem;display:inline-flex;align-items:center;gap:.3rem}
-.pkg-bar{height:1px;background:rgba(255,255,255,.1);margin-bottom:.85rem}
-.pkg-list{flex:1;display:flex;flex-direction:column;gap:.35rem;margin-bottom:.85rem}
-.pkg-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:rgba(255,255,255,.75)}
-.pkg-item::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0}
-.pkg-note{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:.55rem .8rem;font-size:.68rem;color:rgba(56,189,248,.8);line-height:1.55;margin-bottom:.85rem}
-.pkg-warn{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);border-radius:8px;padding:.55rem .8rem;font-size:.68rem;color:rgba(251,191,36,.85);line-height:1.55;margin-bottom:.85rem}
-.pkg-btn{display:block;text-align:center;padding:.82rem;background:var(--blue);color:#050810;font-size:.8rem;font-weight:800;border:none;border-radius:9px;transition:all .2s;cursor:pointer;width:100%;margin-top:auto;box-shadow:0 2px 12px rgba(56,189,248,.2)}
-.pkg-btn:hover{background:#7dd3fc;transform:translateY(-1px)}
-
-/* multi-car note */
-.multi-note{margin-top:1.5rem;border:1px solid rgba(251,191,36,.25);border-radius:var(--r);padding:1.1rem 1.4rem;display:flex;gap:.85rem;align-items:flex-start}
-.mn-tx{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.65}
-.mn-tx strong{color:var(--amber)}
-
-/* ── ADD-ONS ───────────────────────────── */
-.addons-sec{padding:5.5rem 0}
-.addons-sec .photo-bg{
-  background-image:url('https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=1920&q=80&auto=format&fit=crop');
-}
-.addons-sec .photo-overlay{
-  background:linear-gradient(180deg,rgba(3,5,15,.75) 0%,rgba(3,5,15,.55) 50%,rgba(3,5,15,.8) 100%);
-}
-.ao-intro{border:1px solid rgba(56,189,248,.2);border-radius:var(--r);padding:1.1rem 1.5rem;display:flex;gap:.75rem;margin-bottom:2rem;font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.65}
-.ao-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1.1rem}
-.ao{border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.4rem;display:flex;flex-direction:column;gap:.9rem;transition:all .2s}
-.ao:hover{border-color:rgba(56,189,248,.3);transform:translateY(-2px)}
-.ao-head{display:flex;gap:.85rem;align-items:flex-start}
-.ao-icon{width:44px;height:44px;border-radius:10px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ao-icon svg{width:22px;height:22px}
-.ao-name{font-size:.92rem;font-weight:800;margin-bottom:.2rem}
-.ao-desc{font-size:.74rem;color:rgba(255,255,255,.5);line-height:1.55}
-.ao-pb{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:.85rem 1rem}
-.apr{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;margin-bottom:.25rem}
-.apr:last-child{margin-bottom:0}
-.apr-l{color:rgba(255,255,255,.45)}
-.apr-v{font-weight:700}
-.apr-v.s{text-decoration:line-through;color:rgba(255,255,255,.3);font-weight:400;font-size:.73rem}
-.apr-v.b{color:var(--blue)}
-.apr-sep{height:1px;background:rgba(255,255,255,.08);margin:.55rem 0}
-.save-tag{font-size:.6rem;font-weight:700;color:var(--green);background:rgba(74,222,128,.1);padding:.15rem .45rem;border-radius:4px;display:inline-block;margin-top:.25rem}
-.ao-btn{font-size:.73rem;font-weight:700;padding:.58rem;background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);border-radius:8px;transition:all .2s;width:100%}
-.ao-btn:hover{border-color:var(--blue);color:var(--blue)}
-
-/* product add-ons */
-.prod-sec{margin-top:3rem}
-.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.85rem;margin-top:1rem}
-.prod{border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem;transition:all .2s}
-.prod:hover{border-color:rgba(56,189,248,.25)}
-.prod-emoji{font-size:1.5rem;margin-bottom:.6rem}
-.prod-name{font-size:.82rem;font-weight:700;margin-bottom:.2rem}
-.prod-price{font-size:.75rem;color:var(--amber);font-weight:600;margin-bottom:.2rem}
-.prod-note{font-size:.67rem;color:rgba(255,255,255,.4);line-height:1.5}
-
-/* ── BOOKING ───────────────────────────── */
-.booking-sec{padding:5.5rem 0}
-.booking-sec .photo-bg{
-  background-image:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80&auto=format&fit=crop');
-}
-.booking-sec .photo-overlay{
-  background:linear-gradient(135deg,rgba(3,5,15,.88) 0%,rgba(3,5,15,.6) 60%,rgba(3,5,15,.82) 100%);
-}
-.bk-layout{display:grid;grid-template-columns:310px 1fr;gap:2.5rem;align-items:start}
-@media(max-width:860px){.bk-layout{grid-template-columns:1fr}}
-.bi{padding:1.75rem}
-.bi-logo{font-size:1.4rem;font-weight:900;letter-spacing:-.02em;margin-bottom:.12rem}
-.bi-logo span{color:var(--blue)}
-.bi-tag{font-size:.55rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.4rem}
-.bi-pts{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem}
-.bi-pt{display:flex;gap:.6rem;align-items:flex-start}
-.bi-ic{width:28px;height:28px;border-radius:7px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.78rem}
-.bi-tx{font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.6}
-.bi-tx strong{color:var(--white);font-weight:600}
-.bi-phones{display:flex;flex-direction:column;gap:.4rem}
-.bi-ph{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:600;padding:.6rem .88rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;transition:all .2s}
-.bi-ph:hover{border-color:rgba(56,189,248,.4);color:var(--blue);background:rgba(56,189,248,.08)}
-.dist-note{margin-top:1rem;font-size:.65rem;color:rgba(255,255,255,.35);line-height:1.65;border-top:1px solid rgba(255,255,255,.08);padding-top:.85rem}
-
-/* form */
-.bform{padding:2rem}
-.step-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.1)}
-.step-tab{flex:1;text-align:center;padding:.7rem .4rem;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;margin-bottom:-1px}
-.step-tab.done{color:var(--green)}
-.step-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
-.step-body{display:none}
-.step-body.active{display:block}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
-.fg.full{grid-template-columns:1fr}
-.fld{display:flex;flex-direction:column;gap:.3rem}
-.fld label{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4)}
-.fld label .opt{font-size:.55rem;color:rgba(255,255,255,.25);font-weight:400;letter-spacing:.05em;text-transform:none;margin-left:.25rem}
-.fld input,.fld select,.fld textarea{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
-  border-radius:8px;padding:.7rem .9rem;color:var(--white);
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:.83rem;
-  outline:none;transition:border-color .2s;width:100%;
-}
-.fld input::placeholder{color:rgba(255,255,255,.25)}
-.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:rgba(56,189,248,.5);background:rgba(56,189,248,.06)}
-.fld textarea{resize:vertical;min-height:65px}
-.fld select option{background:#0d1117;color:var(--white)}
-
-.slot-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:.75rem}
-.slot{border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.85rem;display:flex;flex-direction:column;gap:.4rem}
-.slot-label{font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(56,189,248,.7)}
-
-.cond-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem;margin-top:.35rem}
-.cond-opt{padding:.65rem .35rem;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;cursor:pointer;transition:all .2s;font-size:.65rem;font-weight:700;color:rgba(255,255,255,.5)}
-.cond-opt:hover{border-color:rgba(56,189,248,.3);color:rgba(255,255,255,.8)}
-.cond-opt.selected{border-color:var(--blue);color:var(--blue);background:rgba(56,189,248,.1)}
-.cond-opt .ci{font-size:1.1rem;display:block;margin-bottom:.3rem}
-
-.seat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-top:.35rem}
-.seat-opt{padding:.55rem .4rem;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;cursor:pointer;transition:all .2s;font-size:.68rem;font-weight:600;color:rgba(255,255,255,.5)}
-.seat-opt:hover,.seat-opt.selected{border-color:rgba(56,189,248,.4);color:var(--blue);background:rgba(56,189,248,.08)}
-
-.ap-grid{display:grid;grid-template-columns:1fr 1fr;gap:.38rem;margin-top:.35rem}
-.ap-pick{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:rgba(255,255,255,.5);cursor:pointer;padding:.42rem .6rem;border:1px solid rgba(255,255,255,.1);border-radius:7px;transition:all .2s;line-height:1.3}
-.ap-pick input{accent-color:var(--blue);width:12px;height:12px;flex-shrink:0}
-.ap-pick:has(input:checked){border-color:rgba(56,189,248,.4);color:var(--blue);background:rgba(56,189,248,.08)}
-
-.live-est{background:rgba(0,0,0,.4);border:1px solid rgba(74,222,128,.2);border-radius:9px;padding:.95rem 1.1rem;margin:.75rem 0;backdrop-filter:blur(8px)}
-.le-head{font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.6rem}
-.le-row{display:flex;justify-content:space-between;font-size:.78rem;padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.6)}
-.le-row.tot{border:none;font-weight:700;color:var(--green);font-size:.88rem;padding-top:.4rem;margin-top:.2rem}
-.le-row span:last-child{font-weight:700}
-.le-save{font-size:.63rem;color:var(--green);text-align:right;margin-top:.3rem}
-
-.opt-banner{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.18);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.25rem;font-size:.77rem;color:rgba(56,189,248,.85);line-height:1.6;display:flex;gap:.6rem;align-items:flex-start}
-
-.step-nav{display:flex;gap:.75rem;margin-top:1.5rem;justify-content:space-between}
-.s-btn{font-size:.82rem;font-weight:700;padding:.75rem 1.75rem;border-radius:9px;transition:all .2s;border:none}
-.s-btn.next{background:var(--blue);color:#050810;margin-left:auto}
-.s-btn.next:hover{background:#7dd3fc}
-.s-btn.back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
-.s-btn.back:hover{color:var(--white)}
-.s-btn.submit{background:var(--green);color:#050810;margin-left:auto;width:100%}
-.s-btn.submit:hover{background:#86efac}
-
-@media(max-width:600px){.fg{grid-template-columns:1fr}.ap-grid{grid-template-columns:1fr}.slot-grid{grid-template-columns:1fr}.cond-grid{grid-template-columns:1fr 1fr}.seat-grid{grid-template-columns:1fr 1fr 1fr}}
-
-/* ── MEMBERSHIP ─────────────────────────── */
-.membership-sec{padding:5.5rem 0}
-.membership-sec .photo-bg{
-  background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80&auto=format&fit=crop');
-}
-.membership-sec .photo-overlay{
-  background:linear-gradient(180deg,rgba(3,5,15,.78) 0%,rgba(3,5,15,.55) 50%,rgba(3,5,15,.82) 100%);
-}
-.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-@media(max-width:700px){.sub-grid{grid-template-columns:1fr}}
-.sub{padding:1.75rem;position:relative;overflow:hidden;transition:all .2s;display:flex;flex-direction:column;gap:.85rem;border:1px solid rgba(255,255,255,.12)}
-.sub:hover{border-color:rgba(56,189,248,.35);transform:translateY(-3px)}
-.sub.feat{border-color:rgba(56,189,248,.4)}
-.sub::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),transparent)}
-.sub-name{font-size:1.15rem;font-weight:800;letter-spacing:-.02em}
-.sub-fee{font-size:2.6rem;font-weight:900;color:var(--blue);line-height:1;letter-spacing:-.03em;text-shadow:0 0 30px rgba(56,189,248,.3)}
-.sub-fee span{font-size:.9rem;font-weight:400;color:rgba(255,255,255,.4)}
-.sub-wash{font-size:.8rem;font-weight:600;color:var(--green);padding:.5rem .8rem;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.15);border-radius:7px}
-.sub-wash del{color:rgba(255,255,255,.35);font-weight:400}
-.sub-list{display:flex;flex-direction:column;gap:.38rem}
-.sub-li{display:flex;align-items:flex-start;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.45}
-.sub-li::before{content:'✓';color:var(--green);font-weight:800;flex-shrink:0;margin-top:.05rem}
-.sub-savings{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;padding:.7rem .95rem}
-.ss-lbl{font-size:.57rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(74,222,128,.65);margin-bottom:.4rem}
-.ss-nums{display:flex;gap:2rem}
-.ss-n{font-size:1.3rem;font-weight:900;color:var(--green)}
-.ss-s{font-size:.63rem;color:rgba(74,222,128,.55)}
-.sub-pay{display:flex;flex-direction:column;gap:.38rem;margin-top:auto}
-.pb{font-size:.73rem;font-weight:700;padding:.62rem;border-radius:8px;transition:all .2s;border:none;text-align:center;display:block}
-.pb.et{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
-.pb.et:hover{border-color:rgba(56,189,248,.4);color:var(--blue);background:rgba(56,189,248,.08)}
-.pb.cc{background:var(--blue);color:#050810}
-.pb.cc:hover{background:#7dd3fc}
-
-/* ── WHY ────────────────────────────────── */
-.why-sec{padding:5.5rem 0}
-.why-sec .photo-bg{
-  background-image:url('https://images.unsplash.com/photo-1544636331-9cd9f8a843d0?w=1920&q=80&auto=format&fit=crop');
-}
-.why-sec .photo-overlay{
-  background:rgba(3,5,15,.72);
-}
-.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
-.why{border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.4rem;transition:all .2s}
-.why:hover{border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.04)}
-.why-ic{font-size:1.4rem;margin-bottom:.75rem}
-.why-t{font-size:.9rem;font-weight:800;margin-bottom:.4rem;text-shadow:0 1px 8px rgba(0,0,0,.3)}
-.why-d{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6}
-
-/* ── FOOTER CTA ─────────────────────────── */
-.fcta-sec{padding:5rem 0;text-align:center}
-.fcta-sec .photo-bg{
-  background-image:url('https://images.unsplash.com/photo-1593950315186-76a92975b60c?w=1920&q=80&auto=format&fit=crop');
-}
-.fcta-sec .photo-overlay{
-  background:linear-gradient(180deg,rgba(3,5,15,.7) 0%,rgba(3,5,15,.5) 50%,rgba(3,5,15,.75) 100%);
-}
-.fcta-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
-.fcta-btn{font-size:.88rem;font-weight:700;padding:.9rem 2.2rem;border-radius:11px;transition:all .2s;border:none;display:inline-block}
-.fcta-btn.a{background:var(--blue);color:#050810;box-shadow:0 4px 20px rgba(56,189,248,.3)}
-.fcta-btn.a:hover{background:#7dd3fc;transform:translateY(-2px)}
-.fcta-btn.b{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--white);backdrop-filter:blur(8px)}
-.fcta-btn.b:hover{background:rgba(255,255,255,.18)}
-
-/* ── FOOTER ─────────────────────────────── */
-footer{background:rgba(3,5,10,.96);border-top:1px solid rgba(255,255,255,.08);padding:1.75rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;backdrop-filter:blur(20px)}
-.f-logo{font-size:1.1rem;font-weight:900;letter-spacing:-.02em}
-.f-logo span{color:var(--blue)}
-.f-links{display:flex;gap:1.5rem;flex-wrap:wrap}
-.f-links a{font-size:.72rem;color:rgba(255,255,255,.4);transition:color .2s}
-.f-links a:hover{color:var(--blue)}
-.f-right{display:flex;flex-direction:column;align-items:flex-end;gap:.35rem}
-.f-admin{font-size:.65rem;color:rgba(56,189,248,.35);transition:color .2s}
-.f-admin:hover{color:var(--blue)}
-.f-note{font-size:.58rem;color:rgba(255,255,255,.2);max-width:380px;text-align:right;line-height:1.65}
-@media(max-width:600px){.f-note{text-align:left}.f-right{align-items:flex-start}footer{flex-direction:column}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div>
-    <div class="nav-logo">Beyond<span>1</span>
-      <small>More Than You Expected · Brampton & GTA</small>
+<!-- ── NAVIGATION ──────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        BEYOND<span>1</span>
+        <small>Auto &amp; Home Care</small>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#areas">Areas</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <span class="nav-phone">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (647) 646-8756
+        </span>
+        <button class="btn btn-ghost" onclick="window.location.href='tel:6476468756'">Call Now</button>
+        <button class="btn btn-primary" onclick="openModal()">Book Now &rarr;</button>
+      </div>
+      <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#addons">Add-Ons</a></li>
-    <li><a href="#booking">Book</a></li>
-    <li><a href="#membership">Membership</a></li>
-  </ul>
-  <div class="nav-btns">
-    <a href="https://wa.me/16476468756" class="nb p">Book Now</a>
-    <a href="https://wa.me/14372266769" class="nb g">(437) 226-6769</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero photo-sec">
-  <div class="photo-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=85')"></div>
-  <div class="photo-overlay"></div>
-  <div class="wrap" style="width:100%">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-pill">Mobile — We Come to Your Driveway · Brampton & GTA</div>
-        <h1 class="display">Mobile<br>detailing.<br><span>At your door.</span></h1>
-        <div class="hero-tagline">More than you expected.</div>
-        <p class="hero-p"><strong>Professional car wash and detailing</strong> brought to your driveway. Cars, driveways, bins, sofas — all done on-site. Priced below the GTA market.</p>
-        <div class="hero-btns">
-          <a href="#services" class="hbtn a">See Services & Prices</a>
-          <a href="#booking" class="hbtn b">Book a Wash</a>
-        </div>
-        <div class="hero-stats">
-          <div><div class="hs-n">$65</div><div class="hs-l">Starting price</div></div>
-          <div><div class="hs-n">10–30%</div><div class="hs-l">Below GTA market</div></div>
-          <div><div class="hs-n">100%</div><div class="hs-l">Mobile service</div></div>
-        </div>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">&times;</button>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#packages" onclick="toggleMenu()">Packages</a>
+  <a href="#how-it-works" onclick="toggleMenu()">How It Works</a>
+  <a href="#reviews" onclick="toggleMenu()">Reviews</a>
+  <a href="#areas" onclick="toggleMenu()">Areas</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <button class="btn btn-primary btn-lg" onclick="toggleMenu();openModal()">Book Now &rarr;</button>
+</div>
+
+<!-- ── HERO ──────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">Premium Mobile Detailing</div>
+      <h1 class="hero-title">
+        Beyond<br>The
+        <span class="line-amber">Expectations.</span>
+      </h1>
+      <p class="hero-sub">Premium mobile auto and home care services delivered directly to your driveway — in Brampton and across the GTA.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-primary btn-lg" onclick="openModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Build Your Package
+        </button>
+        <a href="tel:6476468756" class="btn btn-ghost btn-lg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call Now
+        </a>
       </div>
-      <div class="glass hcard">
-        <div class="hcard-title">Our prices vs. GTA market</div>
-        <div class="hc-row"><span class="hc-svc">Regular Wash · Sedan</span><div class="hc-right"><span class="hc-mkt">$90</span><span class="hc-price">$65</span><span class="hc-save">–$25</span></div></div>
-        <div class="hc-row"><span class="hc-svc">Standard Detail · Sedan</span><div class="hc-right"><span class="hc-mkt">$180</span><span class="hc-price">$130</span><span class="hc-save">–$50</span></div></div>
-        <div class="hc-row"><span class="hc-svc">Premium Detail · Sedan</span><div class="hc-right"><span class="hc-mkt">$290</span><span class="hc-price">$220</span><span class="hc-save">–$90</span></div></div>
-        <div class="hc-row"><span class="hc-svc">Driveway Wash (add-on)</span><div class="hc-right"><span class="hc-mkt">$150</span><span class="hc-price">$90</span><span class="hc-save">–$60</span></div></div>
+      <div class="hero-trust">
+        <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>We Come To You</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Fully Insured</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>5-Star Rated</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Fair Pricing</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services" class="packages-sec photo-sec">
-  <div class="photo-bg"></div>
-  <div class="photo-overlay"></div>
-  <div class="wrap">
-    <span class="eyebrow">Car Wash Packages</span>
-    <h2 class="heading" style="margin-bottom:.5rem">Pick your package</h2>
-    <p class="subtext" style="margin-bottom:2rem">Select your vehicle size — price updates instantly. All services at your location. All prices are <strong>starting from</strong> rates.</p>
-    <div class="vtabs-wrap">
-      <button class="vt on" onclick="setV('sedan',this)">Sedan</button>
-      <button class="vt" onclick="setV('suv5',this)">SUV 5-Seat</button>
-      <button class="vt" onclick="setV('suv7',this)">SUV 7-Seat</button>
+<!-- ── FEATURES BAR ───────────────────────────────────────────────── -->
+<section class="features-bar">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-item reveal">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="feature-title">Mobile Convenience</div><div class="feature-desc">We come to you — home, office or condo. No drop-off needed.</div></div>
+      </div>
+      <div class="feature-item reveal reveal-delay-1">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div><div class="feature-title">Professional Results</div><div class="feature-desc">Professional-grade equipment and techniques every single visit.</div></div>
+      </div>
+      <div class="feature-item reveal reveal-delay-2">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div><div class="feature-title">Transparent Pricing</div><div class="feature-desc">No hidden fees. No surprises. Your quote is your price.</div></div>
+      </div>
+      <div class="feature-item reveal reveal-delay-3">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><div class="feature-title">Fully Insured</div><div class="feature-desc">Your vehicle and property are fully protected on every job.</div></div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ── PACKAGES SECTION ───────────────────────────────────────────── -->
+<section class="packages-section" id="packages">
+  <div class="container">
+    <div class="packages-intro reveal">
+      <div class="section-label">Our Packages</div>
+      <h2 class="section-title">Choose Your Level of Clean</h2>
+      <p class="section-sub">Three tiers designed for every need — from a maintenance refresh to a full premium restoration. All services are mobile and come to you.</p>
+    </div>
+
     <div class="pkg-grid">
 
-      <!-- REGULAR -->
-      <div class="pkg glass-dark">
-        <div class="pkg-photo" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop')">
-          <div class="pkg-photo-label">
-            <div class="pkg-photo-name">Regular</div>
-            <div class="pkg-photo-sub">Full exterior wash + interior refresh</div>
+      <!-- ESSENTIAL REFRESH -->
+      <div class="pkg-card reveal">
+        <div class="pkg-header">
+          <div class="pkg-tier">Tier 1</div>
+          <div class="pkg-name">Essential Refresh</div>
+          <div class="pkg-tagline">A complete maintenance detail — interior &amp; exterior included. Perfect for regular upkeep.</div>
+          <div class="pkg-price-block">
+            <span class="pkg-from">Starting from</span>
+            <span class="pkg-price" id="er-price">$69</span>
+            <span class="pkg-price-suffix">/ vehicle</span>
           </div>
         </div>
         <div class="pkg-body">
-          <div class="pkg-from">Starting from</div>
-          <div class="pkg-price">$<span id="bp">65</span><small> – $<span id="bp2">80</span></small></div>
-          <div class="pkg-mkt">GTA market avg. $90+</div>
-          <div class="pkg-save-pill">↓ Save <span id="bs">~$25</span> vs GTA market</div>
-          <div class="pkg-dur">⏱ Estimated 1–2 hours</div>
-          <div class="pkg-bar"></div>
-          <div class="pkg-list">
-            <div class="pkg-item">Exterior pressure wash</div>
-            <div class="pkg-item">Full interior vacuum</div>
-            <div class="pkg-item">Interior polish</div>
-            <div class="pkg-item">Dashboard & seat wipe-down</div>
-            <div class="pkg-item">Air freshener spray</div>
+          <div class="pkg-price-range">
+            <div class="pkg-price-range-title">Pricing by Vehicle</div>
+            <div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">$69 – $109</span></div>
+            <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">$79 – $129</span></div>
+            <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">$89 – $139</span></div>
           </div>
-          <div class="pkg-note">Tip: Adding driveway, bins, or home cleaning? Ask — a better rate may apply.</div>
-          <button class="pkg-btn" onclick="goBook('Regular')">Book Regular →</button>
+          <div style="font-size:.72rem;color:var(--amber);font-weight:600;margin-bottom:.9rem;padding:.4rem .7rem;background:var(--amber-dim);border-radius:6px;display:inline-block">&#10003; Full Detail — Interior &amp; Exterior Included</div>
+          <ul class="pkg-features">
+            <li>Exterior hand wash &amp; rinse</li>
+            <li>Wheel &amp; tire cleaning + tire shine</li>
+            <li>Door jamb &amp; trunk wipe</li>
+            <li>Full interior vacuum (seats, carpet, trunk)</li>
+            <li>Dashboard &amp; surface wipe-down</li>
+            <li>Door panels &amp; cup holders cleaned</li>
+            <li>Interior &amp; exterior windows</li>
+            <li>Air freshener applied</li>
+          </ul>
+          <button class="pkg-cta pkg-cta-ghost" onclick="openModalWith('Essential Refresh','full')">Choose Package &rarr;</button>
         </div>
       </div>
 
-      <!-- STANDARD -->
-      <div class="pkg glass-dark pop">
-        <div class="pkg-photo" style="background-image:url('https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=800&q=80&auto=format&fit=crop')">
-          <div class="pkg-pop-badge">Most Popular</div>
-          <div class="pkg-photo-label">
-            <div class="pkg-photo-name">Standard</div>
-            <div class="pkg-photo-sub">Deep shampoo + steam clean</div>
+      <!-- DEEP CLEAN -->
+      <div class="pkg-card featured reveal reveal-delay-1">
+        <div class="pkg-popular">Most Popular</div>
+        <div class="pkg-header">
+          <div class="pkg-tier">Tier 2</div>
+          <div class="pkg-name">Deep Clean</div>
+          <div class="pkg-tagline">A thorough deep clean with steam, extraction and shampoo. Choose interior only, exterior only, or full service.</div>
+          <div class="pkg-price-block">
+            <span class="pkg-from">Starting from</span>
+            <span class="pkg-price" id="dc-price">$139</span>
+            <span class="pkg-price-suffix">/ vehicle</span>
           </div>
         </div>
         <div class="pkg-body">
-          <div class="pkg-from">Starting from</div>
-          <div class="pkg-price">$<span id="sp">130</span><small> – $<span id="sp2">170</span></small></div>
-          <div class="pkg-mkt">GTA market avg. $200+</div>
-          <div class="pkg-save-pill">↓ Save <span id="ss">~$50</span> vs GTA market</div>
-          <div class="pkg-dur">⏱ Estimated 2–3 hours</div>
-          <div class="pkg-bar"></div>
-          <div class="pkg-list">
-            <div class="pkg-item">Everything in Regular</div>
-            <div class="pkg-item">Vacuum + air blow edge to edge</div>
-            <div class="pkg-item">Tire & rim polish</div>
-            <div class="pkg-item">Steam clean vents & seats</div>
-            <div class="pkg-item">Seat & carpet shampoo</div>
-            <div class="pkg-item">Salt stain removal</div>
+          <div class="pkg-service-tabs" id="dc-tabs">
+            <button class="pkg-tab active" onclick="selectPkgTab('dc','full',this)">Full Service</button>
+            <button class="pkg-tab" onclick="selectPkgTab('dc','interior',this)">Interior Only</button>
+            <button class="pkg-tab" onclick="selectPkgTab('dc','exterior',this)">Exterior Only</button>
           </div>
-          <div class="pkg-warn">Note: Charged separately if needed: Pet hair +$30–50 · Light/cream seats +$30 · Engine bay +$40–50 · Heavy rims +$25–50</div>
-          <button class="pkg-btn" onclick="goBook('Standard')">Book Standard →</button>
+          <div class="pkg-price-range" id="dc-price-range">
+            <div class="pkg-price-range-title">Pricing by Vehicle</div>
+            <div id="dc-price-rows">
+              <div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">$139 – $199</span></div>
+              <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">$149 – $219</span></div>
+              <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">$169 – $239</span></div>
+            </div>
+          </div>
+          <ul class="pkg-features" id="dc-features">
+            <li>Everything in Essential Refresh</li>
+            <li>Steam cleaning throughout</li>
+            <li>Hot water extraction</li>
+            <li>Seat &amp; carpet shampoo</li>
+            <li>Heavy stain treatment</li>
+            <li>Vent &amp; cup holder detail</li>
+            <li>Exterior spray wax &amp; buff</li>
+            <li>Brake dust removal</li>
+          </ul>
+          <button class="pkg-cta pkg-cta-main" id="dc-cta" onclick="openModalWith('Deep Clean','full')">Choose Package &rarr;</button>
         </div>
       </div>
 
-      <!-- PREMIUM -->
-      <div class="pkg glass-dark">
-        <div class="pkg-photo" style="background-image:url('https://images.unsplash.com/photo-1600661803210-5f0d02ef6b30?w=800&q=80&auto=format&fit=crop')">
-          <div class="pkg-photo-label">
-            <div class="pkg-photo-name">Premium</div>
-            <div class="pkg-photo-sub">Complete top-to-bottom detail</div>
+      <!-- PREMIUM RESTORATION -->
+      <div class="pkg-card reveal reveal-delay-2">
+        <div class="pkg-header">
+          <div class="pkg-tier">Tier 3</div>
+          <div class="pkg-name">Premium Restoration</div>
+          <div class="pkg-tagline">The full premium experience. Paint protection, leather care, odour elimination and more. Interior, exterior or full.</div>
+          <div class="pkg-price-block">
+            <span class="pkg-from">Starting from</span>
+            <span class="pkg-price" id="pr-price">$229</span>
+            <span class="pkg-price-suffix">/ vehicle</span>
           </div>
         </div>
         <div class="pkg-body">
-          <div class="pkg-from">Starting from</div>
-          <div class="pkg-price">$<span id="pp">220</span><small> – $<span id="pp2">260</span></small></div>
-          <div class="pkg-mkt">GTA market avg. $310+</div>
-          <div class="pkg-save-pill">↓ Save <span id="ps">~$80</span> vs GTA market</div>
-          <div class="pkg-dur">⏱ Estimated 3–5 hours</div>
-          <div class="pkg-bar"></div>
-          <div class="pkg-list">
-            <div class="pkg-item">Everything in Standard</div>
-            <div class="pkg-item">Engine bay wash</div>
-            <div class="pkg-item">Leather conditioning</div>
-            <div class="pkg-item">Odour elimination</div>
-            <div class="pkg-item">Floor mat deep clean</div>
-            <div class="pkg-item">Fragrance of your choice</div>
+          <div class="pkg-service-tabs" id="pr-tabs">
+            <button class="pkg-tab active" onclick="selectPkgTab('pr','full',this)">Full Service</button>
+            <button class="pkg-tab" onclick="selectPkgTab('pr','interior',this)">Interior Only</button>
+            <button class="pkg-tab" onclick="selectPkgTab('pr','exterior',this)">Exterior Only</button>
           </div>
-          <button class="pkg-btn" onclick="goBook('Premium')">Book Premium →</button>
+          <div class="pkg-price-range" id="pr-price-range">
+            <div class="pkg-price-range-title">Pricing by Vehicle</div>
+            <div id="pr-price-rows">
+              <div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">$229 – $299</span></div>
+              <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">$249 – $319</span></div>
+              <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">$279 – $349</span></div>
+            </div>
+          </div>
+          <ul class="pkg-features" id="pr-features">
+            <li>Everything in Deep Clean</li>
+            <li>Leather conditioning &amp; protection</li>
+            <li>Odour elimination treatment</li>
+            <li>Clay bar decontamination</li>
+            <li>Ceramic wax coating</li>
+            <li>Paint enhancement polish</li>
+            <li>UV protectant on all plastics</li>
+            <li>Premium fragrance applied</li>
+          </ul>
+          <button class="pkg-cta pkg-cta-ghost" id="pr-cta" onclick="openModalWith('Premium Restoration','full')">Choose Package &rarr;</button>
         </div>
       </div>
 
     </div>
-    <div class="multi-note glass-dark">
-      
-      <p class="mn-tx"><strong>Multiple cars at the same location?</strong> 2nd car and beyond — <strong>$15 off each.</strong> Fleet or recurring service? <a href="https://wa.me/16476468756" style="color:var(--amber)">WhatsApp us for a custom quote.</a></p>
+    <p class="pkg-note reveal">Final price depends on vehicle size and condition. <strong>Get an exact quote</strong> when you build your package — takes less than 2 minutes.</p>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────────────────── -->
+<section class="hiw-section" id="how-it-works">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <div class="section-label">The Process</div>
+      <h2 class="section-title">Simple. Easy. Convenient.</h2>
+      <p class="section-sub" style="margin:0 auto">From booking to a spotless finish — we make it effortless every time.</p>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-step reveal">
+        <div class="hiw-num">01</div>
+        <div class="hiw-title">Build Your Package</div>
+        <div class="hiw-desc">Choose your service, vehicle type and add-ons. Get an instant quote in under 2 minutes.</div>
+      </div>
+      <div class="hiw-step reveal reveal-delay-1">
+        <div class="hiw-num">02</div>
+        <div class="hiw-title">Booking Confirmed</div>
+        <div class="hiw-desc">Select your preferred date and time. We confirm your booking within 2–3 hours.</div>
+      </div>
+      <div class="hiw-step reveal reveal-delay-2">
+        <div class="hiw-num">03</div>
+        <div class="hiw-title">We Come To You</div>
+        <div class="hiw-desc">We arrive on time, fully equipped with everything needed. No drop-off required.</div>
+      </div>
+      <div class="hiw-step reveal reveal-delay-3">
+        <div class="hiw-num">04</div>
+        <div class="hiw-title">Enjoy The Results</div>
+        <div class="hiw-desc">Sit back and relax. We take care of everything and leave your vehicle spotless.</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem" class="reveal">
+      <button class="btn btn-primary btn-lg" onclick="openModal()">Start Your Booking &rarr;</button>
     </div>
   </div>
 </section>
 
-<!-- ADD-ONS -->
-<section id="addons" class="addons-sec photo-sec">
-  <div class="photo-bg"></div>
-  <div class="photo-overlay"></div>
-  <div class="wrap">
-    <span class="eyebrow">Add-On Services</span>
-    <h2 class="heading" style="margin-bottom:.5rem">More services, same visit</h2>
-    <p class="subtext" style="margin-bottom:2rem">Book standalone or combine with a car wash. When combined, you pay less.</p>
-    <div class="ao-intro glass-dark">
-      <span style="font-size:1rem;flex-shrink:0"></span>
-      <span>Two prices shown — <strong>standalone rate</strong> and the <strong>lower combined rate</strong>. Product add-on prices are charged at current market rates and confirmed before service.</span>
-    </div>
-    <div class="ao-grid">
-      <div class="ao glass-dark">
-        <div class="ao-head">
-          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="13" width="20" height="9" rx="2" fill="rgba(56,189,248,.08)"/><path d="M2 13L5 6H19L22 13"/><line x1="8" y1="9" x2="16" y2="9"/></svg></div>
-          <div><div class="ao-name">Driveway & Patio Wash</div><div class="ao-desc">2,100 PSI + degreaser. Salt, dirt, mud removed. Concrete and interlock.</div></div>
-        </div>
-        <div class="ao-pb">
-          <div class="apr"><span class="apr-l">Standalone</span><span class="apr-v s">$120</span></div>
-          <div class="apr-sep"></div>
-          <div class="apr"><span class="apr-l">With car wash</span><span class="apr-v b">$90</span></div>
-          <span class="save-tag">Save $30 when combined</span>
-        </div>
-        <button class="ao-btn" onclick="goBook('Driveway Wash')">Add to Booking →</button>
+<!-- ── SERVICES SECTION ───────────────────────────────────────────── -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem" class="reveal">
+      <div>
+        <div class="section-label">What We Offer</div>
+        <h2 class="section-title" style="margin-bottom:.5rem">Services Built Around<br>Your Schedule.</h2>
+        <p class="section-sub">Choose auto detailing, home care, or combine both in a single visit for maximum value.</p>
       </div>
-      <div class="ao glass-dark">
-        <div class="ao-head">
-          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="8" width="14" height="14" rx="2" fill="rgba(56,189,248,.08)"/><path d="M9 8V6a2 2 0 014 0v2"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="10" y1="12" x2="10" y2="18"/><line x1="14" y1="12" x2="14" y2="18"/></svg></div>
-          <div><div class="ao-name">Garbage Bin Cleaning</div><div class="ao-desc">Pressure wash + steam sanitize. Kills bacteria. All bin types.</div></div>
-        </div>
-        <div class="ao-pb">
-          <div class="apr"><span class="apr-l">1 bin</span><span class="apr-v b">$20</span></div>
-          <div class="apr"><span class="apr-l">2 bins</span><span class="apr-v b">$35</span></div>
-          <div class="apr"><span class="apr-l">3 bins</span><span class="apr-v b">$45</span></div>
-          <div class="apr-sep"></div>
-          <span class="save-tag">Already $5–10 below market rate</span>
-        </div>
-        <button class="ao-btn" onclick="goBook('Bin Cleaning')">Add to Booking →</button>
-      </div>
-      <div class="ao glass-dark">
-        <div class="ao-head">
-          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="11" width="22" height="9" rx="3" fill="rgba(56,189,248,.08)"/><rect x="1" y="11" width="5" height="9" rx="2" fill="rgba(56,189,248,.12)"/><rect x="18" y="11" width="5" height="9" rx="2" fill="rgba(56,189,248,.12)"/><rect x="4" y="7" width="16" height="6" rx="2" fill="rgba(56,189,248,.06)"/></svg></div>
-          <div><div class="ao-name">Sofa & Couch Extraction</div><div class="ao-desc">Hot water extractor + steam. Pet hair, stains, odour removed.</div></div>
-        </div>
-        <div class="ao-pb">
-          <div class="apr"><span class="apr-l">Standalone</span><span class="apr-v s">$100</span></div>
-          <div class="apr-sep"></div>
-          <div class="apr"><span class="apr-l">With car wash</span><span class="apr-v b">$75</span></div>
-          <span class="save-tag">Save $25 when combined</span>
-        </div>
-        <button class="ao-btn" onclick="goBook('Sofa Extraction')">Add to Booking →</button>
-      </div>
-      <div class="ao glass-dark">
-        <div class="ao-head">
-          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="5" width="20" height="15" rx="2" fill="rgba(56,189,248,.08)"/><line x1="6" y1="9" x2="18" y2="9"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="15" x2="18" y2="15"/></svg></div>
-          <div><div class="ao-name">Carpet & Rug Extraction</div><div class="ao-desc">Hot water extraction on rugs at your home. Deep clean.</div></div>
-        </div>
-        <div class="ao-pb">
-          <div class="apr"><span class="apr-l">Standalone</span><span class="apr-v s">$80</span></div>
-          <div class="apr-sep"></div>
-          <div class="apr"><span class="apr-l">With car wash</span><span class="apr-v b">$60</span></div>
-          <span class="save-tag">Save $20 when combined</span>
-        </div>
-        <button class="ao-btn" onclick="goBook('Carpet Extraction')">Add to Booking →</button>
-      </div>
-      <div class="ao glass-dark">
-        <div class="ao-head">
-          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="8" width="18" height="10" rx="2" fill="rgba(56,189,248,.08)"/><line x1="7" y1="11" x2="7" y2="15"/><line x1="11" y1="11" x2="11" y2="15"/><line x1="15" y1="11" x2="15" y2="15"/><line x1="3" y1="11" x2="21" y2="11"/></svg></div>
-          <div><div class="ao-name">Floor Mat Wash</div><div class="ao-desc">Car + home entry mats. Pressure washed, extracted, dried.</div></div>
-        </div>
-        <div class="ao-pb">
-          <div class="apr"><span class="apr-l">Standalone</span><span class="apr-v s">$25</span></div>
-          <div class="apr-sep"></div>
-          <div class="apr"><span class="apr-l">With car wash</span><span class="apr-v b">$15</span></div>
-          <span class="save-tag">Save $10 when combined</span>
-        </div>
-        <button class="ao-btn" onclick="goBook('Mat Wash')">Add to Booking →</button>
-      </div>
-      <div class="ao glass-dark">
-        <div class="ao-head">
-          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="11" rx="3" fill="rgba(56,189,248,.08)"/><rect x="2" y="8" width="20" height="4" rx="2" fill="rgba(56,189,248,.12)"/><path d="M8 5Q9 3 8 1"/><path d="M12 5Q13 3 12 1"/><path d="M16 5Q17 3 16 1"/></svg></div>
-          <div><div class="ao-name">Mattress Sanitize</div><div class="ao-desc">Steam sanitize — kills dust mites, allergens, bacteria. All sizes.</div></div>
-        </div>
-        <div class="ao-pb">
-          <div class="apr"><span class="apr-l">Standalone</span><span class="apr-v s">$65</span></div>
-          <div class="apr-sep"></div>
-          <div class="apr"><span class="apr-l">With car wash</span><span class="apr-v b">$50</span></div>
-          <span class="save-tag">Save $15 when combined</span>
-        </div>
-        <button class="ao-btn" onclick="goBook('Mattress Sanitize')">Add to Booking →</button>
+      <div class="services-tabs">
+        <button class="svc-tab active" id="tab-auto" onclick="showSvc('auto',this)">Auto Detailing</button>
+        <button class="svc-tab" id="tab-home" onclick="showSvc('home',this)">Home Care</button>
       </div>
     </div>
 
-    <!-- PRODUCT ADD-ONS -->
-    <div class="prod-sec">
-      <span class="eyebrow" style="margin-top:2rem;display:block">Product Add-Ons</span>
-      <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:.3rem;text-shadow:0 2px 12px rgba(0,0,0,.4)">Enhance your service</h3>
-      <p style="font-size:.78rem;color:var(--muted);margin-bottom:.8rem;line-height:1.7">Prices at <strong style="color:var(--amber)">current market rates</strong> — confirmed before we begin.</p>
-      <div class="prod-grid">
-        <div class="prod glass-dark"><div class="prod-name">Hanging Air Freshener</div><div class="prod-price">~$5–$10</div><div class="prod-note">Your chosen scent. Lasts 4–6 weeks.</div></div>
-        <div class="prod glass-dark"><div class="prod-name">Interior Freshener Spray</div><div class="prod-price">~$10–$15</div><div class="prod-note">Deep-fabric odour neutralizer.</div></div>
-        <div class="prod glass-dark"><div class="prod-name">Microfiber Cloth Set</div><div class="prod-price">~$15–$25</div><div class="prod-note">3–5 premium cloths for maintenance.</div></div>
-        <div class="prod glass-dark"><div class="prod-name">Dashboard UV Protectant</div><div class="prod-price">~$15–$20</div><div class="prod-note">Prevents cracking and fading.</div></div>
-        <div class="prod glass-dark"><div class="prod-name">Tire Shine Spray</div><div class="prod-price">~$12–$18</div><div class="prod-note">Long-lasting black tire finish.</div></div>
-        <div class="prod glass-dark"><div class="prod-name">Dashboard Wipes Pack</div><div class="prod-price">~$8–$12</div><div class="prod-note">30-pack interior care wipes.</div></div>
+    <div class="svc-panel on" id="svc-auto">
+      <div class="svc-img-grid reveal">
+        <div class="svc-img-card" onclick="openModalWith('Essential Refresh','full')">
+          <img src="interior-detailing.jpg" alt="Interior Detailing" loading="lazy">
+          <div class="svc-img-overlay">
+            <div class="svc-img-name">Interior Detailing</div>
+            <div class="svc-img-price">Deep clean, steam &amp; extraction</div>
+          </div>
+        </div>
+        <div class="svc-img-card" onclick="openModalWith('Essential Refresh','full')">
+          <img src="exterior-detailing.jpg" alt="Exterior Detailing" loading="lazy">
+          <div class="svc-img-overlay">
+            <div class="svc-img-name">Exterior Detailing</div>
+            <div class="svc-img-price">Hand wash, wax &amp; paint protection</div>
+          </div>
+        </div>
+        <div class="svc-img-card" onclick="openModalWith('Deep Clean','full')" style="position:relative">
+          <img src="exterior-detailing.jpg" alt="Full Detail" loading="lazy" style="filter:brightness(.75)">
+          <div class="svc-img-overlay">
+            <div class="svc-img-name">Full Detail <span style="font-size:.6rem;background:var(--amber);color:#000;padding:.1rem .4rem;border-radius:4px;margin-left:.3rem;font-weight:700">BEST VALUE</span></div>
+            <div class="svc-img-price">Interior + Exterior — Starting at $69</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- BOOKING -->
-<section id="booking" class="booking-sec photo-sec">
-  <div class="photo-bg"></div>
-  <div class="photo-overlay"></div>
-  <div class="wrap">
-    <div class="bk-layout">
-      <div class="bi glass-dark">
-        <div class="bi-logo">Beyond<span>1</span></div>
-        <div class="bi-tag">More than you expected</div>
-        <div class="bi-pts">
-          <div class="bi-pt"><div class="bi-ic">1</div><div class="bi-tx"><strong>Confirmed within 2–3 hours.</strong> Nothing charged until we confirm.</div></div>
-          <div class="bi-pt"><div class="bi-ic">2</div><div class="bi-tx"><strong>Pick 3 time slots.</strong> We confirm whichever works — you stay flexible.</div></div>
-          <div class="bi-pt"><div class="bi-ic">3</div><div class="bi-tx"><strong>Pay at your doorstep.</strong> Cash, e-transfer, or card on arrival.</div></div>
-          <div class="bi-pt"><div class="bi-ic">4</div><div class="bi-tx"><strong>We come to you.</strong> Driveway, condo, or workplace.</div></div>
+    <div class="svc-panel" id="svc-home">
+      <div class="home-grid reveal">
+        <div class="home-card">
+          <img class="home-card-img" src="sofa-cleaning.jpg" alt="Sofa Extraction" loading="lazy">
+          <div class="home-card-body">
+            <div class="home-card-name">Sofa Extraction</div>
+            <div class="home-card-price">From $75 (with car service)</div>
+            <div class="home-card-desc">Hot water extraction removes stains, pet hair and odours from all sofa types.</div>
+          </div>
         </div>
-        <div class="bi-phones">
-          <a href="https://wa.me/16476468756" class="bi-ph">(647) 646-8756</a>
-          <a href="https://wa.me/14372266769" class="bi-ph">(437) 226-6769</a>
+        <div class="home-card">
+          <img class="home-card-img" src="bin-cleaning.jpg" alt="Bin Cleaning" loading="lazy">
+          <div class="home-card-body">
+            <div class="home-card-name">Bin Cleaning</div>
+            <div class="home-card-price">From $20 per bin</div>
+            <div class="home-card-desc">Pressure wash and steam sanitize. Eliminates bacteria and odours from all bin types.</div>
+          </div>
         </div>
-        <p class="dist-note">* Distance charges may apply outside Brampton — confirmed before booking, no surprises.</p>
+        <div class="home-card">
+          <img class="home-card-img" src="carpet-cleaning.webp" alt="Carpet Extraction" loading="lazy">
+          <div class="home-card-body">
+            <div class="home-card-name">Carpet Extraction</div>
+            <div class="home-card-price">From $60 (with car service)</div>
+            <div class="home-card-desc">Deep carpet and rug extraction at your home. Not a surface rinse — a real deep clean.</div>
+          </div>
+        </div>
+        <div class="home-card">
+          <div style="height:140px;background:var(--raised);display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:var(--muted);stroke-width:1.5;fill:none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="home-card-body">
+            <div class="home-card-name">Driveway &amp; Patio</div>
+            <div class="home-card-price">From $90 (with car service)</div>
+            <div class="home-card-desc">Pressure wash removes salt, stains and surface buildup from concrete and interlock.</div>
+          </div>
+        </div>
+        <div class="home-card">
+          <div style="height:140px;background:var(--raised);display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:var(--muted);stroke-width:1.5;fill:none"><rect x="2" y="8" width="20" height="11" rx="3"/><rect x="2" y="8" width="20" height="4" rx="2"/></svg>
+          </div>
+          <div class="home-card-body">
+            <div class="home-card-name">Mattress Sanitize</div>
+            <div class="home-card-price">From $50 (with car service)</div>
+            <div class="home-card-desc">Steam sanitize kills dust mites, allergens and bacteria. All mattress sizes.</div>
+          </div>
+        </div>
+        <div class="home-card">
+          <div style="height:140px;background:var(--raised);display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:var(--muted);stroke-width:1.5;fill:none"><rect x="3" y="8" width="18" height="10" rx="2"/><line x1="3" y1="11" x2="21" y2="11"/></svg>
+          </div>
+          <div class="home-card-body">
+            <div class="home-card-name">Floor Mat Wash</div>
+            <div class="home-card-price">From $15 (with car service)</div>
+            <div class="home-card-desc">Car and home entry mats washed, extracted and dried on site.</div>
+          </div>
+        </div>
       </div>
-
-      <div class="bform glass-dark">
-        <div class="step-tabs">
-          <div class="step-tab active" id="tab1">1 · Service</div>
-          <div class="step-tab" id="tab2">2 · Time Slots</div>
-          <div class="step-tab" id="tab3">3 · Your Details</div>
-          <div class="step-tab" id="tab4">4 · Car Info</div>
-        </div>
-
-        <!-- STEP 1 -->
-        <div class="step-body active" id="step1">
-          <div class="fg">
-            <div class="fld"><label>Package</label>
-              <select id="s1_pkg" onchange="rc()">
-                <option value="0|">Select a package</option>
-                <option value="65|Regular — Sedan">Regular — Sedan (from $65)</option>
-                <option value="75|Regular — SUV 5-Seat">Regular — SUV 5-Seat (from $75)</option>
-                <option value="85|Regular — SUV 7-Seat">Regular — SUV 7-Seat (from $85)</option>
-                <option value="130|Standard — Sedan">Standard — Sedan (from $130)</option>
-                <option value="150|Standard — SUV 5-Seat">Standard — SUV 5-Seat (from $150)</option>
-                <option value="170|Standard — SUV 7-Seat">Standard — SUV 7-Seat (from $170)</option>
-                <option value="220|Premium — Sedan">Premium — Sedan (from $220)</option>
-                <option value="245|Premium — SUV 5-Seat">Premium — SUV 5-Seat (from $245)</option>
-                <option value="275|Premium — SUV 7-Seat">Premium — SUV 7-Seat (from $275)</option>
-              </select>
-            </div>
-            <div class="fld"><label>Number of Cars</label>
-              <select id="s1_cars" onchange="rc()">
-                <option value="1">1 car</option>
-                <option value="2">2 cars (2nd — $15 off)</option>
-                <option value="3">3+ cars (each — $15 off)</option>
-              </select>
-            </div>
-          </div>
-          <div class="fld" style="margin-bottom:.75rem"><label>Car Condition Right Now</label>
-            <div class="cond-grid">
-              <div class="cond-opt" onclick="selCond(this,'Like New')">Like New</div>
-              <div class="cond-opt" onclick="selCond(this,'Good')">Good</div>
-              <div class="cond-opt" onclick="selCond(this,'Fair')">Fair</div>
-              <div class="cond-opt" onclick="selCond(this,'Heavy Dirty')">Heavy Dirty</div>
-            </div>
-          </div>
-          <div class="fld" style="margin-bottom:.75rem"><label>Add-On Services <span class="opt">(optional)</span></label>
-            <div class="ap-grid">
-              <label class="ap-pick"><input type="checkbox" data-p="90" data-s="120" data-l="Driveway Wash" onchange="rc()"> Driveway ($90 w/car)</label>
-              <label class="ap-pick"><input type="checkbox" data-p="20" data-s="20" data-l="Bin ×1" onchange="rc()"> 1 Bin ($20)</label>
-              <label class="ap-pick"><input type="checkbox" data-p="35" data-s="35" data-l="Bin ×2" onchange="rc()"> 2 Bins ($35)</label>
-              <label class="ap-pick"><input type="checkbox" data-p="45" data-s="45" data-l="Bin ×3" onchange="rc()"> 3 Bins ($45)</label>
-              <label class="ap-pick"><input type="checkbox" data-p="75" data-s="100" data-l="Sofa Extraction" onchange="rc()"> Sofa ($75 w/car)</label>
-              <label class="ap-pick"><input type="checkbox" data-p="60" data-s="80" data-l="Carpet Extraction" onchange="rc()"> Carpet ($60 w/car)</label>
-              <label class="ap-pick"><input type="checkbox" data-p="15" data-s="25" data-l="Mat Wash" onchange="rc()"> Mats ($15 w/car)</label>
-              <label class="ap-pick"><input type="checkbox" data-p="50" data-s="65" data-l="Mattress Sanitize" onchange="rc()"> Mattress ($50 w/car)</label>
-            </div>
-          </div>
-          <div class="live-est">
-            <div class="le-head">Estimated Total</div>
-            <div id="le-rows"><div class="le-row"><span>Select a package above</span><span>—</span></div></div>
-            <div class="le-save" id="le-save"></div>
-          </div>
-          <div class="step-nav"><button class="s-btn next" onclick="goStep(2)">Next: Pick Time →</button></div>
-        </div>
-
-        <!-- STEP 2 -->
-        <div class="step-body" id="step2">
-          <p style="font-size:.8rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.7">Pick <strong style="color:var(--white)">up to 3 time slots</strong> in order of preference. We confirm the first available within 2–3 hours.</p>
-          <div class="slot-grid">
-            <div class="slot glass"><div class="slot-label">1st Choice</div><div class="fld"><label>Date</label><input type="date" id="d1"></div><div class="fld"><label>Time</label><select id="t1"><option value="">Select</option><option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option></select></div></div>
-            <div class="slot glass"><div class="slot-label">2nd Choice</div><div class="fld"><label>Date</label><input type="date" id="d2"></div><div class="fld"><label>Time</label><select id="t2"><option value="">Select</option><option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option></select></div></div>
-            <div class="slot glass"><div class="slot-label">3rd Choice</div><div class="fld"><label>Date</label><input type="date" id="d3"></div><div class="fld"><label>Time</label><select id="t3"><option value="">Select</option><option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option></select></div></div>
-          </div>
-          <div class="fg" style="margin-top:.75rem">
-            <div class="fld"><label>Preferred Payment</label><select id="s2_pay"><option>Cash on arrival</option><option>E-Transfer on arrival</option><option>Card on arrival</option><option>Pay online after confirmation</option><option>Not sure yet</option></select></div>
-            <div class="fld"><label>Fragrance <span class="opt">(optional)</span></label><select id="s2_frag"><option value="">No preference</option><option>New Car</option><option>Citrus Fresh</option><option>Ocean Breeze</option><option>Vanilla Sweet</option><option>Floral Garden</option><option>Cedar Wood</option><option>Tropical Fruits</option><option>No Fragrance</option></select></div>
-          </div>
-          <div class="step-nav"><button class="s-btn back" onclick="goStep(1)">← Back</button><button class="s-btn next" onclick="goStep(3)">Next: Your Details →</button></div>
-        </div>
-
-        <!-- STEP 3 -->
-        <div class="step-body" id="step3">
-          <div class="fg">
-            <div class="fld"><label>Full Name</label><input type="text" id="s3_name" placeholder="Your name"></div>
-            <div class="fld"><label>Phone / WhatsApp</label><input type="tel" id="s3_phone" placeholder="(647) 000-0000"></div>
-          </div>
-          <div class="fg full" style="margin-bottom:.75rem"><div class="fld"><label>Service Address</label><input type="text" id="s3_addr" placeholder="Your address in Brampton / GTA"></div></div>
-          <div class="fg full"><div class="fld"><label>Notes <span class="opt">(optional)</span></label><textarea id="s3_notes" placeholder="Anything we should know before arriving..."></textarea></div></div>
-          <div class="step-nav"><button class="s-btn back" onclick="goStep(2)">← Back</button><button class="s-btn next" onclick="goStep(4)">Next: Car Info →</button></div>
-        </div>
-
-        <!-- STEP 4 -->
-        <div class="step-body" id="step4">
-          <div class="opt-banner">
-            <span style="font-size:1rem;flex-shrink:0"></span>
-            <span>This section is <strong>completely optional</strong> — tap Submit below to skip. Sharing details helps us bring the right products for a better result.</span>
-          </div>
-          <div class="fg">
-            <div class="fld"><label>Car Brand <span class="opt">(optional)</span></label>
-              <select id="s4_brand"><option value="">Select brand</option><option>Toyota</option><option>Honda</option><option>Ford</option><option>Chevrolet</option><option>Hyundai</option><option>Kia</option><option>Nissan</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Volkswagen</option><option>Subaru</option><option>Mazda</option><option>Jeep</option><option>Ram</option><option>GMC</option><option>Lexus</option><option>Acura</option><option>Infiniti</option><option>Cadillac</option><option>Lincoln</option><option>Dodge</option><option>Mitsubishi</option><option>Volvo</option><option>Tesla</option><option>Porsche</option><option>Land Rover</option><option>Other</option></select>
-            </div>
-            <div class="fld"><label>Car Model <span class="opt">(optional)</span></label><input type="text" id="s4_model" placeholder="e.g. Camry, Civic, F-150"></div>
-          </div>
-          <div class="fg">
-            <div class="fld"><label>Exterior Colour <span class="opt">(optional)</span></label><select id="s4_extcol"><option value="">Select colour</option><option>Black</option><option>White</option><option>Silver</option><option>Grey</option><option>Red</option><option>Blue</option><option>Green</option><option>Orange</option><option>Yellow</option><option>Brown/Bronze</option><option>Gold/Champagne</option><option>Two-tone</option><option>Other</option></select></div>
-            <div class="fld"><label>Interior Colour <span class="opt">(optional)</span></label><select id="s4_intcol"><option value="">Select colour</option><option>Black</option><option>Beige/Cream</option><option>Grey</option><option>Dark Brown/Tan</option><option>Red</option><option>White</option><option>Navy Blue</option><option>Two-tone</option></select></div>
-          </div>
-          <div class="fld" style="margin-bottom:.75rem"><label>Seat Type <span class="opt">(optional — helps us pick the right products)</span></label>
-            <div class="seat-grid" id="seatGrid">
-              <div class="seat-opt" onclick="selSeat(this,'Leather')">Leather</div>
-              <div class="seat-opt" onclick="selSeat(this,'Fabric')">Fabric</div>
-              <div class="seat-opt" onclick="selSeat(this,'Leatherette')">Leatherette</div>
-              <div class="seat-opt" onclick="selSeat(this,'Alcantara')">Alcantara</div>
-              <div class="seat-opt" onclick="selSeat(this,'Vinyl')">Vinyl</div>
-              <div class="seat-opt" onclick="selSeat(this,'Mixed')">Mixed</div>
-            </div>
-          </div>
-          <div class="fg full" style="margin-bottom:.75rem"><div class="fld"><label>Floor Matting <span class="opt">(optional)</span></label><select id="s4_mat"><option value="">Select matting</option><option>Standard Carpet Mats</option><option>All-Weather Rubber Mats</option><option>3D Molded Mats</option><option>WeatherTech Style</option><option>No mats</option><option>Not sure</option></select></div></div>
-          <div class="step-nav">
-            <button class="s-btn back" onclick="goStep(3)">← Back</button>
-            <button class="s-btn submit" onclick="submitBooking()">Send Booking via WhatsApp →</button>
-          </div>
-          <p style="font-size:.65rem;color:rgba(255,255,255,.3);text-align:center;margin-top:.55rem;line-height:1.6">Opens WhatsApp with all details. Confirmed within 2–3 hours. Nothing charged until confirmed.</p>
-        </div>
+      <div class="home-note reveal">
+        <strong>Combine and save.</strong> Add home care services to any car package and pay less — we are already at your door. All savings are applied automatically when you build your package.
       </div>
     </div>
   </div>
 </section>
 
-<!-- MEMBERSHIP -->
-<section id="membership" class="membership-sec photo-sec">
-  <div class="photo-bg"></div>
-  <div class="photo-overlay"></div>
-  <div class="wrap">
-    <span class="eyebrow">Monthly Membership</span>
-    <h2 class="heading" style="margin-bottom:.5rem">Regular customer?<br>Pay less every time.</h2>
-    <p class="subtext" style="margin-bottom:2.5rem">Small monthly fee, lower wash rate, priority booking. Cancel any time.</p>
-    <div class="sub-grid">
-      <div class="sub glass-dark">
-        <div class="sub-name">Basic Member</div>
-        <div class="sub-fee">$20 <span>/month</span></div>
-        <div class="sub-wash">$55/wash — <del>$65 regular</del> · save $10 per wash</div>
-        <ul class="sub-list">
-          <li class="sub-li">Up to 4 Regular washes/month at $55</li>
-          <li class="sub-li">10% off all add-on services</li>
-          <li class="sub-li">Priority booking over non-members</li>
-          <li class="sub-li">1 vehicle · Cancel any time</li>
+<!-- ── PRODUCTS SECTION ───────────────────────────────────────────── -->
+<section class="products-section" id="products">
+  <div class="container">
+    <div class="products-layout">
+      <div class="reveal">
+        <div class="products-badge">Premium Products</div>
+        <h2 class="section-title">Quality Makes<br>The Difference</h2>
+        <p class="section-sub">Every Beyond1 service is performed using professional-grade, industry-leading products — the same tools and formulas trusted by top detailers across North America.</p>
+        <div class="products-notice">
+          <strong>Professional-grade products used exclusively during Beyond1 services.</strong>
+          These products are not sold separately. They are part of what makes every Beyond1 result exceptional — and they stay with our team.
+        </div>
+        <ul class="pkg-features" style="margin-top:1.5rem">
+          <li>pH-neutral shampoos for a scratch-free wash</li>
+          <li>Safe interior cleaners for all surfaces</li>
+          <li>Ceramic protection for long-lasting shine</li>
+          <li>Professional microfiber tools on every job</li>
+          <li>Eco-friendly formulas — safe for your family</li>
         </ul>
-        <div class="sub-savings"><div class="ss-lbl">Monthly savings</div><div class="ss-nums"><div><div class="ss-n">$20</div><div class="ss-s">at 2 washes</div></div><div><div class="ss-n">$60</div><div class="ss-s">at 4 washes</div></div></div></div>
-        <div class="sub-pay">
-          <a href="https://wa.me/16476468756?text=Hi%2C%20I%27d%20like%20to%20join%20Beyond1%20Basic%20Membership%20%2420%2Fmonth." class="pb et">📧 Pay by E-Transfer</a>
-          <button class="pb cc" onclick="alert('Card payments coming soon. WhatsApp us at (647) 646-8756.')">💳 Pay by Card</button>
+      </div>
+      <div class="products-grid reveal reveal-delay-1">
+        <div class="product-card">
+          <img src="products.jpg" alt="pH Neutral Shampoo" loading="lazy">
+          <div class="product-card-body">
+            <div class="product-card-name">pH Neutral Shampoo</div>
+            <div class="product-card-desc">Balanced formula for a scratch-free, streak-free exterior wash every time.</div>
+            <span class="product-card-tag">Used in Service Only</span>
+          </div>
+        </div>
+        <div class="product-card">
+          <img src="spray-product.jpg" alt="Interior Cleaner" loading="lazy">
+          <div class="product-card-body">
+            <div class="product-card-name">Interior Cleaner</div>
+            <div class="product-card-desc">Safe on all surfaces — leather, vinyl, plastic and fabric. Deep clean and refresh.</div>
+            <span class="product-card-tag">Used in Service Only</span>
+          </div>
+        </div>
+        <div class="product-card">
+          <img src="exterior-detailing.jpg" alt="Ceramic Protection" loading="lazy">
+          <div class="product-card-body">
+            <div class="product-card-name">Ceramic Protection</div>
+            <div class="product-card-desc">Long-lasting shine and UV protection. Applied in Deep Clean and Premium tiers.</div>
+            <span class="product-card-tag">Used in Service Only</span>
+          </div>
+        </div>
+        <div class="product-card">
+          <img src="interior-detailing.jpg" alt="Premium Microfiber Tools" loading="lazy">
+          <div class="product-card-body">
+            <div class="product-card-name">Premium Microfiber Tools</div>
+            <div class="product-card-desc">Soft, lint-free and effective on every surface — zero scratches, maximum results.</div>
+            <span class="product-card-tag">Used in Service Only</span>
+          </div>
         </div>
       </div>
-      <div class="sub glass-dark feat">
-        <div class="sub-name">Premium Member</div>
-        <div class="sub-fee">$35 <span>/month</span></div>
-        <div class="sub-wash">$55/wash — <del>$65 regular</del> · Unlimited</div>
-        <ul class="sub-list">
-          <li class="sub-li">Unlimited Regular washes at $55 each</li>
-          <li class="sub-li">15% off Standard & Premium packages</li>
-          <li class="sub-li">15% off all add-on services</li>
-          <li class="sub-li">First priority booking — guaranteed slots</li>
-          <li class="sub-li">Free mat wash with every Standard+ booking</li>
-          <li class="sub-li">Cancel any time</li>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ──────────────────────────────────────────────────── -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="reveal">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="stat-num">New</div>
+        <div class="stat-label">Now Serving Brampton</div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Mobile Service</div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="stat-num">5 &#9733;</div>
+        <div class="stat-label">Google Rating</div>
+      </div>
+      <div class="reveal reveal-delay-3">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="stat-num">Fully</div>
+        <div class="stat-label">Insured</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REVIEWS ────────────────────────────────────────────────────── -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <div class="section-label">Customer Reviews</div>
+      <h2 class="section-title">Trusted By Our Community</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="review-text">"Amazing service! My car looks brand new. Super convenient and professional. They came right to my driveway and the results were incredible."</p>
+        <div class="review-author">
+          <div class="review-avatar">J</div>
+          <div><div class="review-name">Jason M.</div><div class="review-meta">Brampton, ON &nbsp;·&nbsp; Google Review</div></div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-1">
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="review-text">"They came right to my office and did a full detail. Incredible attention to detail. My car smells fresh and looks showroom clean. Highly recommend!"</p>
+        <div class="review-author">
+          <div class="review-avatar">P</div>
+          <div><div class="review-name">Priya K.</div><div class="review-meta">Mississauga, ON &nbsp;·&nbsp; Google Review</div></div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-2">
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="review-text">"Best mobile detailing in Brampton. Highly recommend Beyond1 Auto &amp; Home Care! The team is professional, punctual and the quality is unmatched."</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div><div class="review-name">Arjun S.</div><div class="review-meta">Brampton, ON &nbsp;·&nbsp; Google Review</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICE AREAS ──────────────────────────────────────────────── -->
+<section class="areas-section" id="areas">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <div class="section-label">Service Areas</div>
+      <h2 class="section-title">We Come To You</h2>
+      <p class="section-sub" style="margin:0 auto">Currently serving Brampton and the surrounding GTA communities. More areas coming soon.</p>
+    </div>
+    <div class="areas-grid">
+      <div class="reveal">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--off)">Serving These Areas</h3>
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:.5rem">Don't see your city? Contact us — we may still be able to serve you.</p>
+        <div class="area-pills">
+          <a href="#contact" class="area-pill">Brampton</a>
+          <a href="#contact" class="area-pill">Mississauga</a>
+          <a href="#contact" class="area-pill">Caledon</a>
+          <a href="#contact" class="area-pill">Milton</a>
+          <a href="#contact" class="area-pill">Georgetown</a>
+          <a href="#contact" class="area-pill">Vaughan</a>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--off)">Travel Fees</h3>
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:.5rem">Distance-based pricing from Brampton.</p>
+        <table class="travel-table">
+          <thead><tr><th>Distance</th><th>Travel Fee</th></tr></thead>
+          <tbody>
+            <tr><td>0 – 20 km</td><td>Free</td></tr>
+            <tr><td>20 – 40 km</td><td>+$10</td></tr>
+            <tr><td>40 – 60 km</td><td>+$20</td></tr>
+            <tr><td>60 – 70 km</td><td>+$35</td></tr>
+          </tbody>
+        </table>
+        <div class="travel-waiver"><strong>Travel fee waived</strong> on all orders over $250.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA SECTION ────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="section-label" style="text-align:center">Ready to Book?</div>
+      <h2 class="cta-title">Your Driveway.<br><span class="amber">Our Expertise.</span></h2>
+      <p class="cta-sub">Premium mobile detailing that comes to you — home, office or condo. Book in under 2 minutes and we'll confirm your slot within hours.</p>
+      <div class="cta-btns">
+        <button class="btn btn-primary btn-lg" onclick="openModal()">Build Your Package &rarr;</button>
+        <a href="tel:6476468756" class="btn btn-outline btn-lg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (647) 646-8756
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT SECTION ────────────────────────────────────────────── -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Contact Us</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <div class="contact-card-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div class="contact-card-title">Phone</div>
+        <a href="tel:6476468756" class="contact-card-val">(647) 646-8756</a>
+        <div class="contact-card-sub">Call or text anytime</div>
+      </div>
+      <div class="contact-card reveal reveal-delay-1">
+        <div class="contact-card-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="contact-card-title">Email</div>
+        <a href="mailto:sarpreetsingh625@gmail.com" class="contact-card-val" style="font-size:.85rem">sarpreetsingh625@gmail.com</a>
+        <div class="contact-card-sub">We reply within 24 hours</div>
+      </div>
+      <div class="contact-card reveal reveal-delay-2">
+        <div class="contact-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="contact-card-title">Hours</div>
+        <div class="contact-card-val" style="font-size:.9rem">Mon–Fri: 8AM–8PM</div>
+        <div class="contact-card-sub">Sat: 9AM–6PM &nbsp;·&nbsp; Sun: 10AM–4PM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">BEYOND<span>1</span></div>
+        <div class="footer-brand-sub">Auto &amp; Home Care</div>
+        <p class="footer-brand-desc">Premium mobile auto and home care services delivered to your driveway in Brampton and surrounding areas.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
-        <div class="sub-savings"><div class="ss-lbl">Monthly savings</div><div class="ss-nums"><div><div class="ss-n">$65</div><div class="ss-s">at 4 washes</div></div><div><div class="ss-n">+15%</div><div class="ss-s">off all add-ons</div></div></div></div>
-        <div class="sub-pay">
-          <a href="https://wa.me/16476468756?text=Hi%2C%20I%27d%20like%20to%20join%20Beyond1%20Premium%20Membership%20%2435%2Fmonth." class="pb et">📧 Pay by E-Transfer</a>
-          <button class="pb cc" onclick="alert('Card payments coming soon. WhatsApp us at (647) 646-8756.')">💳 Pay by Card</button>
+      </div>
+      <div>
+        <div class="footer-col-title">Service Areas</div>
+        <ul class="footer-links">
+          <li><a href="#areas">Brampton</a></li>
+          <li><a href="#areas">Mississauga</a></li>
+          <li><a href="#areas">Caledon</a></li>
+          <li><a href="#areas">Milton</a></li>
+          <li><a href="#areas">Georgetown</a></li>
+          <li><a href="#areas">Vaughan</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#packages">Essential Refresh</a></li>
+          <li><a href="#packages">Deep Clean</a></li>
+          <li><a href="#packages">Premium Restoration</a></li>
+          <li><a href="#services">Home Care</a></li>
+          <li><a href="#services">Bin Cleaning</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact Us</div>
+        <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(647) 646-8756</div>
+        <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sarpreetsingh625@gmail.com</div>
+        <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Brampton, ON</div>
+        <div style="margin-top:.8rem;font-size:.72rem;color:var(--muted)">
+          <div>Mon–Fri: 8:00 AM – 8:00 PM</div>
+          <div>Saturday: 9:00 AM – 6:00 PM</div>
+          <div>Sunday: 10:00 AM – 4:00 PM</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- WHY -->
-<section class="why-sec photo-sec">
-  <div class="photo-bg"></div>
-  <div class="photo-overlay"></div>
-  <div class="wrap">
-    <span class="eyebrow">Why Beyond1</span>
-    <h2 class="heading" style="margin-bottom:2.5rem">More than you expected</h2>
-    <div class="why-grid">
-      <div class="why glass-dark"><div class="why-ic"></div><div class="why-t">We Come to You</div><div class="why-d">Driveway, condo parking, or workplace. You don't move — we do.</div></div>
-      <div class="why glass-dark"><div class="why-ic"></div><div class="why-t">Below Market Pricing</div><div class="why-d">GTA average shown with every price. Judge for yourself.</div></div>
-      <div class="why glass-dark"><div class="why-ic"></div><div class="why-t">Pro Equipment</div><div class="why-d">2,100 PSI washer, hot extractor, steamer, air compressor.</div></div>
-      <div class="why glass-dark"><div class="why-ic"></div><div class="why-t">Confirmed in 2–3 Hours</div><div class="why-d">3 time slot options. We confirm first available. Nothing charged until then.</div></div>
-      <div class="why glass-dark"><div class="why-ic"></div><div class="why-t">Flexible Scheduling</div><div class="why-d">Pick 3 alternative slots — we work around your schedule.</div></div>
-      <div class="why glass-dark"><div class="why-ic"></div><div class="why-t">One Visit, Many Services</div><div class="why-d">Car, bins, driveway, sofa, carpet — one team, one visit.</div></div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 Beyond1 Auto &amp; Home Care. All rights reserved.</div>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+      </div>
     </div>
-  </div>
-</section>
-
-<!-- FOOTER CTA -->
-<section class="fcta-sec photo-sec">
-  <div class="photo-bg"></div>
-  <div class="photo-overlay"></div>
-  <div class="wrap">
-    <span class="eyebrow" style="display:block;text-align:center;margin-bottom:.6rem">Brampton · Mississauga · GTA</span>
-    <h2 class="display" style="text-align:center">Ready for <span>Beyond1</span>?</h2>
-    <p style="font-size:.85rem;color:var(--muted);text-align:center;margin-top:.75rem">More than you expected — every time</p>
-    <div class="fcta-btns">
-      <a href="https://wa.me/16476468756" class="fcta-btn a">(647) 646-8756</a>
-      <a href="https://wa.me/14372266769" class="fcta-btn b">(437) 226-6769</a>
-      <a href="#booking" class="fcta-btn b">Fill Booking Form</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="f-logo">Beyond<span>1</span></div>
-  <div class="f-links">
-    <a href="#services">Services</a>
-    <a href="#addons">Add-Ons</a>
-    <a href="#booking">Book</a>
-    <a href="#membership">Membership</a>
-    <a href="https://wa.me/16476468756">(647) 646-8756</a>
-    <a href="https://wa.me/14372266769">(437) 226-6769</a>
-  </div>
-  <div class="f-right">
-    <a href="beyond1-admin.html" class="f-admin">Owner Portal</a>
-    <div class="f-note">© 2025 Beyond1 Mobile Detailing · Brampton, ON · GTA market prices for comparison only. *Distance charges confirmed before booking.</div>
   </div>
 </footer>
 
+<!-- ── BOOKING MODAL ──────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Build Your Package</div>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-progress">
+      <div class="modal-progress-bar"><div class="modal-progress-fill" id="progressFill" style="width:12.5%"></div></div>
+      <div class="modal-progress-text" id="progressText">Step 1 of 8</div>
+    </div>
+    <div class="modal-body" id="modalBody">
+
+      <!-- STEP 1: Service Type -->
+      <div class="step active" id="step1">
+        <div class="step-title">What service do you need?</div>
+        <div class="step-sub">Choose your primary service type to get started.</div>
+        <div class="opt-grid">
+          <div class="opt" onclick="selectOpt(this,'svcType','auto-full')" data-val="auto-full">
+            <div class="opt-icon">🚗</div>
+            <div class="opt-name">Auto Detailing</div>
+            <div class="opt-desc">Interior, exterior or full detail for your vehicle</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'svcType','home')" data-val="home">
+            <div class="opt-icon">🏠</div>
+            <div class="opt-name">Home Care</div>
+            <div class="opt-desc">Sofa, carpet, bin cleaning &amp; more</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'svcType','both')" data-val="both">
+            <div class="opt-icon">✨</div>
+            <div class="opt-name">Auto + Home</div>
+            <div class="opt-desc">Combine both in one visit and save</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Package -->
+      <div class="step" id="step2">
+        <div class="step-title">Choose your package</div>
+        <div class="step-sub">Select the level of detail that fits your needs.</div>
+        <div class="opt-grid" id="pkgOpts" style="grid-template-columns:1fr"></div>
+      </div>
+
+      <!-- STEP 3: Service Option (Interior/Exterior/Full) — only for Deep Clean & Premium -->
+      <div class="step" id="step3">
+        <div class="step-title">Choose your service option</div>
+        <div class="step-sub" id="step3Sub">Select what you'd like included in this service.</div>
+        <div class="opt-grid opt-grid-3" id="svcOptGrid">
+          <div class="opt" onclick="selectOpt(this,'svcOpt','full')" data-val="full">
+            <div class="opt-icon">✨</div>
+            <div class="opt-name">Full Service</div>
+            <div class="opt-desc">Interior + Exterior — best value</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'svcOpt','interior')" data-val="interior">
+            <div class="opt-icon">🪑</div>
+            <div class="opt-name">Interior Only</div>
+            <div class="opt-desc">Deep clean inside only</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'svcOpt','exterior')" data-val="exterior">
+            <div class="opt-icon">🚿</div>
+            <div class="opt-name">Exterior Only</div>
+            <div class="opt-desc">Wash, wax &amp; protect outside only</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: Vehicle Type -->
+      <div class="step" id="step4">
+        <div class="step-title">What type of vehicle?</div>
+        <div class="step-sub">Vehicle size affects pricing. Select the closest match.</div>
+        <div class="opt-grid" id="vehOpts"></div>
+      </div>
+
+      <!-- STEP 5: Vehicle Condition -->
+      <div class="step" id="step5">
+        <div class="step-title">What's the condition of your vehicle?</div>
+        <div class="step-sub">This helps us arrive prepared with the right products and time allocation.</div>
+        <div class="condition-grid">
+          <div class="condition-opt" onclick="selectOpt(this,'condition','light')">
+            <div class="condition-icon">😊</div>
+            <div class="condition-name">Light</div>
+            <div class="condition-desc">Regular use, no major stains</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','moderate')">
+            <div class="condition-icon">😐</div>
+            <div class="condition-name">Moderate</div>
+            <div class="condition-desc">Some stains, pet hair or odour</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','heavy')">
+            <div class="condition-icon">😬</div>
+            <div class="condition-name">Heavy</div>
+            <div class="condition-desc">Heavy soiling, long neglect</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: Address -->
+      <div class="step" id="step6">
+        <div class="step-title">Where should we come?</div>
+        <div class="step-sub">We'll calculate your travel fee automatically.</div>
+        <div class="form-group">
+          <label class="form-label">Street Address</label>
+          <input class="form-input" type="text" id="addr" placeholder="123 Main Street" oninput="bk.addr=this.value">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input class="form-input" type="text" id="city" placeholder="Brampton" oninput="bk.city=this.value">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Postal Code</label>
+            <input class="form-input" type="text" id="postal" placeholder="L6P 0A1" oninput="bk.postal=this.value;calcTravel()">
+          </div>
+        </div>
+        <div class="travel-box" id="travelFeeBox"></div>
+        <div class="form-group">
+          <label class="form-label">Preferred Date</label>
+          <input class="form-input" type="date" id="bookDate" oninput="bk.date=this.value">
+        </div>
+      </div>
+
+      <!-- STEP 7: Add-ons -->
+      <div class="step" id="step7">
+        <div class="step-title">Add-on services</div>
+        <div class="step-sub">Combine home care with your auto service and save — we're already at your door.</div>
+        <div class="addon-grid" id="addonGrid"></div>
+      </div>
+
+      <!-- STEP 8: Contact Details -->
+      <div class="step" id="step8">
+        <div class="step-title">Your contact details</div>
+        <div class="step-sub">We'll confirm your booking within 2–3 hours.</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" id="fname" placeholder="John" oninput="bk.fname=this.value">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" id="lname" placeholder="Smith" oninput="bk.lname=this.value">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" type="tel" id="phone" placeholder="(647) 000-0000" oninput="bk.phone=this.value">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="email" placeholder="you@email.com" oninput="bk.email=this.value">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Contact Method</label>
+          <select class="form-input form-select" id="contactPref" onchange="bk.contact=this.value">
+            <option value="phone">Phone Call</option>
+            <option value="text">Text Message</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="email">Email</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Additional Notes (optional)</label>
+          <textarea class="form-input" id="notes" rows="3" placeholder="Any specific requests, gate codes, parking instructions..." oninput="bk.notes=this.value" style="resize:vertical"></textarea>
+        </div>
+      </div>
+
+      <!-- STEP 9: Review & Submit -->
+      <div class="step" id="step9">
+        <div class="step-title">Review your booking</div>
+        <div class="step-sub">Everything look good? Submit to send your request via WhatsApp.</div>
+        <div class="summary-box" id="summaryBox"></div>
+        <p style="font-size:.75rem;color:var(--muted);line-height:1.5">By submitting, you agree to be contacted by Beyond1 Auto &amp; Home Care to confirm your booking. This is a booking request — not a confirmed appointment until we reply.</p>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn modal-btn-back" id="btnBack" onclick="goStep(-1)" style="display:none">&#8592; Back</button>
+      <button class="modal-btn modal-btn-next" id="btnNext" onclick="goStep(1)">Continue &rarr;</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// VEHICLE TABS
-const VP={
-  sedan:{b:[65,80,'~$25'],s:[130,170,'~$50'],p:[220,260,'~$90']},
-  suv5:{b:[75,95,'~$35'],s:[155,185,'~$55'],p:[255,300,'~$85']},
-  suv7:{b:[85,110,'~$45'],s:[175,210,'~$65'],p:[285,330,'~$90']}
+// ── NAV SCROLL ──────────────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// ── MOBILE MENU ─────────────────────────────────────────────────────
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ── REVEAL ON SCROLL ────────────────────────────────────────────────
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// ── COUNTER ANIMATION ───────────────────────────────────────────────
+
+// ── SERVICE TABS ────────────────────────────────────────────────────
+function showSvc(id,btn){
+  document.querySelectorAll('.svc-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.svc-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('svc-'+id).classList.add('on');
+  btn.classList.add('active');
+}
+
+// ── PACKAGE CARD TABS (on main page) ───────────────────────────────
+const DC_PRICES = {
+  full:     {sedan:'$139 – $199', compact:'$149 – $219', large:'$169 – $239', start:139},
+  interior: {sedan:'$109 – $159', compact:'$119 – $179', large:'$139 – $199', start:109},
+  exterior: {sedan:'$79 – $119',  compact:'$89 – $129',  large:'$99 – $139',  start:79},
 };
-let cv='sedan';
-function setV(v,el){
-  cv=v;
-  document.querySelectorAll('.vt').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  const d=VP[v];
-  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-  s('bp',d.b[0]);s('bp2',d.b[1]);s('bs',d.b[2]);
-  s('sp',d.s[0]);s('sp2',d.s[1]);s('ss',d.s[2]);
-  s('pp',d.p[0]);s('pp2',d.p[1]);s('ps',d.p[2]);
+const PR_PRICES = {
+  full:     {sedan:'$229 – $299', compact:'$249 – $319', large:'$279 – $349', start:229},
+  interior: {sedan:'$179 – $239', compact:'$199 – $259', large:'$219 – $279', start:179},
+  exterior: {sedan:'$129 – $169', compact:'$149 – $189', large:'$169 – $209', start:129},
+};
+const DC_FEATURES = {
+  full:     ['Everything in Essential Refresh','Steam cleaning throughout','Hot water extraction','Seat & carpet shampoo','Heavy stain treatment','Vent & cup holder detail','Exterior spray wax & buff','Brake dust removal'],
+  interior: ['Full interior vacuum','Steam cleaning throughout','Hot water extraction','Seat & carpet shampoo','Heavy stain treatment','Vent & cup holder detail','Headliner wipe-down','Air freshener applied'],
+  exterior: ['Foam cannon pre-soak','Hand wash & rinse','Wheel & tire cleaning','Tire shine','Clay bar decontamination','Spray wax & buff','Brake dust removal','6-week paint sealant'],
+};
+const PR_FEATURES = {
+  full:     ['Everything in Deep Clean','Leather conditioning & protection','Odour elimination treatment','Clay bar decontamination','Ceramic wax coating','Paint enhancement polish','UV protectant on all plastics','Premium fragrance applied'],
+  interior: ['Everything in Deep Clean Interior','Leather conditioning & protection','Odour elimination treatment','UV protectant on all plastics','Headliner deep clean','Premium fragrance applied','Stain guard application'],
+  exterior: ['Everything in Deep Clean Exterior','Clay bar decontamination','Paint enhancement polish','Ceramic wax coating','Deep wheel & brake clean','12-month paint sealant','Trim & plastic dressing'],
+};
+
+function selectPkgTab(pkg, type, btn){
+  const prices = pkg==='dc' ? DC_PRICES : PR_PRICES;
+  const features = pkg==='dc' ? DC_FEATURES : PR_FEATURES;
+  const p = prices[type];
+
+  // Update tabs
+  btn.closest('.pkg-service-tabs').querySelectorAll('.pkg-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Update price display
+  document.getElementById(pkg==='dc'?'dc-price':'pr-price').textContent = '$'+p.start;
+
+  // Update price rows
+  document.getElementById(pkg==='dc'?'dc-price-rows':'pr-price-rows').innerHTML =
+    `<div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">${p.sedan}</span></div>
+     <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">${p.compact}</span></div>
+     <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">${p.large}</span></div>`;
+
+  // Update features
+  const featureEl = document.getElementById(pkg==='dc'?'dc-features':'pr-features');
+  featureEl.innerHTML = features[type].map(f=>`<li>${f}</li>`).join('');
+
+  // Update CTA
+  const ctaEl = document.getElementById(pkg==='dc'?'dc-cta':'pr-cta');
+  const pkgName = pkg==='dc' ? 'Deep Clean' : 'Premium Restoration';
+  ctaEl.onclick = ()=>openModalWith(pkgName, type);
 }
 
-// LIVE ESTIMATE
-function rc(){
-  const pv=document.getElementById('s1_pkg').value;
-  const cars=parseInt(document.getElementById('s1_cars').value)||1;
-  const[pstr,plabel]=pv.split('|');
-  const base=parseInt(pstr)||0;const hasCar=base>0;
-  let carTotal=base;
-  if(cars===2)carTotal=base*2-15;
-  if(cars>=3)carTotal=base*cars-15*(cars-1);
-  const lines=[];let addonSum=0,savedSum=0;
-  if(base>0)lines.push([(cars>1?plabel+' ×'+cars:plabel),'$'+carTotal]);
-  document.querySelectorAll('.ap-grid input:checked').forEach(i=>{
-    const price=hasCar?parseInt(i.dataset.p):parseInt(i.dataset.s);
-    const saved=hasCar?parseInt(i.dataset.s)-parseInt(i.dataset.p):0;
-    addonSum+=price;savedSum+=saved;
-    lines.push([i.dataset.l+(saved>0?` (–$${saved})`:''),'$'+price]);
-  });
-  const total=carTotal+addonSum;
-  if(!lines.length)lines.push(['Select a package above','—']);
-  lines.push(['Estimated Total',total>0?`from $${total}`:'—']);
-  document.getElementById('le-rows').innerHTML=lines.map((l,i)=>`<div class="le-row${i===lines.length-1?' tot':''}"><span>${l[0]}</span><span>${l[1]}</span></div>`).join('');
-  const s=document.getElementById('le-save');
-  s.textContent=savedSum>0?`↓ Saving $${savedSum} by combining services`:hasCar?'Add services to see combined savings':'';
+// ── BOOKING STATE ───────────────────────────────────────────────────
+let bk = {
+  svcType:'', pkg:'', svcOpt:'full', vehType:'', condition:'',
+  addr:'', city:'', postal:'', date:'', addons:[], travelFee:0,
+  fname:'', lname:'', phone:'', email:'', contact:'text', notes:''
+};
+let currentStep = 1;
+const TOTAL_STEPS = 9;
+
+// ── PRICING TABLES ──────────────────────────────────────────────────
+// Essential Refresh — Full Detail only, no service option split
+const PRICE_ER = {
+  'Sedan':       {full:69},
+  'Compact SUV': {full:79},
+  'Large SUV':   {full:89},
+  'Truck':       {full:79},
+  'Van':         {full:89},
+};
+// Deep Clean — three service options
+const PRICE_DC = {
+  'Sedan':       {full:139, interior:109, exterior:79},
+  'Compact SUV': {full:149, interior:119, exterior:89},
+  'Large SUV':   {full:169, interior:139, exterior:99},
+  'Truck':       {full:149, interior:129, exterior:89},
+  'Van':         {full:169, interior:149, exterior:99},
+};
+// Premium Restoration — three service options
+const PRICE_PR = {
+  'Sedan':       {full:229, interior:179, exterior:129},
+  'Compact SUV': {full:249, interior:199, exterior:149},
+  'Large SUV':   {full:279, interior:219, exterior:169},
+  'Truck':       {full:249, interior:209, exterior:149},
+  'Van':         {full:279, interior:229, exterior:169},
+};
+
+function getPrice(){
+  const veh = bk.vehType || 'Sedan';
+  const opt = bk.svcOpt || 'full';
+  if(bk.pkg==='Essential Refresh') return (PRICE_ER[veh]||PRICE_ER['Sedan']).full;
+  if(bk.pkg==='Deep Clean') return (PRICE_DC[veh]||PRICE_DC['Sedan'])[opt]||139;
+  if(bk.pkg==='Premium Restoration') return (PRICE_PR[veh]||PRICE_PR['Sedan'])[opt]||229;
+  return 0;
 }
-rc();
 
-// SELECTIONS
-let selCondVal='',selSeatVal='';
-function selCond(el,v){selCondVal=v;document.querySelectorAll('.cond-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');}
-function selSeat(el,v){selSeatVal=v;document.querySelectorAll('.seat-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');}
+const ADDONS = [
+  {name:'Sofa Extraction',      standalone:95, withCar:75},
+  {name:'Carpet Extraction',    standalone:80, withCar:60},
+  {name:'Bin Cleaning ×1',      standalone:25, withCar:20},
+  {name:'Bin Cleaning ×2',      standalone:45, withCar:35},
+  {name:'Mattress Sanitize',    standalone:70, withCar:50},
+  {name:'Driveway Wash',        standalone:120, withCar:90},
+  {name:'Floor Mat Wash',       standalone:20, withCar:15},
+  {name:'Engine Bay Clean',     standalone:80, withCar:65},
+];
 
-// STEPS
-function goStep(n){
-  for(let i=1;i<=4;i++){
-    document.getElementById('step'+i).classList.toggle('active',i===n);
-    const t=document.getElementById('tab'+i);
-    t.classList.remove('active','done');
-    if(i===n)t.classList.add('active');
-    else if(i<n)t.classList.add('done');
+const POSTAL_ZONE = {
+  'L6P':0,'L6R':0,'L6S':0,'L6T':0,'L6V':0,'L6W':0,'L6X':0,'L6Y':0,'L6Z':0,'L7A':0,
+  'L4H':1,'L4J':1,'L4K':1,'L4L':1,'L4T':1,'L4W':1,'L4X':1,'L4Y':1,'L4Z':1,
+  'L5A':1,'L5B':1,'L5C':1,'L5E':1,'L5G':1,'L5H':1,'L5J':1,'L5K':1,'L5L':1,
+  'L5M':1,'L5N':1,'L5R':1,'L5S':1,'L5T':1,'L5V':1,'L5W':1,
+  'L4B':1,'L4C':1,'L4E':1,
+  'L7C':2,'L7E':2,'L7G':2,'L7K':2,'L9T':2,'L7J':2,
+  'L0N':3,'N0B':3,'N1H':3,
+};
+const TRAVEL_FEES = [0,10,20,35];
+const ZONE_LABELS = ['0–20 km (free)','20–40 km (+$10)','40–60 km (+$20)','60–70 km (+$35)'];
+
+function calcTravel(){
+  const raw = (document.getElementById('postal').value||'').toUpperCase().replace(/\s/g,'');
+  const prefix = raw.substring(0,3);
+  const box = document.getElementById('travelFeeBox');
+  if(prefix.length<3){box.style.display='none';bk.travelFee=0;return;}
+  const zone = POSTAL_ZONE[prefix];
+  if(zone===undefined){
+    box.style.display='block';
+    box.innerHTML='We may serve your area — we will confirm when reviewing your booking.';
+    bk.travelFee=35;return;
   }
-  document.getElementById('booking').scrollIntoView({behavior:'smooth',block:'start'});
+  bk.travelFee = TRAVEL_FEES[zone];
+  box.style.display='block';
+  const feeText = bk.travelFee===0
+    ? '<strong style="color:#34C97A">✓ No travel fee for your area</strong>'
+    : `<strong style="color:#E8891A">+$${bk.travelFee} travel fee</strong>`;
+  const waiver = bk.travelFee>0 && calcTotal()>=250
+    ? ' <strong style="color:#34C97A">Travel fee waived — order over $250!</strong>'
+    : '';
+  box.innerHTML = `${feeText} — ${ZONE_LABELS[zone]}.${waiver}`;
 }
 
-function goBook(svc){
-  const sel=document.getElementById('s1_pkg');
-  [...sel.options].forEach(o=>{if(o.text.toLowerCase().includes(svc.toLowerCase().split(' ')[0].toLowerCase()))sel.value=o.value;});
-  rc();
-  document.getElementById('booking').scrollIntoView({behavior:'smooth'});
+function calcTotal(){
+  let total = getPrice();
+  const isAuto = bk.svcType!=='home';
+  bk.addons.forEach(a=>{
+    const addon = ADDONS.find(x=>x.name===a);
+    if(addon) total += isAuto ? addon.withCar : addon.standalone;
+  });
+  return total;
 }
 
-// SUBMIT
+// ── MODAL OPEN/CLOSE ────────────────────────────────────────────────
+function openModal(){
+  bk = {svcType:'',pkg:'',svcOpt:'full',vehType:'',condition:'',addr:'',city:'',postal:'',date:'',addons:[],travelFee:0,fname:'',lname:'',phone:'',email:'',contact:'text',notes:''};
+  currentStep=1;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  renderStep();
+}
+function openModalWith(pkg, svcOpt){
+  openModal();
+  bk.pkg = pkg;
+  bk.svcOpt = svcOpt || 'full';
+  bk.svcType = 'auto-full';
+  currentStep = 2;
+  renderStep();
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('modalOverlay')) closeModal();
+}
+
+// ── STEP NAVIGATION ─────────────────────────────────────────────────
+function goStep(dir){
+  const next = currentStep + dir;
+  if(next<1||next>TOTAL_STEPS) return;
+
+  // Validation
+  if(dir>0){
+    if(currentStep===1 && !bk.svcType){alert('Please select a service type.');return;}
+    if(currentStep===2 && !bk.pkg){alert('Please select a package.');return;}
+    if(currentStep===3 && !bk.svcOpt){alert('Please select a service option.');return;}
+    if(currentStep===4 && !bk.vehType && bk.svcType!=='home'){alert('Please select your vehicle type.');return;}
+    if(currentStep===5 && !bk.condition && bk.svcType!=='home'){alert('Please select vehicle condition.');return;}
+    if(currentStep===8){
+      if(!bk.fname||!bk.lname){alert('Please enter your name.');return;}
+      if(!bk.phone){alert('Please enter your phone number.');return;}
+    }
+  }
+
+  // Skip step 3 (service option) for Essential Refresh
+  if(dir>0 && currentStep===2 && bk.pkg==='Essential Refresh'){
+    bk.svcOpt='full';
+    currentStep = 4; // skip step 3
+    renderStep(); return;
+  }
+  // Going back from step 4, skip step 3 if Essential Refresh
+  if(dir<0 && currentStep===4 && bk.pkg==='Essential Refresh'){
+    currentStep = 2; renderStep(); return;
+  }
+  // Skip steps 3,4,5 for home-only
+  if(dir>0 && currentStep===2 && bk.svcType==='home'){
+    currentStep=6; renderStep(); return;
+  }
+  if(dir<0 && currentStep===6 && bk.svcType==='home'){
+    currentStep=2; renderStep(); return;
+  }
+
+  currentStep = next;
+  renderStep();
+}
+
+function renderStep(){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+currentStep).classList.add('active');
+
+  // Progress
+  const pct = Math.round((currentStep/TOTAL_STEPS)*100);
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressText').textContent = `Step ${currentStep} of ${TOTAL_STEPS}`;
+
+  // Back button
+  document.getElementById('btnBack').style.display = currentStep>1 ? 'block' : 'none';
+
+  // Next button label
+  const btnNext = document.getElementById('btnNext');
+  if(currentStep===TOTAL_STEPS){
+    btnNext.textContent = '📲 Send Booking via WhatsApp';
+    btnNext.onclick = submitBooking;
+  } else {
+    btnNext.textContent = 'Continue →';
+    btnNext.onclick = ()=>goStep(1);
+  }
+
+  // Render dynamic steps
+  if(currentStep===2) renderPackages();
+  if(currentStep===4) renderVehicles();
+  if(currentStep===7) renderAddons();
+  if(currentStep===9) renderSummary();
+}
+
+function renderPackages(){
+  const el = document.getElementById('pkgOpts');
+  const packages = [
+    {name:'Essential Refresh', tier:'Tier 1', icon:'🧹', desc:'Complete maintenance detail — interior & exterior included. Perfect for regular upkeep.', price:'From $69', note:'Full Service Only'},
+    {name:'Deep Clean', tier:'Tier 2', icon:'🫧', desc:'Thorough deep clean with steam, extraction and shampoo. Choose interior, exterior or full.', price:'From $109', note:'Interior / Exterior / Full'},
+    {name:'Premium Restoration', tier:'Tier 3', icon:'✨', desc:'The full premium experience — paint protection, leather care, odour elimination and more.', price:'From $179', note:'Interior / Exterior / Full'},
+  ];
+  el.innerHTML = packages.map(p=>`
+    <div class="opt${bk.pkg===p.name?' selected':''}" onclick="selectOpt(this,'pkg','${p.name}')" data-val="${p.name}" style="display:flex;gap:.75rem;align-items:flex-start">
+      <div style="font-size:1.6rem;flex-shrink:0">${p.icon}</div>
+      <div style="flex:1">
+        <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:.2rem">${p.tier}</div>
+        <div class="opt-name">${p.name}</div>
+        <div class="opt-desc">${p.desc}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.5rem">
+          <span class="opt-price">${p.price}</span>
+          <span style="font-size:.68rem;color:var(--muted)">${p.note}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderVehicles(){
+  const el = document.getElementById('vehOpts');
+  const vehs = [
+    {name:'Sedan',       icon:'🚗', desc:'Sedan, coupe, hatchback'},
+    {name:'Compact SUV', icon:'🚙', desc:'Compact crossover, small SUV'},
+    {name:'Large SUV',   icon:'🛻', desc:'Full-size SUV, 3-row, minivan'},
+    {name:'Truck',       icon:'🚚', desc:'Pickup truck, work truck'},
+  ];
+  el.innerHTML = vehs.map(v=>`
+    <div class="opt${bk.vehType===v.name?' selected':''}" onclick="selectOpt(this,'vehType','${v.name}')" data-val="${v.name}">
+      <div class="opt-icon">${v.icon}</div>
+      <div class="opt-name">${v.name}</div>
+      <div class="opt-desc">${v.desc}</div>
+      <div class="opt-price">From $${getVehPrice(v.name)}</div>
+    </div>`).join('');
+}
+
+function getVehPrice(veh){
+  const opt = bk.svcOpt||'full';
+  if(bk.pkg==='Essential Refresh') return (PRICE_ER[veh]||PRICE_ER['Sedan']).full;
+  if(bk.pkg==='Deep Clean') return (PRICE_DC[veh]||PRICE_DC['Sedan'])[opt]||139;
+  if(bk.pkg==='Premium Restoration') return (PRICE_PR[veh]||PRICE_PR['Sedan'])[opt]||229;
+  return 0;
+}
+
+function renderAddons(){
+  const isAuto = bk.svcType!=='home';
+  const el = document.getElementById('addonGrid');
+  el.innerHTML = ADDONS.map(a=>`
+    <div class="addon-item${bk.addons.includes(a.name)?' selected':''}" onclick="toggleAddon('${a.name}',this)">
+      <div class="addon-name">${a.name}</div>
+      <div class="addon-price">$${isAuto?a.withCar:a.standalone}</div>
+      ${isAuto && a.standalone!==a.withCar ? `<div class="addon-save">Save $${a.standalone-a.withCar} vs standalone</div>` : ''}
+    </div>`).join('');
+}
+
+function toggleAddon(name, el){
+  const idx = bk.addons.indexOf(name);
+  if(idx>-1){bk.addons.splice(idx,1);el.classList.remove('selected');}
+  else{bk.addons.push(name);el.classList.add('selected');}
+}
+
+function renderSummary(){
+  const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'';
+  const svcTypeLabel = bk.svcType==='home'?'Home Care Only':bk.svcType==='both'?'Auto + Home':'Auto Detailing';
+  const pkgPrice = getPrice();
+  const isAuto = bk.svcType!=='home';
+  let addonRows = '';
+  let addonTotal = 0;
+  bk.addons.forEach(a=>{
+    const addon = ADDONS.find(x=>x.name===a);
+    if(addon){
+      const p = isAuto?addon.withCar:addon.standalone;
+      addonTotal+=p;
+      addonRows+=`<div class="summary-row"><span>${a}</span><span>$${p}</span></div>`;
+    }
+  });
+  const tFee = bk.travelFee||0;
+  const waived = tFee>0 && (pkgPrice+addonTotal)>=250;
+  const total = pkgPrice + addonTotal + (waived?0:tFee);
+
+  document.getElementById('summaryBox').innerHTML = `
+    <div class="summary-row"><span>Service Type</span><span>${svcTypeLabel}</span></div>
+    ${bk.pkg?`<div class="summary-row"><span>${bk.pkg}${svcOptLabel?' — '+svcOptLabel:''}</span><span>$${pkgPrice}</span></div>`:''}
+    ${bk.vehType?`<div class="summary-row"><span>Vehicle</span><span>${bk.vehType}</span></div>`:''}
+    ${bk.condition?`<div class="summary-row"><span>Condition</span><span>${bk.condition}</span></div>`:''}
+    ${addonRows}
+    <div class="summary-row"><span>Travel Fee</span><span>${waived?'<span style="color:#34C97A">Waived</span>':tFee===0?'<span style="color:#34C97A">Free</span>':'$'+tFee}</span></div>
+    ${bk.addr?`<div class="summary-row"><span>Address</span><span>${bk.addr}, ${bk.city}</span></div>`:''}
+    ${bk.date?`<div class="summary-row"><span>Date</span><span>${bk.date}</span></div>`:''}
+    <div class="summary-row total"><span>Estimated Total</span><span>from $${total}</span></div>`;
+}
+
+function selectOpt(el, key, val){
+  const grid = el.closest('.opt-grid,.condition-grid,.opt-grid-3');
+  if(grid) grid.querySelectorAll('.opt,.condition-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  bk[key] = val;
+  if(key==='vehType') renderVehicles();
+}
+
 function submitBooking(){
-  const pkg=document.getElementById('s1_pkg').value.split('|')[1]||'Not selected';
-  const cars=document.getElementById('s1_cars').value;
-  const ao=[];document.querySelectorAll('.ap-grid input:checked').forEach(i=>ao.push(i.dataset.l));
-  const d1=document.getElementById('d1').value,t1=document.getElementById('t1').value;
-  const d2=document.getElementById('d2').value,t2=document.getElementById('t2').value;
-  const d3=document.getElementById('d3').value,t3=document.getElementById('t3').value;
-  const pay=document.getElementById('s2_pay').value;
-  const frag=document.getElementById('s2_frag').value;
-  const name=document.getElementById('s3_name').value.trim()||'Not provided';
-  const phone=document.getElementById('s3_phone').value.trim()||'Not provided';
-  const addr=document.getElementById('s3_addr').value.trim()||'Not provided';
-  const notes=document.getElementById('s3_notes').value.trim()||'None';
-  const brand=document.getElementById('s4_brand').value;
-  const model=document.getElementById('s4_model').value;
-  const extcol=document.getElementById('s4_extcol').value;
-  const intcol=document.getElementById('s4_intcol').value;
-  const mat=document.getElementById('s4_mat').value;
-  const slot1=d1&&t1?`${d1} at ${t1}`:'Not provided';
-  const slot2=d2&&t2?`${d2} at ${t2}`:'Not provided';
-  const slot3=d3&&t3?`${d3} at ${t3}`:'Not provided';
-  const msg=`*Beyond1 — Booking Request*\n_More Than You Expected_\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n📍 Address: ${addr}\n\n🚗 Package: ${pkg}\n🔢 Cars: ${cars}\n🛣️ Condition: ${selCondVal||'Not selected'}\n➕ Add-ons: ${ao.length?ao.join(', '):'None'}\n\n📅 Slot 1: ${slot1}\n📅 Slot 2: ${slot2}\n📅 Slot 3: ${slot3}\n\n💳 Payment: ${pay}\n🌸 Fragrance: ${frag||'No preference'}\n🚘 Car: ${brand} ${model}\n🎨 Ext: ${extcol||'—'} | Int: ${intcol||'—'}\n🪑 Seats: ${selSeatVal||'—'} | Mats: ${mat||'—'}\n\n📝 Notes: ${notes}\n\n_Sent from beyond1.ca_`;
-  const bk=JSON.parse(localStorage.getItem('b1_bookings')||'[]');
-  bk.push({id:Date.now(),name,phone,addr,pkg,cars,condition:selCondVal,addons:ao.join(', '),slot1,slot2,slot3,pay,frag,brand,model,extcol,intcol,seat:selSeatVal,mat,notes,status:'pending',created:new Date().toISOString()});
-  localStorage.setItem('b1_bookings',JSON.stringify(bk));
+  if(!bk.fname||!bk.lname||!bk.phone){alert('Please complete your contact details first.');return;}
+  const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'';
+  const svcTypeLabel = bk.svcType==='home'?'Home Care Only':bk.svcType==='both'?'Auto + Home':'Auto Detailing';
+  const pkgPrice = getPrice();
+  const isAuto = bk.svcType!=='home';
+  let addonTotal=0;
+  bk.addons.forEach(a=>{const ad=ADDONS.find(x=>x.name===a);if(ad)addonTotal+=isAuto?ad.withCar:ad.standalone;});
+  const tFee = bk.travelFee||0;
+  const waived = tFee>0&&(pkgPrice+addonTotal)>=250;
+  const total = pkgPrice+addonTotal+(waived?0:tFee);
+
+  const msg = `*Beyond1 — New Booking Request* 🚗✨\n\n`+
+    `👤 ${bk.fname} ${bk.lname}\n`+
+    `📱 ${bk.phone}${bk.email?' · '+bk.email:''}\n`+
+    `📍 ${bk.addr||'TBD'}, ${bk.city||''}, ${bk.postal||''}\n`+
+    `📅 ${bk.date||'Date TBD'}\n`+
+    `📞 Preferred contact: ${bk.contact}\n\n`+
+    `🔧 Service: ${svcTypeLabel}\n`+
+    `📦 Package: ${bk.pkg||'Home Care Only'}${svcOptLabel?' — '+svcOptLabel:''}\n`+
+    `🚗 Vehicle: ${bk.vehType||'N/A'}\n`+
+    `🛣️ Condition: ${bk.condition||'Not specified'}\n`+
+    `➕ Add-ons: ${bk.addons.length?bk.addons.join(', '):'None'}\n`+
+    `🚘 Travel fee: ${waived?'Waived (order over $250)':tFee===0?'Free':'$'+tFee}\n`+
+    `💰 Estimated total: from $${total}\n\n`+
+    `📝 Notes: ${bk.notes||'None'}\n\n`+
+    `_Sent from beyond1detailing.ca_`;
+
+  // ── Save booking to admin portal shared data store ──────────────────
+  const newBooking = {
+    id: 'B' + Date.now().toString(36).toUpperCase(),
+    fname: bk.fname,
+    lname: bk.lname,
+    phone: bk.phone,
+    email: bk.email||'',
+    pkg: bk.pkg||'Home Care',
+    svc: bk.svcOpt||'full',
+    vehicle: bk.vehType||'N/A',
+    condition: bk.condition||'',
+    date: bk.date||'',
+    time: bk.time||'',
+    addr: (bk.addr||'')+(bk.city?', '+bk.city:'')+(bk.postal?', '+bk.postal:''),
+    total: total,
+    status: 'pending',
+    notes: bk.notes||'',
+    addons: bk.addons||[],
+    travelFee: waived?0:tFee,
+    svcType: svcTypeLabel,
+    svcOpt: svcOptLabel,
+    created: new Date().toISOString(),
+    source: 'website'
+  };
+  try {
+    const existing = JSON.parse(localStorage.getItem('b1_bookings')||'[]');
+    existing.unshift(newBooking);
+    localStorage.setItem('b1_bookings', JSON.stringify(existing));
+    // Also bump pending badge for admin
+    localStorage.setItem('b1_lastBooking', JSON.stringify(newBooking));
+  } catch(e){}
   window.open('https://wa.me/16476468756?text='+encodeURIComponent(msg),'_blank');
+  closeModal();
+  setTimeout(()=>alert('Thank you! Your booking request has been sent via WhatsApp. We will confirm within 2–3 hours. 🎉'),400);
 }
 
-// DATE MIN
-const today=new Date().toISOString().split('T')[0];
-['d1','d2','d3'].forEach(id=>{const e=document.getElementById(id);if(e)e.min=today;});
+// ── KEYBOARD CLOSE ──────────────────────────────────────────────────
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 </script>
 </body>
 </html>

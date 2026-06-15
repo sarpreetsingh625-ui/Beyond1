@@ -2,525 +2,1399 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beyond1 — Owner Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beyond1 Admin Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#07080a;--bg2:#0d0f13;--bg3:#13161d;--card:#171b24;--blue:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--white:#f1f5f9;--muted:#64748b;--bdr:rgba(255,255,255,.08);--r:12px}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--white);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer}
-input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a;--surface:#111;--raised:#1a1a1a;--card:#161616;
+  --border:#252525;--border2:#2e2e2e;
+  --amber:#E8891A;--amber-light:#F5A030;--amber-dim:rgba(232,137,26,.13);
+  --white:#fff;--off:#c8c8c8;--muted:#666;
+  --green:#34C97A;--green-dim:rgba(52,201,122,.12);
+  --red:#f87171;--red-dim:rgba(248,113,113,.12);
+  --blue:#60a5fa;--blue-dim:rgba(96,165,250,.12);
+  --yellow:#fbbf24;--yellow-dim:rgba(251,191,36,.12);
+  --sidebar:240px;--font:'Inter',sans-serif;--radius:12px;--radius-sm:8px;
+}
+html,body{height:100%;font-family:var(--font);background:var(--black);color:var(--white);font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font);border:none;outline:none}
+input,select,textarea{font-family:var(--font)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* LOGIN */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.1),transparent 60%)}
-.login-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:2.5rem;width:100%;max-width:400px;text-align:center}
-.login-logo{font-size:2rem;font-weight:900;letter-spacing:-.03em;margin-bottom:.3rem}
-.login-logo span{color:var(--blue)}
-.login-sub{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem}
-.login-label{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;text-align:left;margin-bottom:.35rem}
-.login-input{width:100%;background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:.85rem 1rem;color:var(--white);font-size:1.2rem;letter-spacing:.3em;text-align:center;outline:none;margin-bottom:1rem;transition:border-color .2s}
-.login-input:focus{border-color:rgba(59,130,246,.5)}
-.login-btn{width:100%;padding:1rem;background:var(--blue);color:#fff;border:none;border-radius:9px;font-size:.9rem;font-weight:700;transition:all .2s}
-.login-btn:hover{background:#60a5fa}
-.login-err{font-size:.78rem;color:var(--red);margin-top:.5rem;display:none}
-.login-note{font-size:.68rem;color:var(--muted);margin-top:1rem;line-height:1.6}
+/* ── LOGIN ─────────────────────────────────────────────────────────── */
+#loginScreen{position:fixed;inset:0;background:var(--black);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;width:100%;max-width:380px;text-align:center}
+.login-logo{font-size:1.4rem;font-weight:900;margin-bottom:.2rem}
+.login-logo span{color:var(--amber)}
+.login-sub{font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem}
+.login-field{margin-bottom:1rem;text-align:left}
+.login-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem}
+.login-input{width:100%;background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.7rem 1rem;font-size:.88rem;color:var(--white);transition:border-color .2s}
+.login-input:focus{outline:none;border-color:var(--amber)}
+.login-btn{width:100%;background:var(--amber);color:#000;font-weight:800;font-size:.9rem;padding:.85rem;border-radius:var(--radius-sm);margin-top:.5rem;transition:background .2s}
+.login-btn:hover{background:var(--amber-light)}
+.login-err{color:var(--red);font-size:.78rem;margin-top:.6rem;display:none}
 
-/* DASHBOARD */
-.dash{display:none;min-height:100vh}
-.dash-nav{background:var(--card);border-bottom:1px solid var(--bdr);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:sticky;top:0;z-index:100}
-.dash-logo{font-size:1.4rem;font-weight:900;letter-spacing:-.02em}
-.dash-logo span{color:var(--blue)}
-.dash-badge{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.25);color:var(--blue);padding:.25rem .65rem;border-radius:20px;margin-left:.5rem}
-.dash-nav-right{display:flex;gap:.6rem;flex-wrap:wrap}
-.nav-tab{font-size:.75rem;font-weight:700;padding:.5rem 1.1rem;border-radius:8px;border:none;background:var(--bg3);color:var(--muted);transition:all .2s}
-.nav-tab.active,.nav-tab:hover{background:var(--blue);color:#fff}
-.logout-btn{font-size:.75rem;font-weight:700;padding:.5rem 1.1rem;border-radius:8px;border:1px solid var(--bdr);background:transparent;color:var(--muted);transition:all .2s}
-.logout-btn:hover{color:var(--red);border-color:rgba(239,68,68,.3)}
-.dash-body{padding:2rem;max-width:1200px;margin:0 auto}
+/* ── LAYOUT ─────────────────────────────────────────────────────────── */
+#app{display:none;height:100vh;overflow:hidden}
+.layout{display:flex;height:100%}
 
-/* PANELS */
+/* ── SIDEBAR ────────────────────────────────────────────────────────── */
+.sidebar{width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar-logo{padding:1.25rem 1.25rem 1rem;border-bottom:1px solid var(--border)}
+.sidebar-logo-name{font-size:1rem;font-weight:900}
+.sidebar-logo-name span{color:var(--amber)}
+.sidebar-logo-sub{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sidebar-nav{flex:1;padding:.75rem 0}
+.nav-section{padding:.5rem 1rem .25rem;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.nav-item{display:flex;align-items:center;gap:.65rem;padding:.65rem 1.25rem;font-size:.82rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;border-left:2px solid transparent;margin:.05rem 0}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.03)}
+.nav-item.active{color:var(--amber);background:var(--amber-dim);border-left-color:var(--amber);font-weight:600}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--amber);color:#000;font-size:.6rem;font-weight:800;padding:.15rem .45rem;border-radius:50px;min-width:18px;text-align:center}
+.sidebar-footer{padding:1rem 1.25rem;border-top:1px solid var(--border)}
+.sidebar-user{display:flex;align-items:center;gap:.65rem}
+.sidebar-avatar{width:32px;height:32px;background:var(--amber-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:var(--amber);flex-shrink:0}
+.sidebar-user-name{font-size:.82rem;font-weight:600}
+.sidebar-user-role{font-size:.68rem;color:var(--muted)}
+.sidebar-logout{margin-left:auto;background:none;padding:.3rem;color:var(--muted);transition:color .2s;border-radius:6px}
+.sidebar-logout:hover{color:var(--red)}
+.sidebar-logout svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ── MAIN ───────────────────────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{padding:.85rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface);flex-shrink:0}
+.topbar-title{font-size:1.05rem;font-weight:800}
+.topbar-actions{display:flex;align-items:center;gap:.65rem}
+.content{flex:1;overflow-y:auto;padding:1.5rem}
+
+/* ── PANELS ─────────────────────────────────────────────────────────── */
 .panel{display:none}
 .panel.active{display:block}
 
-/* STATS ROW */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
-.stat-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem 1.5rem}
-.stat-num{font-size:2rem;font-weight:900;letter-spacing:-.03em;color:var(--blue);line-height:1}
-.stat-lbl{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+/* ── BUTTONS ────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:var(--radius-sm);font-size:.8rem;font-weight:700;transition:all .2s;white-space:nowrap}
+.btn-primary{background:var(--amber);color:#000}.btn-primary:hover{background:var(--amber-light)}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--off)}.btn-ghost:hover{border-color:var(--amber);color:var(--white)}
+.btn-danger{background:var(--red-dim);border:1px solid var(--red);color:var(--red)}.btn-danger:hover{background:rgba(248,113,113,.25)}
+.btn-success{background:var(--green-dim);border:1px solid var(--green);color:var(--green)}.btn-success:hover{background:rgba(52,201,122,.25)}
+.btn-sm{padding:.35rem .75rem;font-size:.72rem}
+.btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
 
-/* BOOKINGS TABLE */
-.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
-.section-title{font-size:1.1rem;font-weight:800;letter-spacing:-.02em}
-.filter-row{display:flex;gap:.5rem;flex-wrap:wrap}
-.filter-btn{font-size:.7rem;font-weight:700;padding:.38rem .85rem;border-radius:6px;border:1px solid var(--bdr);background:var(--bg3);color:var(--muted);transition:all .2s}
-.filter-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
-.bk-list{display:flex;flex-direction:column;gap:.75rem}
-.bk-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
-.bk-card.pending{border-left:3px solid var(--amber)}
-.bk-card.confirmed{border-left:3px solid var(--green)}
-.bk-card.declined{border-left:3px solid var(--red);opacity:.6}
-.bk-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;gap:.75rem;flex-wrap:wrap;cursor:pointer}
-.bk-head:hover{background:rgba(255,255,255,.02)}
-.bk-name{font-size:.9rem;font-weight:700}
-.bk-meta{font-size:.72rem;color:var(--muted)}
-.bk-status{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .6rem;border-radius:4px}
-.bk-status.pending{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
-.bk-status.confirmed{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25)}
-.bk-status.declined{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}
-.bk-detail{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--bdr)}
-.bk-detail.open{display:block}
-.bk-detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem;margin:.9rem 0}
-.bk-field{background:var(--bg3);border-radius:8px;padding:.65rem .85rem}
-.bk-field-label{font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
-.bk-field-val{font-size:.8rem;color:var(--white)}
-.bk-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
-.act-btn{font-size:.75rem;font-weight:700;padding:.55rem 1.25rem;border-radius:8px;border:none;transition:all .2s}
-.act-btn.confirm{background:var(--green);color:#fff}
-.act-btn.confirm:hover{background:#16a34a}
-.act-btn.decline{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--red)}
-.act-btn.decline:hover{background:rgba(239,68,68,.25)}
-.act-btn.wa{background:var(--bg3);border:1px solid var(--bdr);color:var(--muted)}
-.act-btn.wa:hover{border-color:rgba(34,197,94,.4);color:var(--green)}
-.act-btn.del{background:var(--bg3);border:1px solid var(--bdr);color:var(--muted);margin-left:auto}
-.act-btn.del:hover{border-color:rgba(239,68,68,.3);color:var(--red)}
-.no-bookings{text-align:center;padding:3rem;color:var(--muted);font-size:.88rem}
+/* ── CARDS ──────────────────────────────────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.card-title{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
 
-/* SETTINGS PANEL */
-.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-@media(max-width:700px){.settings-grid{grid-template-columns:1fr}}
-.settings-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.5rem}
-.settings-card-title{font-size:.88rem;font-weight:800;letter-spacing:-.01em;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:.5rem}
-.s-field{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.75rem}
-.s-field label{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.s-field input,.s-field select{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:.65rem .88rem;color:var(--white);font-size:.85rem;outline:none;transition:border-color .2s;width:100%}
-.s-field input:focus,.s-field select:focus{border-color:rgba(59,130,246,.5)}
-.save-btn{font-size:.8rem;font-weight:700;padding:.68rem 1.5rem;background:var(--blue);color:#fff;border:none;border-radius:8px;transition:all .2s;margin-top:.5rem}
-.save-btn:hover{background:#60a5fa}
-.saved-msg{font-size:.72rem;color:var(--green);margin-left:.75rem;display:none}
+/* ── STAT CARDS ─────────────────────────────────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.stat-label{font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.stat-val{font-size:1.8rem;font-weight:900;line-height:1}
+.stat-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+.stat-icon{float:right;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-top:-2px}
+.stat-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
 
-/* CALENDAR */
-.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.cal-nav-btn{font-size:.8rem;font-weight:700;padding:.5rem 1rem;border-radius:8px;border:1px solid var(--bdr);background:var(--bg3);color:var(--muted);transition:all .2s}
-.cal-nav-btn:hover{border-color:rgba(59,130,246,.4);color:var(--blue)}
-.cal-month{font-size:1.1rem;font-weight:800}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem}
-.cal-dow{text-align:center;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.5rem 0}
-.cal-day{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:.6rem .4rem;min-height:70px;cursor:pointer;transition:all .2s;position:relative}
-.cal-day:hover{border-color:rgba(59,130,246,.3)}
-.cal-day.today{border-color:rgba(59,130,246,.5)}
-.cal-day.empty{background:transparent;border-color:transparent}
-.cal-day-num{font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
-.cal-day.today .cal-day-num{color:var(--blue)}
-.cal-event{font-size:.58rem;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.3);color:var(--blue);border-radius:4px;padding:.15rem .3rem;margin-bottom:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cal-event.confirmed{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.3);color:var(--green)}
-.hours-bar{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.1rem 1.4rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-.hb-label{font-size:.72rem;color:var(--muted)}
-.hb-used{font-size:1.1rem;font-weight:800;color:var(--blue)}
-.hb-bar{flex:1;min-width:120px;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
-.hb-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .4s}
-.hb-fill.warn{background:var(--amber)}
-.hb-fill.full{background:var(--red)}
+/* ── TABLE ──────────────────────────────────────────────────────────── */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:.65rem .9rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:.7rem .9rem;font-size:.82rem;color:var(--off);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
 
-/* TOAST */
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--green);color:#fff;font-size:.82rem;font-weight:700;padding:.85rem 1.5rem;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:999;transform:translateY(100px);opacity:0;transition:all .3s}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.error{background:var(--red)}
+/* ── STATUS BADGES ──────────────────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:50px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.badge-pending{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(251,191,36,.3)}
+.badge-confirmed{background:var(--green-dim);color:var(--green);border:1px solid rgba(52,201,122,.3)}
+.badge-completed{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(96,165,250,.3)}
+.badge-cancelled{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.badge-new{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(232,137,26,.3)}
 
-/* UTIL */
-.divider{height:1px;background:var(--bdr);margin:1.5rem 0}
+/* ── FORM ELEMENTS ──────────────────────────────────────────────────── */
+.form-group{margin-bottom:1rem}
+.form-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem}
+.form-input{width:100%;background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .9rem;font-size:.85rem;color:var(--white);transition:border-color .2s}
+.form-input:focus{outline:none;border-color:var(--amber)}
+.form-input::placeholder{color:var(--muted)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .65rem center;background-size:14px;padding-right:2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+
+/* ── MODAL ──────────────────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:560px;max-height:88vh;overflow-y:auto}
+.modal-header{padding:1.25rem 1.5rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:1}
+.modal-title{font-size:.95rem;font-weight:800}
+.modal-close{width:28px;height:28px;background:var(--raised);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--muted);transition:all .2s}
+.modal-close:hover{background:var(--border);color:var(--white)}
+.modal-body{padding:1.5rem}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.65rem;justify-content:flex-end}
+
+/* ── CALENDAR ───────────────────────────────────────────────────────── */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.cal-nav{background:var(--raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.4rem .8rem;font-size:.8rem;font-weight:600;color:var(--off);transition:all .2s}
+.cal-nav:hover{border-color:var(--amber);color:var(--white)}
+.cal-month{font-size:1rem;font-weight:800}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-label{text-align:center;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:.4rem 0}
+.cal-day{min-height:72px;background:var(--raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.4rem .5rem;cursor:pointer;transition:all .2s;position:relative}
+.cal-day:hover{border-color:rgba(232,137,26,.4)}
+.cal-day.today{border-color:var(--amber)}
+.cal-day.blocked{background:rgba(248,113,113,.06);border-color:rgba(248,113,113,.3)}
+.cal-day.has-bookings{border-color:rgba(52,201,122,.3)}
+.cal-day.other-month{opacity:.3}
+.cal-day-num{font-size:.75rem;font-weight:700;margin-bottom:.3rem}
+.cal-day.today .cal-day-num{color:var(--amber)}
+.cal-day.blocked .cal-day-num{color:var(--red)}
+.cal-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin:.1rem}
+.cal-dot-booking{background:var(--green)}
+.cal-dot-blocked{background:var(--red)}
+.cal-blocked-label{font-size:.58rem;font-weight:700;color:var(--red);text-transform:uppercase}
+.cal-count{font-size:.65rem;color:var(--green);font-weight:600}
+
+/* ── TIME SLOTS ─────────────────────────────────────────────────────── */
+.time-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.75rem}
+.time-slot{padding:.5rem .4rem;background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);text-align:center;font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s}
+.time-slot:hover{border-color:rgba(232,137,26,.4)}
+.time-slot.blocked{background:var(--red-dim);border-color:rgba(248,113,113,.4);color:var(--red)}
+.time-slot.booked{background:var(--green-dim);border-color:rgba(52,201,122,.4);color:var(--green)}
+
+/* ── DISCOUNT CHIPS ─────────────────────────────────────────────────── */
+.discount-list{display:flex;flex-direction:column;gap:.6rem}
+.discount-item{background:var(--raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.9rem 1rem;display:flex;align-items:center;gap:.75rem}
+.discount-code{font-size:.9rem;font-weight:800;color:var(--amber);font-family:monospace;letter-spacing:.05em}
+.discount-meta{flex:1;font-size:.78rem;color:var(--muted)}
+.discount-val{font-size:.88rem;font-weight:700;color:var(--green)}
+.discount-toggle{width:36px;height:20px;background:var(--border);border-radius:50px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.discount-toggle.on{background:var(--amber)}
+.discount-toggle::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform .2s}
+.discount-toggle.on::after{transform:translateX(16px)}
+
+/* ── PRICING TABLE ──────────────────────────────────────────────────── */
+.price-tier{background:var(--raised);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.25rem;margin-bottom:.75rem}
+.price-tier-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
+.price-tier-name{font-size:.9rem;font-weight:800}
+.price-tier-badge{font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:50px}
+.price-rows{display:grid;gap:.5rem}
+.price-row{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:.5rem;align-items:center}
+.price-row-label{font-size:.78rem;color:var(--off);font-weight:600}
+.price-input-wrap{position:relative}
+.price-input-wrap::before{content:'$';position:absolute;left:.6rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.8rem;pointer-events:none}
+.price-input{width:100%;background:var(--black);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.45rem .6rem .45rem 1.4rem;font-size:.82rem;color:var(--amber);font-weight:700;transition:border-color .2s}
+.price-input:focus{outline:none;border-color:var(--amber)}
+.price-col-header{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center}
+
+/* ── NOTIFICATION TOAST ─────────────────────────────────────────────── */
+#toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
+.toast-item{background:var(--raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.75rem 1.1rem;font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:.6rem;animation:slideIn .25s ease;box-shadow:0 8px 24px rgba(0,0,0,.5);pointer-events:all}
+.toast-item.success{border-color:rgba(52,201,122,.4);color:var(--green)}
+.toast-item.error{border-color:rgba(248,113,113,.4);color:var(--red)}
+.toast-item.info{border-color:rgba(232,137,26,.4);color:var(--amber)}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* ── SEARCH BAR ─────────────────────────────────────────────────────── */
+.search-bar{position:relative;flex:1;max-width:280px}
+.search-bar input{width:100%;background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.5rem .9rem .5rem 2.2rem;font-size:.82rem;color:var(--white);transition:border-color .2s}
+.search-bar input:focus{outline:none;border-color:var(--amber)}
+.search-bar svg{position:absolute;left:.65rem;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;pointer-events:none}
+
+/* ── TABS ───────────────────────────────────────────────────────────── */
+.tab-bar{display:flex;gap:.3rem;background:var(--raised);border:1px solid var(--border);border-radius:50px;padding:.25rem;width:fit-content;margin-bottom:1.25rem}
+.tab-btn{padding:.4rem 1rem;border-radius:50px;font-size:.78rem;font-weight:600;color:var(--muted);background:none;transition:all .2s}
+.tab-btn.active{background:var(--amber);color:#000}
+.tab-btn:hover:not(.active){color:var(--white)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* ── EMPTY STATE ────────────────────────────────────────────────────── */
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.empty-state svg{width:40px;height:40px;stroke:var(--border2);fill:none;stroke-width:1.5;margin:0 auto 1rem}
+.empty-state p{font-size:.88rem}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .sidebar{width:56px;overflow:hidden}
+  .sidebar-logo-name,.sidebar-logo-sub,.nav-section,.nav-item span,.nav-badge,.sidebar-user-name,.sidebar-user-role{display:none}
+  .nav-item{padding:.65rem;justify-content:center}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .form-row,.form-row-3{grid-template-columns:1fr}
+  .price-row{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .stat-grid{grid-template-columns:1fr}
+  .time-slots{grid-template-columns:repeat(3,1fr)}
+  .cal-grid{gap:2px}
+  .cal-day{min-height:50px}
+}
 </style>
 </head>
 <body>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<!-- LOGIN -->
-<div class="login-wrap" id="loginWrap">
+<!-- ── LOGIN ──────────────────────────────────────────────────────── -->
+<div id="loginScreen">
   <div class="login-box">
-    <div class="login-logo">Beyond<span>1</span></div>
-    <div class="login-sub">Owner Portal — Secure Access</div>
-    <label class="login-label">Enter Your 4-Digit PIN</label>
-    <input type="password" class="login-input" id="pinInput" maxlength="4" placeholder="••••" onkeyup="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">Access Dashboard →</button>
-    <div class="login-err" id="loginErr">Incorrect PIN. Try again.</div>
-    <div class="login-note">PIN is set to <strong>8756</strong> by default. Change it in Settings after first login.</div>
+    <div class="login-logo">BEYOND<span>1</span></div>
+    <div class="login-sub">Admin Portal</div>
+    <div class="login-field">
+      <label class="login-label">Username</label>
+      <input class="login-input" type="text" id="loginUser" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label class="login-label">Password</label>
+      <input class="login-input" type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="login-err" id="loginErr">Incorrect username or password.</div>
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div class="dash" id="dash">
-  <nav class="dash-nav">
-    <div>
-      <span class="dash-logo">Beyond<span>1</span></span>
-      <span class="dash-badge">Owner Portal</span>
+<!-- ── APP ────────────────────────────────────────────────────────── -->
+<div id="app">
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-name">BEYOND<span>1</span></div>
+    <div class="sidebar-logo-sub">Admin Portal</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Main</div>
+    <div class="nav-item active" onclick="showPanel('dashboard',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Dashboard</span>
     </div>
-    <div class="dash-nav-right">
-      <button class="nav-tab active" onclick="showPanel('bookings',this)">📋 Bookings</button>
-      <button class="nav-tab" onclick="showPanel('calendar',this)">📅 Calendar</button>
-      <button class="nav-tab" onclick="showPanel('settings',this)">⚙️ Settings</button>
-      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    <div class="nav-item" onclick="showPanel('bookings',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Bookings</span>
+      <span class="nav-badge" id="pendingBadge">0</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('schedule',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Schedule</span>
+    </div>
+    <div class="nav-section">Customers</div>
+    <div class="nav-item" onclick="showPanel('customers',this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Customers</span>
+    </div>
+    <div class="nav-section">Business</div>
+    <div class="nav-item" onclick="showPanel('pricing',this)">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <span>Pricing</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('discounts',this)">
+      <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+      <span>Discounts</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('settings',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Settings</span>
     </div>
   </nav>
-
-  <div class="dash-body">
-
-    <!-- STATS -->
-    <div class="stats-row" id="statsRow"></div>
-
-    <!-- BOOKINGS PANEL -->
-    <div class="panel active" id="panel-bookings">
-      <div class="section-head">
-        <div class="section-title">All Bookings</div>
-        <div class="filter-row">
-          <button class="filter-btn active" onclick="filterBk('all',this)">All</button>
-          <button class="filter-btn" onclick="filterBk('pending',this)">Pending</button>
-          <button class="filter-btn" onclick="filterBk('confirmed',this)">Confirmed</button>
-          <button class="filter-btn" onclick="filterBk('declined',this)">Declined</button>
-        </div>
-      </div>
-      <div class="bk-list" id="bkList"></div>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">B</div>
+      <div><div class="sidebar-user-name">Beyond1 Admin</div><div class="sidebar-user-role">Owner</div></div>
+      <button class="sidebar-logout" onclick="doLogout()" title="Sign Out">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
     </div>
+  </div>
+</aside>
 
-    <!-- CALENDAR PANEL -->
-    <div class="panel" id="panel-calendar">
-      <div class="hours-bar" id="hoursBar">
-        <div class="hb-label">Today's booked hours:</div>
-        <div class="hb-used" id="todayHours">0</div>
-        <div style="font-size:.72rem;color:var(--muted)">/ <span id="maxHours">14</span>h max</div>
-        <div class="hb-bar"><div class="hb-fill" id="hoursFill" style="width:0%"></div></div>
-        <div style="font-size:.68rem;color:var(--muted)">Remaining: <strong id="hoursLeft" style="color:var(--green)">14h</strong></div>
-      </div>
-      <div class="cal-head">
-        <button class="cal-nav-btn" onclick="calNav(-1)">← Prev</button>
-        <div class="cal-month" id="calMonth"></div>
-        <button class="cal-nav-btn" onclick="calNav(1)">Next →</button>
-      </div>
-      <div class="cal-grid" id="calGrid"></div>
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    <div class="topbar-actions" id="topbarActions">
+      <button class="btn btn-primary btn-sm" onclick="openNewBookingModal()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Booking
+      </button>
     </div>
+  </div>
+  <div class="content" id="content">
 
-    <!-- SETTINGS PANEL -->
-    <div class="panel" id="panel-settings">
-      <div class="settings-grid">
-
-        <!-- Pricing -->
-        <div class="settings-card">
-          <div class="settings-card-title">💰 Service Pricing</div>
-          <div style="font-size:.72rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Update prices below. Changes reflect on your price list immediately. Reload the customer website to see updates.</div>
-          <div class="s-field"><label>Regular — Sedan (from)</label><input type="number" id="p_rs" placeholder="65"></div>
-          <div class="s-field"><label>Regular — SUV 5-Seat (from)</label><input type="number" id="p_r5" placeholder="75"></div>
-          <div class="s-field"><label>Regular — SUV 7-Seat (from)</label><input type="number" id="p_r7" placeholder="85"></div>
-          <div class="s-field"><label>Standard — Sedan (from)</label><input type="number" id="p_ss" placeholder="130"></div>
-          <div class="s-field"><label>Standard — SUV 5-Seat (from)</label><input type="number" id="p_s5" placeholder="150"></div>
-          <div class="s-field"><label>Standard — SUV 7-Seat (from)</label><input type="number" id="p_s7" placeholder="170"></div>
-          <div class="s-field"><label>Premium — Sedan (from)</label><input type="number" id="p_ps" placeholder="210"></div>
-          <div class="s-field"><label>Premium — SUV 5-Seat (from)</label><input type="number" id="p_p5" placeholder="245"></div>
-          <div class="s-field"><label>Premium — SUV 7-Seat (from)</label><input type="number" id="p_p7" placeholder="275"></div>
-          <button class="save-btn" onclick="savePrices()">Save Prices</button>
-          <span class="saved-msg" id="price-saved">✓ Saved</span>
+    <!-- ── DASHBOARD PANEL ──────────────────────────────────────── -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--yellow-dim);color:var(--yellow)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="stat-label">Pending</div>
+          <div class="stat-val" id="dash-pending">0</div>
+          <div class="stat-sub">Awaiting confirmation</div>
         </div>
-
-        <!-- Hours & Schedule -->
-        <div class="settings-card">
-          <div class="settings-card-title">⏱️ Hours & Scheduling</div>
-          <div class="s-field"><label>Max Work Hours Per Day</label><input type="number" id="h_max" min="1" max="16" placeholder="14"></div>
-          <div class="s-field"><label>Regular Wash — Estimated Hours</label><select id="h_reg"><option value="1">1 hour</option><option value="1.5" selected>1.5 hours</option><option value="2">2 hours</option></select></div>
-          <div class="s-field"><label>Standard Detail — Estimated Hours</label><select id="h_std"><option value="2">2 hours</option><option value="2.5" selected>2.5 hours</option><option value="3">3 hours</option></select></div>
-          <div class="s-field"><label>Premium Detail — Estimated Hours</label><select id="h_prem"><option value="3">3 hours</option><option value="4" selected>4 hours</option><option value="5">5 hours</option></select></div>
-          <div class="s-field"><label>Each Add-On — Estimated Hours</label><select id="h_ao"><option value="0.5">30 mins</option><option value="1" selected>1 hour</option><option value="1.5">1.5 hours</option></select></div>
-          <button class="save-btn" onclick="saveHours()">Save Hours</button>
-          <span class="saved-msg" id="hours-saved">✓ Saved</span>
-          <div class="divider"></div>
-          <div class="settings-card-title" style="border:none;padding:0;margin-bottom:1rem">🔐 Change PIN</div>
-          <div class="s-field"><label>New 4-Digit PIN</label><input type="password" id="new_pin" maxlength="4" placeholder="Enter new PIN"></div>
-          <div class="s-field"><label>Confirm New PIN</label><input type="password" id="confirm_pin" maxlength="4" placeholder="Confirm PIN"></div>
-          <button class="save-btn" onclick="changePin()">Update PIN</button>
-          <span class="saved-msg" id="pin-saved">✓ PIN Updated</span>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--green-dim);color:var(--green)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="stat-label">Confirmed Today</div>
+          <div class="stat-val" id="dash-today">0</div>
+          <div class="stat-sub">Scheduled for today</div>
         </div>
-
-        <!-- Business Info -->
-        <div class="settings-card">
-          <div class="settings-card-title">📋 Business Info</div>
-          <div class="s-field"><label>Business Name</label><input type="text" id="b_name" value="Beyond1 Mobile Detailing"></div>
-          <div class="s-field"><label>Primary WhatsApp</label><input type="tel" id="b_wa1" value="(647) 646-8756"></div>
-          <div class="s-field"><label>Secondary Phone</label><input type="tel" id="b_wa2" value="(437) 226-6769"></div>
-          <div class="s-field"><label>Service Area</label><input type="text" id="b_area" value="Brampton, Mississauga & GTA"></div>
-          <div class="s-field"><label>Distance Charge Note</label><input type="text" id="b_dist" value="May apply outside Brampton — confirmed before booking"></div>
-          <button class="save-btn" onclick="saveBiz()">Save Info</button>
-          <span class="saved-msg" id="biz-saved">✓ Saved</span>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--blue-dim);color:var(--blue)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="stat-label">Total Customers</div>
+          <div class="stat-val" id="dash-customers">0</div>
+          <div class="stat-sub">All time</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--amber-dim);color:var(--amber)"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="stat-label">Revenue (Month)</div>
+          <div class="stat-val" id="dash-revenue">$0</div>
+          <div class="stat-sub">Completed bookings</div>
+        </div>
+      </div>
 
-        <!-- Export & Tools -->
-        <div class="settings-card">
-          <div class="settings-card-title">🛠️ Tools</div>
-          <div style="display:flex;flex-direction:column;gap:.75rem">
-            <button class="save-btn" style="background:var(--bg3);border:1px solid var(--bdr);color:var(--muted)" onclick="exportCSV()">📥 Export Bookings as CSV</button>
-            <button class="save-btn" style="background:var(--bg3);border:1px solid var(--bdr);color:var(--muted)" onclick="clearOld()">🗑️ Clear Declined Bookings</button>
-            <button class="save-btn" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:var(--red)" onclick="if(confirm('Clear ALL bookings? This cannot be undone.'))clearAll()">⚠️ Clear All Bookings</button>
-            <div style="font-size:.72rem;color:var(--muted);line-height:1.6;padding:.85rem;background:var(--bg3);border-radius:8px">
-              <strong style="color:var(--white)">Worker Access:</strong> Share this file (beyond1-admin.html) with your workers and give them the PIN. They can view and confirm bookings from any device.
-            </div>
-            <a href="index.html" class="save-btn" style="text-align:center;background:var(--bg3);border:1px solid var(--bdr);color:var(--muted);display:block">← Back to Customer Website</a>
+      <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:1rem">
+        <div class="card">
+          <div class="card-title">Recent Bookings</div>
+          <div class="table-wrap">
+            <table id="dash-recent-table">
+              <thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Status</th><th></th></tr></thead>
+              <tbody id="dash-recent-body"></tbody>
+            </table>
           </div>
         </div>
-
+        <div class="card">
+          <div class="card-title">Quick Actions</div>
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <button class="btn btn-ghost" style="justify-content:flex-start" onclick="showPanel('bookings',document.querySelector('[onclick*=bookings]'))">
+              <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              View All Bookings
+            </button>
+            <button class="btn btn-ghost" style="justify-content:flex-start" onclick="showPanel('schedule',document.querySelector('[onclick*=schedule]'))">
+              <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Manage Schedule
+            </button>
+            <button class="btn btn-ghost" style="justify-content:flex-start" onclick="showPanel('pricing',document.querySelector('[onclick*=pricing]'))">
+              <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Update Pricing
+            </button>
+            <button class="btn btn-ghost" style="justify-content:flex-start" onclick="showPanel('discounts',document.querySelector('[onclick*=discounts]'))">
+              <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              Manage Discounts
+            </button>
+            <button class="btn btn-primary" style="justify-content:flex-start" onclick="openNewBookingModal()">
+              <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add New Booking
+            </button>
+          </div>
+          <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)">
+            <div class="card-title">Upcoming (Next 3 Days)</div>
+            <div id="dash-upcoming" style="font-size:.8rem;color:var(--muted)">No upcoming bookings.</div>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- ── BOOKINGS PANEL ───────────────────────────────────────── -->
+    <div class="panel" id="panel-bookings">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="filterBookings('all',this)">All</button>
+          <button class="tab-btn" onclick="filterBookings('pending',this)">Pending</button>
+          <button class="tab-btn" onclick="filterBookings('confirmed',this)">Confirmed</button>
+          <button class="tab-btn" onclick="filterBookings('completed',this)">Completed</button>
+          <button class="tab-btn" onclick="filterBookings('cancelled',this)">Cancelled</button>
+        </div>
+        <div style="display:flex;gap:.6rem;align-items:center">
+          <div class="search-bar">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search bookings…" oninput="searchBookings(this.value)">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openNewBookingModal()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Customer</th><th>Service</th><th>Vehicle</th><th>Date</th><th>Time</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="bookings-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCHEDULE PANEL ───────────────────────────────────────── -->
+    <div class="panel" id="panel-schedule">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:1.25rem">
+        <div class="card">
+          <div class="cal-header">
+            <button class="cal-nav" onclick="calPrev()">&#8592;</button>
+            <div class="cal-month" id="calMonth"></div>
+            <button class="cal-nav" onclick="calNext()">&#8594;</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div style="display:flex;gap:1rem;margin-top:.75rem;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--muted)"><span class="cal-dot cal-dot-booking"></span>Has bookings</div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--muted)"><span class="cal-dot cal-dot-blocked"></span>Blocked</div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--muted)"><span style="width:10px;height:10px;border:1.5px solid var(--amber);border-radius:2px;display:inline-block"></span>Today</div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:1rem">
+            <div class="card-title">Selected Day</div>
+            <div id="selectedDayInfo" style="font-size:.88rem;color:var(--muted)">Click a day to manage it.</div>
+            <div id="selectedDayActions" style="display:none;margin-top:.9rem">
+              <div style="font-size:.82rem;font-weight:700;margin-bottom:.6rem" id="selectedDayLabel"></div>
+              <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem">
+                <button class="btn btn-danger btn-sm" id="blockDayBtn" onclick="toggleBlockDay()">Block Entire Day</button>
+                <button class="btn btn-success btn-sm" onclick="openTimeSlotModal()">Block Time Slots</button>
+              </div>
+              <div style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem">Bookings on this day:</div>
+              <div id="dayBookingsList" style="font-size:.8rem;color:var(--off)"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Blocked Dates</div>
+            <div id="blockedDatesList" style="font-size:.8rem;color:var(--muted)">No blocked dates.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CUSTOMERS PANEL ──────────────────────────────────────── -->
+    <div class="panel" id="panel-customers">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">
+        <div class="search-bar" style="max-width:320px">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Search customers…" oninput="searchCustomers(this.value)">
+        </div>
+        <div style="font-size:.8rem;color:var(--muted)" id="customerCount"></div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>City</th><th>Bookings</th><th>Total Spent</th><th>Last Visit</th><th></th></tr></thead>
+            <tbody id="customers-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PRICING PANEL ────────────────────────────────────────── -->
+    <div class="panel" id="panel-pricing">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+        <div>
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:.2rem">Changes are saved automatically and reflected on the booking form.</div>
+        </div>
+        <button class="btn btn-primary" onclick="savePricing()">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          Save All Prices
+        </button>
+      </div>
+      <div id="pricingPanel"></div>
+    </div>
+
+    <!-- ── DISCOUNTS PANEL ──────────────────────────────────────── -->
+    <div class="panel" id="panel-discounts">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+        <div style="font-size:.78rem;color:var(--muted)">Create discount codes customers can enter at checkout.</div>
+        <button class="btn btn-primary" onclick="openDiscountModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Discount
+        </button>
+      </div>
+      <div class="card">
+        <div class="discount-list" id="discountList"></div>
+      </div>
+    </div>
+
+    <!-- ── SETTINGS PANEL ───────────────────────────────────────── -->
+    <div class="panel" id="panel-settings">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+        <div class="card">
+          <div class="card-title">Business Info</div>
+          <div class="form-group"><label class="form-label">Business Name</label><input class="form-input" id="set-name" value="Beyond1 Auto & Home Care"></div>
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="set-phone" value="(647) 646-8756"></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="set-email" value="sarpreetsingh625@gmail.com"></div>
+          <div class="form-group"><label class="form-label">WhatsApp Number (digits only)</label><input class="form-input" id="set-wa" value="16476468756"></div>
+          <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Business Hours</div>
+          <div id="hoursPanel"></div>
+          <button class="btn btn-primary" style="margin-top:.75rem" onclick="saveHours()">Save Hours</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Change Admin Password</div>
+          <div class="form-group"><label class="form-label">Current Password</label><input class="form-input" type="password" id="pw-current"></div>
+          <div class="form-group"><label class="form-label">New Password</label><input class="form-input" type="password" id="pw-new"></div>
+          <div class="form-group"><label class="form-label">Confirm New Password</label><input class="form-input" type="password" id="pw-confirm"></div>
+          <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Data Management</div>
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <button class="btn btn-ghost" onclick="exportData()">
+              <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export All Data (JSON)
+            </button>
+            <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">
+              <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Import Data (JSON)
+            </button>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+            <button class="btn btn-danger" onclick="clearAllData()">
+              <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+              Clear All Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+</div><!-- /layout -->
+</div><!-- /app -->
+
+<!-- ── TOAST ──────────────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+<!-- ── BOOKING DETAIL MODAL ───────────────────────────────────────── -->
+<div class="modal-overlay" id="bookingDetailModal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-header">
+      <div class="modal-title" id="bdm-title">Booking Details</div>
+      <button class="modal-close" onclick="closeModal('bookingDetailModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="bdm-body"></div>
+    <div class="modal-footer" id="bdm-footer"></div>
+  </div>
+</div>
+
+<!-- ── NEW/EDIT BOOKING MODAL ─────────────────────────────────────── -->
+<div class="modal-overlay" id="newBookingModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="nbm-title">New Booking</div>
+      <button class="modal-close" onclick="closeModal('newBookingModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="nb-fname" placeholder="John"></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="nb-lname" placeholder="Smith"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="nb-phone" placeholder="(647) 000-0000" type="tel"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="nb-email" placeholder="email@example.com" type="email"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Package</label>
+          <select class="form-input form-select" id="nb-pkg">
+            <option>Essential Refresh</option><option>Deep Clean</option><option>Premium Restoration</option><option>Home Care Only</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Service Option</label>
+          <select class="form-input form-select" id="nb-svc">
+            <option value="full">Full Service</option><option value="interior">Interior Only</option><option value="exterior">Exterior Only</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Vehicle Type</label>
+          <select class="form-input form-select" id="nb-veh">
+            <option>Sedan</option><option>Compact SUV</option><option>Large SUV</option><option>Truck</option><option>Van</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Condition</label>
+          <select class="form-input form-select" id="nb-cond">
+            <option>Light</option><option>Moderate</option><option>Heavy</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="nb-date" type="date"></div>
+        <div class="form-group"><label class="form-label">Time</label>
+          <select class="form-input form-select" id="nb-time">
+            <option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+            <option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+            <option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Address</label><input class="form-input" id="nb-addr" placeholder="123 Main St, Brampton, ON"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Total Price ($)</label><input class="form-input" id="nb-total" type="number" placeholder="149"></div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-input form-select" id="nb-status">
+            <option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" id="nb-notes" rows="2" placeholder="Any special instructions…" style="resize:vertical"></textarea></div>
+      <input type="hidden" id="nb-id">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('newBookingModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveBooking()">Save Booking</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DISCOUNT MODAL ─────────────────────────────────────────────── -->
+<div class="modal-overlay" id="discountModal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title">New Discount Code</div>
+      <button class="modal-close" onclick="closeModal('discountModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Discount Code</label><input class="form-input" id="dc-code" placeholder="SUMMER20" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Discount Type</label>
+          <select class="form-input form-select" id="dc-type">
+            <option value="percent">Percentage (%)</option>
+            <option value="fixed">Fixed Amount ($)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Value</label><input class="form-input" id="dc-val" type="number" placeholder="20" min="1"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Min Order ($)</label><input class="form-input" id="dc-min" type="number" placeholder="0" min="0"></div>
+        <div class="form-group"><label class="form-label">Max Uses (0 = unlimited)</label><input class="form-input" id="dc-uses" type="number" placeholder="0" min="0"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Expiry Date (optional)</label><input class="form-input" id="dc-expiry" type="date"></div>
+      <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="dc-desc" placeholder="e.g. Summer promotion — 20% off all services"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('discountModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDiscount()">Create Code</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TIME SLOT MODAL ────────────────────────────────────────────── -->
+<div class="modal-overlay" id="timeSlotModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title" id="tsm-title">Block Time Slots</div>
+      <button class="modal-close" onclick="closeModal('timeSlotModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">Click slots to toggle blocked/available. Green = booked by customer, Red = manually blocked.</div>
+      <div class="time-slots" id="timeSlotGrid"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('timeSlotModal')">Close</button>
+      <button class="btn btn-primary" onclick="saveTimeSlots()">Save Slots</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CUSTOMER DETAIL MODAL ──────────────────────────────────────── -->
+<div class="modal-overlay" id="customerModal">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <div class="modal-title" id="cm-title">Customer Profile</div>
+      <button class="modal-close" onclick="closeModal('customerModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="cm-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('customerModal')">Close</button>
+    </div>
   </div>
 </div>
 
 <script>
-// ── AUTH ──
-let PIN=localStorage.getItem('b1_pin')||'8756';
+// ── DATA STORE ──────────────────────────────────────────────────────
+const DB = {
+  get(k,d){try{return JSON.parse(localStorage.getItem('b1_'+k))||d}catch{return d}},
+  set(k,v){localStorage.setItem('b1_'+k,JSON.stringify(v))},
+  del(k){localStorage.removeItem('b1_'+k)}
+};
+
+// ── AUTH ─────────────────────────────────────────────────────────────
 function doLogin(){
-  const v=document.getElementById('pinInput').value;
-  if(v===PIN){
-    document.getElementById('loginWrap').style.display='none';
-    document.getElementById('dash').style.display='block';
-    loadAll();
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  const creds=DB.get('creds',{user:'admin',pass:'beyond1admin'});
+  if(u===creds.user&&p===creds.pass){
+    DB.set('session',true);
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
   } else {
     document.getElementById('loginErr').style.display='block';
-    document.getElementById('pinInput').value='';
   }
 }
-function doLogout(){
-  document.getElementById('loginWrap').style.display='flex';
-  document.getElementById('dash').style.display='none';
-  document.getElementById('pinInput').value='';
-}
-function changePin(){
-  const np=document.getElementById('new_pin').value;
-  const cp=document.getElementById('confirm_pin').value;
-  if(np.length!==4||isNaN(np)){showToast('PIN must be exactly 4 digits','error');return;}
-  if(np!==cp){showToast('PINs do not match','error');return;}
-  PIN=np;localStorage.setItem('b1_pin',PIN);
-  showSaved('pin-saved');showToast('PIN updated successfully');
-  document.getElementById('new_pin').value='';document.getElementById('confirm_pin').value='';
-}
-
-// ── DATA ──
-function getBookings(){try{return JSON.parse(localStorage.getItem('b1_bookings')||'[]');}catch{return[];}}
-function saveBookings(b){localStorage.setItem('b1_bookings',JSON.stringify(b));}
-function getSettings(){try{return JSON.parse(localStorage.getItem('b1_settings')||'{}');}catch{return {};}}
-function saveSettings(s){localStorage.setItem('b1_settings',JSON.stringify(s));}
-
-// ── LOAD ALL ──
-function loadAll(){
-  loadStats();loadBookings('all');loadCalendar();loadSettings();
+function doLogout(){DB.del('session');location.reload()}
+function changePassword(){
+  const cur=document.getElementById('pw-current').value;
+  const nw=document.getElementById('pw-new').value;
+  const cf=document.getElementById('pw-confirm').value;
+  const creds=DB.get('creds',{user:'admin',pass:'beyond1admin'});
+  if(cur!==creds.pass){toast('Current password is incorrect','error');return}
+  if(nw.length<6){toast('New password must be at least 6 characters','error');return}
+  if(nw!==cf){toast('Passwords do not match','error');return}
+  DB.set('creds',{user:creds.user,pass:nw});
+  toast('Password updated successfully','success');
+  document.getElementById('pw-current').value='';
+  document.getElementById('pw-new').value='';
+  document.getElementById('pw-confirm').value='';
 }
 
-// ── STATS ──
-function loadStats(){
-  const bk=getBookings();
-  const pending=bk.filter(b=>b.status==='pending').length;
-  const confirmed=bk.filter(b=>b.status==='confirmed').length;
-  const total=bk.length;
-  const todayStr=new Date().toISOString().split('T')[0];
-  const todayBk=bk.filter(b=>b.status==='confirmed'&&(b.slot1||'').includes(todayStr));
-  document.getElementById('statsRow').innerHTML=`
-    <div class="stat-card"><div class="stat-num" style="color:var(--amber)">${pending}</div><div class="stat-lbl">Pending Confirmation</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--green)">${confirmed}</div><div class="stat-lbl">Confirmed Bookings</div></div>
-    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Total Bookings</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--blue)">${todayBk.length}</div><div class="stat-lbl">Today's Jobs</div></div>
-  `;
+// ── INIT ─────────────────────────────────────────────────────────────
+function init(){
+  if(!DB.get('session',false)){return}
+  seedDemoData();
+  renderDashboard();
+  renderBookings();
+  renderCustomers();
+  renderPricing();
+  renderDiscounts();
+  renderCalendar();
+  renderSettings();
+  updatePendingBadge();
 }
 
-// ── BOOKINGS ──
-let currentFilter='all';
-function filterBk(f,el){
-  currentFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+// ── INITIAL SETUP (clean start — no demo data) ───────────────────────
+function seedDemoData(){
+  if(DB.get('seeded',false))return;
+  // Start with empty bookings — all real bookings come from the website
+  if(!DB.get('bookings',null))DB.set('bookings',[]);
+  // Set up default discount codes ready to use
+  DB.set('discounts',[
+    {id:'D001',code:'WELCOME10',type:'percent',val:10,min:0,uses:0,maxUses:0,expiry:'',desc:'Welcome discount — 10% off first booking',active:true,used:0},
+    {id:'D002',code:'REFER20',type:'percent',val:20,min:0,uses:0,maxUses:0,expiry:'',desc:'Referral reward — 20% off for referred customers',active:true,used:0},
+  ]);
+  DB.set('seeded',true);
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────
+function toast(msg,type='info'){
+  const c=document.getElementById('toast');
+  const el=document.createElement('div');
+  el.className=`toast-item ${type}`;
+  const icons={success:'✓',error:'✕',info:'●'};
+  el.innerHTML=`<span>${icons[type]||'●'}</span><span>${msg}</span>`;
+  c.appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+// ── PANEL NAVIGATION ─────────────────────────────────────────────────
+const panelTitles={dashboard:'Dashboard',bookings:'Bookings',schedule:'Schedule',customers:'Customers',pricing:'Pricing',discounts:'Discounts',settings:'Settings'};
+function showPanel(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  document.getElementById('topbarTitle').textContent=panelTitles[id]||id;
+  if(id==='bookings')renderBookings();
+  if(id==='customers')renderCustomers();
+  if(id==='pricing')renderPricing();
+  if(id==='discounts')renderDiscounts();
+  if(id==='schedule')renderCalendar();
+  if(id==='dashboard')renderDashboard();
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.addEventListener('click',e=>{if(e.target.classList.contains('modal-overlay'))e.target.classList.remove('open')});
+
+// ── BOOKING HELPERS ───────────────────────────────────────────────────
+function getBookings(){return DB.get('bookings',[])}
+function saveBookings(b){DB.set('bookings',b)}
+function genId(prefix){return prefix+(Date.now().toString(36).toUpperCase())}
+
+const statusBadge=s=>{
+  const map={pending:'badge-pending',confirmed:'badge-confirmed',completed:'badge-completed',cancelled:'badge-cancelled'};
+  return `<span class="badge ${map[s]||'badge-new'}">${s.charAt(0).toUpperCase()+s.slice(1)}</span>`;
+};
+
+function updatePendingBadge(){
+  const n=getBookings().filter(b=>b.status==='pending').length;
+  document.getElementById('pendingBadge').textContent=n;
+  document.getElementById('pendingBadge').style.display=n?'inline':'none';
+}
+
+
+// u2500u2500 NEW BOOKING NOTIFICATION (from website) u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500
+function checkNewBookingFromWebsite(){
+  const last = localStorage.getItem("b1_lastBooking");
+  const seen = localStorage.getItem("b1_lastBooking_seen");
+  if(last && last !== seen){
+    const b = JSON.parse(last);
+    toast("ud83dudd14 New booking from website: " + b.fname + " " + b.lname + " u2014 " + b.pkg,"success");
+    localStorage.setItem("b1_lastBooking_seen", last);
+    updatePendingBadge();
+    renderDashboard();
+  }
+}
+setInterval(checkNewBookingFromWebsite, 15000);
+// ── DASHBOARD ─────────────────────────────────────────────────────────
+function renderDashboard(){
+  const bookings=getBookings();
+  const today=new Date().toISOString().slice(0,10);
+  const pending=bookings.filter(b=>b.status==='pending').length;
+  const todayConf=bookings.filter(b=>b.date===today&&b.status==='confirmed').length;
+  const customers=[...new Set(bookings.map(b=>b.phone))].length;
+  const revenue=bookings.filter(b=>b.status==='completed').reduce((s,b)=>s+(+b.total||0),0);
+  document.getElementById('dash-pending').textContent=pending;
+  document.getElementById('dash-today').textContent=todayConf;
+  document.getElementById('dash-customers').textContent=customers;
+  document.getElementById('dash-revenue').textContent='$'+revenue.toLocaleString();
+
+  // Recent bookings
+  const recent=bookings.slice().sort((a,b)=>new Date(b.created)-new Date(a.created)).slice(0,5);
+  const tbody=document.getElementById('dash-recent-body');
+  tbody.innerHTML=recent.length?recent.map(b=>`
+    <tr>
+      <td><strong>${b.fname} ${b.lname}</strong></td>
+      <td>${b.pkg}</td>
+      <td>${formatDate(b.date)}</td>
+      <td>${statusBadge(b.status)}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="openBookingDetail('${b.id}')">View</button></td>
+    </tr>`).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No bookings yet.</td></tr>`;
+
+  // Upcoming
+  const now=new Date();
+  const in3=new Date(now);in3.setDate(now.getDate()+3);
+  const upcoming=bookings.filter(b=>b.status==='confirmed'&&new Date(b.date)>=now&&new Date(b.date)<=in3)
+    .sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const upEl=document.getElementById('dash-upcoming');
+  upEl.innerHTML=upcoming.length?upcoming.map(b=>`<div style="padding:.5rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><strong>${b.fname} ${b.lname}</strong><br><span style="color:var(--muted);font-size:.72rem">${b.pkg} · ${b.vehicle}</span></div><div style="text-align:right;font-size:.75rem;color:var(--amber)">${formatDate(b.date)}<br>${b.time}</div></div>`).join(''):'<div style="color:var(--muted);font-size:.8rem">No upcoming bookings in the next 3 days.</div>';
+}
+
+// ── BOOKINGS ──────────────────────────────────────────────────────────
+let bookingFilter='all',bookingSearch='';
+function renderBookings(){
+  let bookings=getBookings();
+  if(bookingFilter!=='all')bookings=bookings.filter(b=>b.status===bookingFilter);
+  if(bookingSearch)bookings=bookings.filter(b=>`${b.fname} ${b.lname} ${b.phone} ${b.email} ${b.pkg}`.toLowerCase().includes(bookingSearch.toLowerCase()));
+  bookings.sort((a,b)=>new Date(b.created)-new Date(a.created));
+  const tbody=document.getElementById('bookings-body');
+  tbody.innerHTML=bookings.length?bookings.map(b=>`
+    <tr>
+      <td style="color:var(--muted);font-size:.72rem">${b.id}</td>
+      <td><strong>${b.fname} ${b.lname}</strong><br><span style="color:var(--muted);font-size:.72rem">${b.phone}</span></td>
+      <td>${b.pkg}<br><span style="color:var(--muted);font-size:.72rem">${b.svc==='full'?'Full Service':b.svc==='interior'?'Interior Only':'Exterior Only'}</span></td>
+      <td>${b.vehicle}</td>
+      <td>${formatDate(b.date)}</td>
+      <td>${b.time}</td>
+      <td style="color:var(--amber);font-weight:700">$${b.total}</td>
+      <td>${statusBadge(b.status)}</td>
+      <td>
+        <div style="display:flex;gap:.35rem;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="openBookingDetail('${b.id}')">View</button>
+          ${b.status==='pending'?`<button class="btn btn-success btn-sm" onclick="quickStatus('${b.id}','confirmed')">Confirm</button>`:''}
+          ${b.status==='confirmed'?`<button class="btn btn-success btn-sm" onclick="quickStatus('${b.id}','completed')">Done</button>`:''}
+          ${b.status!=='cancelled'&&b.status!=='completed'?`<button class="btn btn-danger btn-sm" onclick="quickStatus('${b.id}','cancelled')">Cancel</button>`:''}
+        </div>
+      </td>
+    </tr>`).join(''):`<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:2rem">No bookings found.</td></tr>`;
+}
+function filterBookings(f,el){
+  bookingFilter=f;
+  document.querySelectorAll('#panel-bookings .tab-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  loadBookings(f);
+  renderBookings();
 }
-function loadBookings(filter){
-  const bk=getBookings().sort((a,b)=>new Date(b.created)-new Date(a.created));
-  const filtered=filter==='all'?bk:bk.filter(b=>b.status===filter);
-  const list=document.getElementById('bkList');
-  if(!filtered.length){list.innerHTML='<div class="no-bookings">No bookings found.</div>';return;}
-  list.innerHTML=filtered.map(b=>`
-    <div class="bk-card ${b.status}" id="bk_${b.id}">
-      <div class="bk-head" onclick="toggleBk('${b.id}')">
-        <div>
-          <div class="bk-name">${b.name}</div>
-          <div class="bk-meta">${b.pkg||'No package'} · ${b.slot1||'No time set'} · ${b.addr||''}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-          <div class="bk-status ${b.status}">${b.status.toUpperCase()}</div>
-          <div style="font-size:.7rem;color:var(--muted)">${timeAgo(b.created)}</div>
-          <div style="font-size:.9rem">▾</div>
-        </div>
+function searchBookings(v){bookingSearch=v;renderBookings()}
+function quickStatus(id,status){
+  const b=getBookings();
+  const i=b.findIndex(x=>x.id===id);
+  if(i<0)return;
+  b[i].status=status;
+  saveBookings(b);
+  renderBookings();
+  renderDashboard();
+  updatePendingBadge();
+  toast(`Booking ${status}`,'success');
+}
+
+// ── BOOKING DETAIL ────────────────────────────────────────────────────
+function openBookingDetail(id){
+  const b=getBookings().find(x=>x.id===id);
+  if(!b)return;
+  document.getElementById('bdm-title').textContent=`Booking ${b.id}`;
+  document.getElementById('bdm-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
+      <div>
+        <div class="card-title">Customer</div>
+        <div style="font-size:.95rem;font-weight:700;margin-bottom:.3rem">${b.fname} ${b.lname}</div>
+        <div style="font-size:.82rem;color:var(--muted)">${b.phone}</div>
+        <div style="font-size:.82rem;color:var(--muted)">${b.email||'—'}</div>
       </div>
-      <div class="bk-detail" id="bd_${b.id}">
-        <div class="bk-detail-grid">
-          <div class="bk-field"><div class="bk-field-label">Phone</div><div class="bk-field-val">${b.phone||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Address</div><div class="bk-field-val">${b.addr||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Package</div><div class="bk-field-val">${b.pkg||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Cars</div><div class="bk-field-val">${b.cars||'1'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Condition</div><div class="bk-field-val">${b.condition||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Add-ons</div><div class="bk-field-val">${b.addons||'None'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Slot 1 (preferred)</div><div class="bk-field-val" style="color:var(--green)">${b.slot1||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Slot 2</div><div class="bk-field-val">${b.slot2||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Slot 3</div><div class="bk-field-val">${b.slot3||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Payment</div><div class="bk-field-val">${b.pay||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Fragrance</div><div class="bk-field-val">${b.frag||'No preference'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Car</div><div class="bk-field-val">${b.brand||''} ${b.model||''}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Exterior / Interior</div><div class="bk-field-val">${b.extcol||'—'} / ${b.intcol||'—'}</div></div>
-          <div class="bk-field"><div class="bk-field-label">Seats / Mats</div><div class="bk-field-val">${b.seat||'—'} / ${b.mat||'—'}</div></div>
-        </div>
-        ${b.notes&&b.notes!=='None'?`<div class="bk-field" style="margin-top:0"><div class="bk-field-label">Notes</div><div class="bk-field-val">${b.notes}</div></div>`:''}
-        <div class="bk-actions">
-          ${b.status!=='confirmed'?`<button class="act-btn confirm" onclick="updateBk('${b.id}','confirmed')">✓ Confirm Booking</button>`:''}
-          ${b.status!=='declined'?`<button class="act-btn decline" onclick="updateBk('${b.id}','declined')">✗ Decline</button>`:''}
-          <button class="act-btn wa" onclick="waReply('${b.phone}','${b.name}','${b.slot1}','${b.status}')">📲 WhatsApp Customer</button>
-          <button class="act-btn del" onclick="deleteBk('${b.id}')">🗑️</button>
+      <div>
+        <div class="card-title">Status</div>
+        ${statusBadge(b.status)}
+        <div style="margin-top:.5rem">
+          <select class="form-input form-select" id="bdm-status" style="font-size:.8rem;padding:.4rem .8rem">
+            <option value="pending" ${b.status==='pending'?'selected':''}>Pending</option>
+            <option value="confirmed" ${b.status==='confirmed'?'selected':''}>Confirmed</option>
+            <option value="completed" ${b.status==='completed'?'selected':''}>Completed</option>
+            <option value="cancelled" ${b.status==='cancelled'?'selected':''}>Cancelled</option>
+          </select>
         </div>
       </div>
     </div>
-  `).join('');
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
+      <div>
+        <div class="card-title">Service</div>
+        <div style="font-weight:700">${b.pkg}</div>
+        <div style="font-size:.8rem;color:var(--muted)">${b.svc==='full'?'Full Service':b.svc==='interior'?'Interior Only':'Exterior Only'}</div>
+        <div style="font-size:.8rem;color:var(--muted)">${b.vehicle} · ${b.condition} condition</div>
+      </div>
+      <div>
+        <div class="card-title">Schedule</div>
+        <div style="font-weight:700">${formatDate(b.date)}</div>
+        <div style="font-size:.8rem;color:var(--muted)">${b.time}</div>
+        <div style="font-size:.8rem;color:var(--muted);margin-top:.3rem">${b.addr}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+      <div>
+        <div class="card-title">Total</div>
+        <div style="font-size:1.4rem;font-weight:900;color:var(--amber)">$${b.total}</div>
+      </div>
+      <div>
+        <div class="card-title">Reschedule</div>
+        <div style="display:flex;gap:.4rem">
+          <input class="form-input" type="date" id="bdm-date" value="${b.date}" style="font-size:.78rem;padding:.4rem .6rem">
+          <select class="form-input form-select" id="bdm-time" style="font-size:.78rem;padding:.4rem 1.6rem .4rem .6rem">
+            ${['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'].map(t=>`<option ${t===b.time?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    </div>
+    ${b.notes?`<div class="card-title">Notes</div><div style="font-size:.82rem;color:var(--off);background:var(--raised);padding:.75rem;border-radius:var(--radius-sm)">${b.notes}</div>`:''}
+  `;
+  document.getElementById('bdm-footer').innerHTML=`
+    <button class="btn btn-ghost" onclick="closeModal('bookingDetailModal')">Close</button>
+    <button class="btn btn-ghost" onclick="openEditBooking('${b.id}')">Edit</button>
+    <button class="btn btn-primary" onclick="saveBookingDetail('${b.id}')">Save Changes</button>
+    <button class="btn btn-ghost" onclick="sendWhatsApp('${b.id}')" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.4);color:#25d366">WhatsApp</button>
+  `;
+  openModal('bookingDetailModal');
 }
-function toggleBk(id){
-  const d=document.getElementById('bd_'+id);
-  d.classList.toggle('open');
+function saveBookingDetail(id){
+  const b=getBookings();
+  const i=b.findIndex(x=>x.id===id);
+  if(i<0)return;
+  b[i].status=document.getElementById('bdm-status').value;
+  b[i].date=document.getElementById('bdm-date').value;
+  b[i].time=document.getElementById('bdm-time').value;
+  saveBookings(b);
+  renderBookings();renderDashboard();updatePendingBadge();
+  closeModal('bookingDetailModal');
+  toast('Booking updated','success');
 }
-function updateBk(id,status){
-  const bk=getBookings();
-  const idx=bk.findIndex(b=>String(b.id)===String(id));
-  if(idx===-1)return;
-  bk[idx].status=status;
-  saveBookings(bk);
-  loadAll();
-  showToast(status==='confirmed'?'Booking confirmed!':'Booking declined');
-}
-function deleteBk(id){
-  if(!confirm('Delete this booking?'))return;
-  saveBookings(getBookings().filter(b=>String(b.id)!==String(id)));
-  loadAll();showToast('Booking deleted');
-}
-function waReply(phone,name,slot,status){
-  const ph=phone.replace(/\D/g,'');
-  const msg=status==='confirmed'?
-    `Hi ${name}! Your Beyond1 booking is *confirmed* for ${slot}. We'll be at your location on time. Let us know if you have any questions! — Beyond1 Team 📲`:
-    `Hi ${name}, thanks for booking Beyond1! Unfortunately the slot you requested isn't available. Please WhatsApp us at (647) 646-8756 to arrange an alternative time.`;
-  window.open(`https://wa.me/1${ph}?text=${encodeURIComponent(msg)}`,'_blank');
-}
-
-// ── CALENDAR ──
-let calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
-function calNav(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}loadCalendar();}
-function loadCalendar(){
-  const bk=getBookings().filter(b=>b.status==='confirmed');
-  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('calMonth').textContent=`${monthNames[calMonth]} ${calYear}`;
-  const firstDay=new Date(calYear,calMonth,1).getDay();
-  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
-  const today=new Date();
-  const todayStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-  const dows=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  let html=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  for(let i=0;i<firstDay;i++)html+=`<div class="cal-day empty"></div>`;
-  const cfg=getSettings();const maxH=parseInt(cfg.maxHours||14);
-  for(let d=1;d<=daysInMonth;d++){
-    const dStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const dayBk=bk.filter(b=>(b.slot1||'').includes(dStr));
-    const isToday=dStr===todayStr;
-    let evHTML=dayBk.slice(0,3).map(b=>`<div class="cal-event confirmed">${b.name.split(' ')[0]} · ${(b.slot1||'').split(' at ')[1]||''}</div>`).join('');
-    if(dayBk.length>3)evHTML+=`<div style="font-size:.55rem;color:var(--muted)">+${dayBk.length-3} more</div>`;
-    html+=`<div class="cal-day${isToday?' today':''}"><div class="cal-day-num">${d}</div>${evHTML}</div>`;
-  }
-  document.getElementById('calGrid').innerHTML=html;
-  // hours bar for today
-  const todayBk=bk.filter(b=>(b.slot1||'').includes(todayStr));
-  const usedH=todayBk.reduce((sum,b)=>{
-    const pkg=(b.pkg||'').toLowerCase();
-    if(pkg.includes('premium'))return sum+parseInt(cfg.hPrem||4);
-    if(pkg.includes('standard'))return sum+parseInt(cfg.hStd||2.5);
-    return sum+parseInt(cfg.hReg||1.5);
-  },0);
-  const pct=Math.min(100,Math.round((usedH/maxH)*100));
-  document.getElementById('todayHours').textContent=usedH+'h';
-  document.getElementById('maxHours').textContent=maxH;
-  document.getElementById('hoursLeft').textContent=(maxH-usedH)+'h';
-  document.getElementById('hoursFill').style.width=pct+'%';
-  const fill=document.getElementById('hoursFill');
-  fill.className='hb-fill'+(pct>=100?' full':pct>=75?' warn':'');
+function sendWhatsApp(id){
+  const b=getBookings().find(x=>x.id===id);
+  if(!b)return;
+  const wa=DB.get('settings',{}).waNumber||'16476468756';
+  const msg=`Hi ${b.fname}! This is Beyond1 Auto & Home Care. Your booking (${b.id}) for ${b.pkg} on ${formatDate(b.date)} at ${b.time} is ${b.status}. Address: ${b.addr}. Total: $${b.total}. Any questions? Reply here!`;
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-// ── SETTINGS LOAD ──
-function loadSettings(){
-  const s=getSettings();
-  const fields={p_rs:s.p_rs||65,p_r5:s.p_r5||75,p_r7:s.p_r7||85,p_ss:s.p_ss||130,p_s5:s.p_s5||150,p_s7:s.p_s7||170,p_ps:s.p_ps||210,p_p5:s.p_p5||245,p_p7:s.p_p7||275,h_max:s.maxHours||14};
-  Object.entries(fields).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
-  const hreg=document.getElementById('h_reg');if(hreg)hreg.value=s.hReg||1.5;
-  const hstd=document.getElementById('h_std');if(hstd)hstd.value=s.hStd||2.5;
-  const hprem=document.getElementById('h_prem');if(hprem)hprem.value=s.hPrem||4;
-  const hao=document.getElementById('h_ao');if(hao)hao.value=s.hAo||1;
+// ── NEW / EDIT BOOKING ────────────────────────────────────────────────
+function openNewBookingModal(){
+  document.getElementById('nbm-title').textContent='New Booking';
+  document.getElementById('nb-id').value='';
+  ['fname','lname','phone','email','addr','notes'].forEach(f=>document.getElementById('nb-'+f).value='');
+  document.getElementById('nb-total').value='';
+  document.getElementById('nb-date').value=new Date().toISOString().slice(0,10);
+  openModal('newBookingModal');
 }
-function savePrices(){
-  const s=getSettings();
-  ['p_rs','p_r5','p_r7','p_ss','p_s5','p_s7','p_ps','p_p5','p_p7'].forEach(id=>{
-    const e=document.getElementById(id);if(e&&e.value)s[id]=parseInt(e.value);
+function openEditBooking(id){
+  const b=getBookings().find(x=>x.id===id);
+  if(!b)return;
+  closeModal('bookingDetailModal');
+  document.getElementById('nbm-title').textContent='Edit Booking';
+  document.getElementById('nb-id').value=b.id;
+  document.getElementById('nb-fname').value=b.fname;
+  document.getElementById('nb-lname').value=b.lname;
+  document.getElementById('nb-phone').value=b.phone;
+  document.getElementById('nb-email').value=b.email||'';
+  document.getElementById('nb-addr').value=b.addr||'';
+  document.getElementById('nb-notes').value=b.notes||'';
+  document.getElementById('nb-total').value=b.total||'';
+  document.getElementById('nb-date').value=b.date;
+  document.getElementById('nb-status').value=b.status;
+  ['pkg','svc','veh','cond','time'].forEach(f=>{
+    const el=document.getElementById('nb-'+f);
+    const val={pkg:b.pkg,svc:b.svc,veh:b.vehicle,cond:b.condition,time:b.time}[f];
+    if(el&&val)[...el.options].forEach(o=>{if(o.value===val||o.text===val)o.selected=true});
   });
-  saveSettings(s);showSaved('price-saved');showToast('Prices saved!');
+  openModal('newBookingModal');
+}
+function saveBooking(){
+  const id=document.getElementById('nb-id').value;
+  const b={
+    id:id||genId('B'),
+    fname:document.getElementById('nb-fname').value.trim(),
+    lname:document.getElementById('nb-lname').value.trim(),
+    phone:document.getElementById('nb-phone').value.trim(),
+    email:document.getElementById('nb-email').value.trim(),
+    pkg:document.getElementById('nb-pkg').value,
+    svc:document.getElementById('nb-svc').value,
+    vehicle:document.getElementById('nb-veh').value,
+    condition:document.getElementById('nb-cond').value,
+    date:document.getElementById('nb-date').value,
+    time:document.getElementById('nb-time').value,
+    addr:document.getElementById('nb-addr').value.trim(),
+    total:+document.getElementById('nb-total').value||0,
+    status:document.getElementById('nb-status').value,
+    notes:document.getElementById('nb-notes').value.trim(),
+    created:id?getBookings().find(x=>x.id===id)?.created||new Date().toISOString():new Date().toISOString()
+  };
+  if(!b.fname||!b.phone){toast('Name and phone are required','error');return}
+  const bookings=getBookings();
+  const i=bookings.findIndex(x=>x.id===b.id);
+  if(i>=0)bookings[i]=b;else bookings.unshift(b);
+  saveBookings(bookings);
+  closeModal('newBookingModal');
+  renderBookings();renderDashboard();updatePendingBadge();
+  toast(id?'Booking updated':'Booking added','success');
+}
+
+// ── SCHEDULE / CALENDAR ───────────────────────────────────────────────
+let calYear=new Date().getFullYear(),calMonth=new Date().getMonth(),selectedDay=null;
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function renderCalendar(){
+  document.getElementById('calMonth').textContent=`${MONTHS[calMonth]} ${calYear}`;
+  const blocked=DB.get('blocked',{});
+  const bookings=getBookings();
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML=DAYS.map(d=>`<div class="cal-day-label">${d}</div>`).join('');
+  const first=new Date(calYear,calMonth,1).getDay();
+  const days=new Date(calYear,calMonth+1,0).getDate();
+  const today=new Date();
+  for(let i=0;i<first;i++){
+    const prev=new Date(calYear,calMonth,0-first+i+1);
+    grid.innerHTML+=`<div class="cal-day other-month"><div class="cal-day-num">${prev.getDate()}</div></div>`;
+  }
+  for(let d=1;d<=days;d++){
+    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday=today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
+    const isBlocked=blocked[dateStr]?.day===true;
+    const dayBookings=bookings.filter(b=>b.date===dateStr&&b.status!=='cancelled');
+    let cls='cal-day';
+    if(isToday)cls+=' today';
+    if(isBlocked)cls+=' blocked';
+    else if(dayBookings.length)cls+=' has-bookings';
+    grid.innerHTML+=`<div class="${cls}" onclick="selectDay('${dateStr}')">
+      <div class="cal-day-num">${d}</div>
+      ${isBlocked?'<div class="cal-blocked-label">Blocked</div>':''}
+      ${dayBookings.length&&!isBlocked?`<div class="cal-count">${dayBookings.length} booking${dayBookings.length>1?'s':''}</div>`:''}
+    </div>`;
+  }
+  renderBlockedList();
+}
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--}renderCalendar()}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++}renderCalendar()}
+
+function selectDay(dateStr){
+  selectedDay=dateStr;
+  const blocked=DB.get('blocked',{});
+  const bookings=getBookings().filter(b=>b.date===dateStr&&b.status!=='cancelled');
+  const isBlocked=blocked[dateStr]?.day===true;
+  document.getElementById('selectedDayInfo').style.display='none';
+  document.getElementById('selectedDayActions').style.display='block';
+  const d=new Date(dateStr+'T12:00:00');
+  document.getElementById('selectedDayLabel').textContent=d.toLocaleDateString('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const btn=document.getElementById('blockDayBtn');
+  btn.textContent=isBlocked?'Unblock Day':'Block Entire Day';
+  btn.className=isBlocked?'btn btn-success btn-sm':'btn btn-danger btn-sm';
+  document.getElementById('dayBookingsList').innerHTML=bookings.length?bookings.map(b=>`<div style="padding:.35rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span>${b.fname} ${b.lname} · ${b.pkg}</span><span style="color:var(--amber)">${b.time}</span></div>`).join(''):'<span style="color:var(--muted)">No bookings.</span>';
+}
+function toggleBlockDay(){
+  if(!selectedDay)return;
+  const blocked=DB.get('blocked',{});
+  if(blocked[selectedDay]?.day){delete blocked[selectedDay]}
+  else{blocked[selectedDay]={...(blocked[selectedDay]||{}),day:true}}
+  DB.set('blocked',blocked);
+  renderCalendar();
+  selectDay(selectedDay);
+  toast(blocked[selectedDay]?'Day blocked':'Day unblocked','info');
+}
+function renderBlockedList(){
+  const blocked=DB.get('blocked',{});
+  const keys=Object.keys(blocked).filter(k=>blocked[k].day).sort();
+  const el=document.getElementById('blockedDatesList');
+  el.innerHTML=keys.length?keys.map(k=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--border)"><span style="color:var(--red)">${formatDate(k)}</span><button class="btn btn-ghost btn-sm" onclick="unblockDate('${k}')">Remove</button></div>`).join(''):'<span style="color:var(--muted)">No blocked dates.</span>';
+}
+function unblockDate(d){
+  const blocked=DB.get('blocked',{});
+  delete blocked[d];
+  DB.set('blocked',blocked);
+  renderCalendar();
+  toast('Date unblocked','success');
+}
+
+// ── TIME SLOTS ────────────────────────────────────────────────────────
+const ALL_SLOTS=['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'];
+function openTimeSlotModal(){
+  if(!selectedDay)return;
+  document.getElementById('tsm-title').textContent=`Time Slots — ${formatDate(selectedDay)}`;
+  const blocked=DB.get('blocked',{});
+  const bookedTimes=getBookings().filter(b=>b.date===selectedDay&&b.status!=='cancelled').map(b=>b.time);
+  const blockedSlots=blocked[selectedDay]?.slots||[];
+  const grid=document.getElementById('timeSlotGrid');
+  grid.innerHTML=ALL_SLOTS.map(t=>{
+    const isBooked=bookedTimes.includes(t);
+    const isBlocked=blockedSlots.includes(t);
+    let cls='time-slot';
+    if(isBooked)cls+=' booked';
+    else if(isBlocked)cls+=' blocked';
+    return `<div class="${cls}" data-slot="${t}" onclick="toggleSlot(this,'${t}')">${t}${isBooked?'<br><span style="font-size:.6rem">Booked</span>':isBlocked?'<br><span style="font-size:.6rem">Blocked</span>':''}</div>`;
+  }).join('');
+  openModal('timeSlotModal');
+}
+function toggleSlot(el,t){
+  if(el.classList.contains('booked'))return;
+  el.classList.toggle('blocked');
+  el.innerHTML=el.classList.contains('blocked')?`${t}<br><span style="font-size:.6rem">Blocked</span>`:t;
+}
+function saveTimeSlots(){
+  if(!selectedDay)return;
+  const blocked=DB.get('blocked',{});
+  const slots=[...document.querySelectorAll('#timeSlotGrid .time-slot.blocked')].map(el=>el.dataset.slot);
+  if(!blocked[selectedDay])blocked[selectedDay]={};
+  blocked[selectedDay].slots=slots;
+  DB.set('blocked',blocked);
+  closeModal('timeSlotModal');
+  renderCalendar();
+  toast('Time slots saved','success');
+}
+
+// ── CUSTOMERS ─────────────────────────────────────────────────────────
+let customerSearch='';
+function renderCustomers(){
+  const bookings=getBookings();
+  const map={};
+  bookings.forEach(b=>{
+    const k=b.phone;
+    if(!map[k]){map[k]={fname:b.fname,lname:b.lname,phone:b.phone,email:b.email||'',city:b.addr?.split(',')[1]?.trim()||'',bookings:[],total:0,last:''}}
+    map[k].bookings.push(b);
+    if(b.status==='completed')map[k].total+=+b.total||0;
+    if(!map[k].last||b.date>map[k].last)map[k].last=b.date;
+  });
+  let customers=Object.values(map);
+  if(customerSearch)customers=customers.filter(c=>`${c.fname} ${c.lname} ${c.phone} ${c.email}`.toLowerCase().includes(customerSearch.toLowerCase()));
+  customers.sort((a,b)=>b.bookings.length-a.bookings.length);
+  document.getElementById('customerCount').textContent=`${customers.length} customer${customers.length!==1?'s':''}`;
+  const tbody=document.getElementById('customers-body');
+  tbody.innerHTML=customers.length?customers.map(c=>`
+    <tr>
+      <td><strong>${c.fname} ${c.lname}</strong></td>
+      <td><a href="tel:${c.phone}" style="color:var(--amber)">${c.phone}</a></td>
+      <td style="color:var(--muted)">${c.email||'—'}</td>
+      <td style="color:var(--muted)">${c.city||'—'}</td>
+      <td style="text-align:center"><span class="badge badge-new">${c.bookings.length}</span></td>
+      <td style="color:var(--green);font-weight:700">$${c.total}</td>
+      <td style="color:var(--muted)">${c.last?formatDate(c.last):'—'}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="openCustomerDetail('${c.phone}')">View</button></td>
+    </tr>`).join(''):`<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:2rem">No customers yet.</td></tr>`;
+}
+function searchCustomers(v){customerSearch=v;renderCustomers()}
+function openCustomerDetail(phone){
+  const bookings=getBookings().filter(b=>b.phone===phone);
+  if(!bookings.length)return;
+  const c=bookings[0];
+  const total=bookings.filter(b=>b.status==='completed').reduce((s,b)=>s+(+b.total||0),0);
+  document.getElementById('cm-title').textContent=`${c.fname} ${c.lname}`;
+  document.getElementById('cm-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
+      <div><div class="card-title">Contact</div>
+        <div style="font-size:.88rem"><a href="tel:${c.phone}" style="color:var(--amber)">${c.phone}</a></div>
+        <div style="font-size:.82rem;color:var(--muted)">${c.email||'—'}</div>
+      </div>
+      <div><div class="card-title">Summary</div>
+        <div style="font-size:.82rem">${bookings.length} booking${bookings.length!==1?'s':''} · <span style="color:var(--green)">$${total} spent</span></div>
+      </div>
+    </div>
+    <div class="card-title">Booking History</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Date</th><th>Service</th><th>Total</th><th>Status</th></tr></thead>
+      <tbody>${bookings.sort((a,b)=>new Date(b.date)-new Date(a.date)).map(b=>`<tr><td>${formatDate(b.date)}</td><td>${b.pkg}</td><td style="color:var(--amber)">$${b.total}</td><td>${statusBadge(b.status)}</td></tr>`).join('')}</tbody>
+    </table></div>`;
+  openModal('customerModal');
+}
+
+// ── PRICING ───────────────────────────────────────────────────────────
+const DEFAULT_PRICING={
+  essential:{name:'Essential Refresh',color:'#E8891A',tiers:['Full Service'],vehicles:['Sedan','Compact SUV / Truck','Large SUV / Van'],prices:{'Full Service':[69,79,89]}},
+  deep:{name:'Deep Clean',color:'#60a5fa',tiers:['Full Service','Interior Only','Exterior Only'],vehicles:['Sedan','Compact SUV / Truck','Large SUV / Van'],prices:{'Full Service':[139,149,169],'Interior Only':[99,109,129],'Exterior Only':[59,69,79]}},
+  premium:{name:'Premium Restoration',color:'#a78bfa',tiers:['Full Service','Interior Only','Exterior Only'],vehicles:['Sedan','Compact SUV / Truck','Large SUV / Van'],prices:{'Full Service':[229,249,279],'Interior Only':[169,189,219],'Exterior Only':[99,119,139]}}
+};
+function getPricing(){return DB.get('pricing',DEFAULT_PRICING)}
+function renderPricing(){
+  const pricing=getPricing();
+  const el=document.getElementById('pricingPanel');
+  el.innerHTML=Object.entries(pricing).map(([key,tier])=>`
+    <div class="price-tier">
+      <div class="price-tier-header">
+        <div class="price-tier-name" style="color:${tier.color}">${tier.name}</div>
+        <div class="price-tier-badge" style="background:${tier.color}22;color:${tier.color};border:1px solid ${tier.color}44">Tier ${key==='essential'?1:key==='deep'?2:3}</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row" style="margin-bottom:.3rem">
+          <div class="price-row-label"></div>
+          ${tier.vehicles.map(v=>`<div class="price-col-header">${v}</div>`).join('')}
+        </div>
+        ${tier.tiers.map(t=>`
+          <div class="price-row">
+            <div class="price-row-label">${t}</div>
+            ${tier.vehicles.map((v,vi)=>`
+              <div class="price-input-wrap">
+                <input class="price-input" type="number" data-key="${key}" data-tier="${t}" data-vi="${vi}" value="${tier.prices[t][vi]}" min="0">
+              </div>`).join('')}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function savePricing(){
+  const pricing=getPricing();
+  document.querySelectorAll('.price-input').forEach(inp=>{
+    const {key,tier,vi}=inp.dataset;
+    if(pricing[key]&&pricing[key].prices[tier])pricing[key].prices[tier][+vi]=+inp.value||0;
+  });
+  DB.set('pricing',pricing);
+  toast('Pricing saved successfully','success');
+}
+
+// ── DISCOUNTS ─────────────────────────────────────────────────────────
+function renderDiscounts(){
+  const discounts=DB.get('discounts',[]);
+  const el=document.getElementById('discountList');
+  el.innerHTML=discounts.length?discounts.map(d=>`
+    <div class="discount-item">
+      <div>
+        <div class="discount-code">${d.code}</div>
+        <div class="discount-meta">${d.desc||'No description'} · Used ${d.used||0}${d.maxUses?' / '+d.maxUses:''} times${d.expiry?' · Expires '+formatDate(d.expiry):''}</div>
+      </div>
+      <div class="discount-val">${d.type==='percent'?d.val+'% off':'$'+d.val+' off'}${d.min>0?' (min $'+d.min+')':''}</div>
+      <div class="discount-toggle ${d.active?'on':''}" onclick="toggleDiscount('${d.id}')"></div>
+      <button class="btn btn-danger btn-sm" onclick="deleteDiscount('${d.id}')">Delete</button>
+    </div>`).join(''):`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><p>No discount codes yet.</p></div>`;
+}
+function toggleDiscount(id){
+  const d=DB.get('discounts',[]);
+  const i=d.findIndex(x=>x.id===id);
+  if(i<0)return;
+  d[i].active=!d[i].active;
+  DB.set('discounts',d);
+  renderDiscounts();
+  toast(d[i].active?'Discount activated':'Discount deactivated','info');
+}
+function deleteDiscount(id){
+  if(!confirm('Delete this discount code?'))return;
+  DB.set('discounts',DB.get('discounts',[]).filter(x=>x.id!==id));
+  renderDiscounts();
+  toast('Discount deleted','success');
+}
+function openDiscountModal(){openModal('discountModal')}
+function saveDiscount(){
+  const code=document.getElementById('dc-code').value.trim().toUpperCase();
+  const val=+document.getElementById('dc-val').value;
+  if(!code||!val){toast('Code and value are required','error');return}
+  const d=DB.get('discounts',[]);
+  d.unshift({id:genId('D'),code,type:document.getElementById('dc-type').value,val,min:+document.getElementById('dc-min').value||0,maxUses:+document.getElementById('dc-uses').value||0,expiry:document.getElementById('dc-expiry').value,desc:document.getElementById('dc-desc').value,active:true,used:0});
+  DB.set('discounts',d);
+  closeModal('discountModal');
+  renderDiscounts();
+  toast('Discount code created','success');
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────────────
+const DEFAULT_HOURS={Mon:{open:true,from:'08:00',to:'20:00'},Tue:{open:true,from:'08:00',to:'20:00'},Wed:{open:true,from:'08:00',to:'20:00'},Thu:{open:true,from:'08:00',to:'20:00'},Fri:{open:true,from:'08:00',to:'20:00'},Sat:{open:true,from:'09:00',to:'18:00'},Sun:{open:true,from:'10:00',to:'16:00'}};
+function renderSettings(){
+  const hours=DB.get('hours',DEFAULT_HOURS);
+  const el=document.getElementById('hoursPanel');
+  el.innerHTML=Object.entries(hours).map(([day,h])=>`
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem">
+      <div style="width:36px;font-size:.78rem;font-weight:700;color:var(--off)">${day}</div>
+      <label style="display:flex;align-items:center;gap:.3rem;cursor:pointer">
+        <input type="checkbox" id="h-open-${day}" ${h.open?'checked':''} onchange="toggleDayOpen('${day}')">
+        <span style="font-size:.72rem;color:var(--muted)">Open</span>
+      </label>
+      <input class="form-input" type="time" id="h-from-${day}" value="${h.from}" style="flex:1;font-size:.78rem;padding:.35rem .5rem" ${!h.open?'disabled':''}>
+      <span style="color:var(--muted);font-size:.78rem">–</span>
+      <input class="form-input" type="time" id="h-to-${day}" value="${h.to}" style="flex:1;font-size:.78rem;padding:.35rem .5rem" ${!h.open?'disabled':''}>
+    </div>`).join('');
+}
+function toggleDayOpen(day){
+  const open=document.getElementById('h-open-'+day).checked;
+  document.getElementById('h-from-'+day).disabled=!open;
+  document.getElementById('h-to-'+day).disabled=!open;
 }
 function saveHours(){
-  const s=getSettings();
-  const hmax=document.getElementById('h_max');if(hmax&&hmax.value)s.maxHours=parseInt(hmax.value);
-  const hreg=document.getElementById('h_reg');if(hreg)s.hReg=parseFloat(hreg.value);
-  const hstd=document.getElementById('h_std');if(hstd)s.hStd=parseFloat(hstd.value);
-  const hprem=document.getElementById('h_prem');if(hprem)s.hPrem=parseFloat(hprem.value);
-  const hao=document.getElementById('h_ao');if(hao)s.hAo=parseFloat(hao.value);
-  saveSettings(s);showSaved('hours-saved');showToast('Hours saved!');loadCalendar();
+  const hours=DB.get('hours',DEFAULT_HOURS);
+  Object.keys(hours).forEach(day=>{
+    hours[day].open=document.getElementById('h-open-'+day).checked;
+    hours[day].from=document.getElementById('h-from-'+day).value;
+    hours[day].to=document.getElementById('h-to-'+day).value;
+  });
+  DB.set('hours',hours);
+  toast('Hours saved','success');
 }
-function saveBiz(){saveSettings({...getSettings(),updated:Date.now()});showSaved('biz-saved');showToast('Business info saved!');}
-
-// ── TOOLS ──
-function exportCSV(){
-  const bk=getBookings();
-  if(!bk.length){showToast('No bookings to export','error');return;}
-  const headers=['Name','Phone','Address','Package','Cars','Condition','Add-ons','Slot1','Slot2','Slot3','Payment','Fragrance','Car Brand','Car Model','Ext Color','Int Color','Seat Type','Mats','Notes','Status','Created'];
-  const rows=bk.map(b=>[b.name,b.phone,b.addr,b.pkg,b.cars,b.condition,b.addons,b.slot1,b.slot2,b.slot3,b.pay,b.frag,b.brand,b.model,b.extcol,b.intcol,b.seat,b.mat,b.notes,b.status,b.created].map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(','));
-  const csv=[headers.join(','),...rows].join('\n');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='beyond1-bookings.csv';a.click();
-  showToast('CSV exported!');
-}
-function clearOld(){
-  saveBookings(getBookings().filter(b=>b.status!=='declined'));
-  loadAll();showToast('Declined bookings cleared');
-}
-function clearAll(){saveBookings([]);loadAll();showToast('All bookings cleared');}
-
-// ── PANEL SWITCH ──
-function showPanel(id,el){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
-  if(el)el.classList.add('active');
-  if(id==='calendar')loadCalendar();
+function saveSettings(){
+  DB.set('settings',{name:document.getElementById('set-name').value,phone:document.getElementById('set-phone').value,email:document.getElementById('set-email').value,waNumber:document.getElementById('set-wa').value});
+  toast('Settings saved','success');
 }
 
-// ── UI HELPERS ──
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast'+(type?' '+type:'');
-  setTimeout(()=>t.classList.add('show'),10);
-  setTimeout(()=>t.classList.remove('show'),3000);
+// ── DATA EXPORT / IMPORT ──────────────────────────────────────────────
+function exportData(){
+  const data={bookings:getBookings(),discounts:DB.get('discounts',[]),pricing:getPricing(),blocked:DB.get('blocked',{}),settings:DB.get('settings',{}),hours:DB.get('hours',DEFAULT_HOURS)};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`beyond1-data-${new Date().toISOString().slice(0,10)}.json`;a.click();
+  toast('Data exported','success');
 }
-function showSaved(id){
-  const el=document.getElementById(id);if(!el)return;
-  el.style.display='inline';setTimeout(()=>el.style.display='none',2500);
+function importData(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(data.bookings)saveBookings(data.bookings);
+      if(data.discounts)DB.set('discounts',data.discounts);
+      if(data.pricing)DB.set('pricing',data.pricing);
+      if(data.blocked)DB.set('blocked',data.blocked);
+      if(data.settings)DB.set('settings',data.settings);
+      if(data.hours)DB.set('hours',data.hours);
+      init();toast('Data imported successfully','success');
+    }catch{toast('Invalid JSON file','error')}
+  };
+  reader.readAsText(file);
 }
-function timeAgo(iso){
-  if(!iso)return '';
-  const diff=(Date.now()-new Date(iso))/1000;
-  if(diff<60)return 'just now';
-  if(diff<3600)return `${Math.floor(diff/60)}m ago`;
-  if(diff<86400)return `${Math.floor(diff/3600)}h ago`;
-  return `${Math.floor(diff/86400)}d ago`;
+function clearAllData(){
+  if(!confirm('This will delete ALL bookings, customers, and settings. Are you sure?'))return;
+  ['bookings','discounts','pricing','blocked','settings','hours','seeded'].forEach(k=>DB.del(k));
+  init();toast('All data cleared','info');
 }
+
+// ── UTILS ─────────────────────────────────────────────────────────────
+function formatDate(d){
+  if(!d)return'—';
+  const dt=new Date(d+'T12:00:00');
+  return dt.toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'});
+}
+
+// ── STARTUP ───────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  if(DB.get('session',false)){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  }
+  // Set today as default date in new booking form
+  document.getElementById('nb-date').value=new Date().toISOString().slice(0,10);
+});
 </script>
 </body>
 </html>
