@@ -707,12 +707,42 @@ tr:hover td{background:rgba(255,255,255,.02)}
 </div>
 
 <script>
-// ── DATA STORE ──────────────────────────────────────────────────────
+// ── SUPABASE CONFIG ──────────────────────────────────────────────────
+const SUPA_URL='https://uivvpudjwxtzozfvnbtl.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpdnZwdWRqd3h0em96ZnZuYnRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NDcwMTIsImV4cCI6MjA5NzEyMzAxMn0.rr4ZX63pO908ymMmR-A7SPC39ALN3i7pEK7yCHfUUXg';
+const SUPA_HEADERS={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
+
+async function supaFetch(path,opts={}){
+  const r=await fetch(SUPA_URL+path,{...opts,headers:{...SUPA_HEADERS,...(opts.headers||{})}});
+  if(!r.ok&&r.status!==204){const e=await r.json().catch(()=>({}));console.error('Supabase error:',e);throw new Error(e.message||'Supabase error');}
+  if(r.status===204)return null;
+  return r.json();
+}
+
+// ── LOCAL DB (for non-booking data: settings, discounts, blocked dates) ──
 const DB = {
   get(k,d){try{return JSON.parse(localStorage.getItem('b1_'+k))||d}catch{return d}},
   set(k,v){localStorage.setItem('b1_'+k,JSON.stringify(v))},
   del(k){localStorage.removeItem('b1_'+k)}
 };
+
+// ── BOOKING CACHE ─────────────────────────────────────────────────────
+let _bookingsCache=null;
+let _lastFetch=0;
+
+async function fetchBookings(force=false){
+  const now=Date.now();
+  if(!force&&_bookingsCache&&(now-_lastFetch)<15000)return _bookingsCache;
+  try{
+    const data=await supaFetch('/rest/v1/bookings?order=created_at.desc&limit=500');
+    _bookingsCache=data||[];
+    _lastFetch=now;
+    return _bookingsCache;
+  }catch(e){
+    console.warn('Failed to fetch bookings from Supabase:',e);
+    return _bookingsCache||[];
+  }
+}
 
 // ── AUTH ─────────────────────────────────────────────────────────────
 function doLogin(){
@@ -745,9 +775,14 @@ function changePassword(){
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────
-function init(){
+async function init(){
   if(!DB.get('session',false)){return}
   seedDemoData();
+  // Show loading state
+  document.getElementById('bookings-body').innerHTML='<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--muted)">Loading bookings...</td></tr>';
+  document.getElementById('dash-recent-body').innerHTML='<tr><td colspan="5" style="text-align:center;padding:1rem;color:var(--muted)">Loading...</td></tr>';
+  // Fetch bookings from Supabase
+  await fetchBookings(true);
   renderDashboard();
   renderBookings();
   renderCustomers();
@@ -756,6 +791,17 @@ function init(){
   renderCalendar();
   renderSettings();
   updatePendingBadge();
+  // Poll for new bookings every 20 seconds
+  setInterval(async()=>{
+    const prev=(_bookingsCache||[]).length;
+    await fetchBookings(true);
+    const curr=(_bookingsCache||[]).length;
+    if(curr>prev){
+      const newest=_bookingsCache[0];
+      toast('New booking: '+(newest.name||'Customer')+' — '+newest.pkg,'success');
+      renderDashboard();renderBookings();updatePendingBadge();
+    }
+  },20000);
 }
 
 // ── INITIAL SETUP (clean start — no demo data) ───────────────────────
@@ -804,9 +850,36 @@ function closeModal(id){document.getElementById(id).classList.remove('open')}
 document.addEventListener('click',e=>{if(e.target.classList.contains('modal-overlay'))e.target.classList.remove('open')});
 
 // ── BOOKING HELPERS ───────────────────────────────────────────────────
-function getBookings(){return DB.get('bookings',[])}
-function saveBookings(b){DB.set('bookings',b)}
+function getBookings(){return _bookingsCache||[]}
 function genId(prefix){return prefix+(Date.now().toString(36).toUpperCase())}
+
+async function updateBookingStatus(supaId,status){
+  await supaFetch('/rest/v1/bookings?id=eq.'+supaId,{
+    method:'PATCH',
+    headers:{'Prefer':'return=minimal'},
+    body:JSON.stringify({status:status,confirmed_at:status==='confirmed'?new Date().toISOString():null})
+  });
+  await fetchBookings(true);
+}
+
+async function updateBookingFields(supaId,fields){
+  await supaFetch('/rest/v1/bookings?id=eq.'+supaId,{
+    method:'PATCH',
+    headers:{'Prefer':'return=minimal'},
+    body:JSON.stringify(fields)
+  });
+  await fetchBookings(true);
+}
+
+async function insertBooking(data){
+  const result=await supaFetch('/rest/v1/bookings',{
+    method:'POST',
+    headers:{'Prefer':'return=representation'},
+    body:JSON.stringify(data)
+  });
+  await fetchBookings(true);
+  return result&&result[0];
+}
 
 const statusBadge=s=>{
   const map={pending:'badge-pending',confirmed:'badge-confirmed',completed:'badge-completed',cancelled:'badge-cancelled'};
@@ -815,31 +888,19 @@ const statusBadge=s=>{
 
 function updatePendingBadge(){
   const n=getBookings().filter(b=>b.status==='pending').length;
-  document.getElementById('pendingBadge').textContent=n;
-  document.getElementById('pendingBadge').style.display=n?'inline':'none';
+  const el=document.getElementById('pendingBadge');
+  if(el){el.textContent=n;el.style.display=n?'inline':'none';}
 }
 
 
-// u2500u2500 NEW BOOKING NOTIFICATION (from website) u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500u2500
-function checkNewBookingFromWebsite(){
-  const last = localStorage.getItem("b1_lastBooking");
-  const seen = localStorage.getItem("b1_lastBooking_seen");
-  if(last && last !== seen){
-    const b = JSON.parse(last);
-    toast("ud83dudd14 New booking from website: " + b.fname + " " + b.lname + " u2014 " + b.pkg,"success");
-    localStorage.setItem("b1_lastBooking_seen", last);
-    updatePendingBadge();
-    renderDashboard();
-  }
-}
-setInterval(checkNewBookingFromWebsite, 15000);
+// New booking polling is handled inside init() via setInterval
 // ── DASHBOARD ─────────────────────────────────────────────────────────
 function renderDashboard(){
   const bookings=getBookings();
   const today=new Date().toISOString().slice(0,10);
   const pending=bookings.filter(b=>b.status==='pending').length;
-  const todayConf=bookings.filter(b=>b.date===today&&b.status==='confirmed').length;
-  const customers=[...new Set(bookings.map(b=>b.phone))].length;
+  const todayConf=bookings.filter(b=>b.booking_date===today&&b.status==='confirmed').length;
+  const customers=[...new Set(bookings.map(b=>b.phone).filter(Boolean))].length;
   const revenue=bookings.filter(b=>b.status==='completed').reduce((s,b)=>s+(+b.total||0),0);
   document.getElementById('dash-pending').textContent=pending;
   document.getElementById('dash-today').textContent=todayConf;
@@ -847,13 +908,13 @@ function renderDashboard(){
   document.getElementById('dash-revenue').textContent='$'+revenue.toLocaleString();
 
   // Recent bookings
-  const recent=bookings.slice().sort((a,b)=>new Date(b.created)-new Date(a.created)).slice(0,5);
+  const recent=bookings.slice().sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
   const tbody=document.getElementById('dash-recent-body');
   tbody.innerHTML=recent.length?recent.map(b=>`
     <tr>
-      <td><strong>${b.fname} ${b.lname}</strong></td>
-      <td>${b.pkg}</td>
-      <td>${formatDate(b.date)}</td>
+      <td><strong>${b.name||'—'}</strong></td>
+      <td>${b.pkg||'—'}</td>
+      <td>${formatDate(b.booking_date)}</td>
       <td>${statusBadge(b.status)}</td>
       <td><button class="btn btn-ghost btn-sm" onclick="openBookingDetail('${b.id}')">View</button></td>
     </tr>`).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No bookings yet.</td></tr>`;
@@ -861,10 +922,10 @@ function renderDashboard(){
   // Upcoming
   const now=new Date();
   const in3=new Date(now);in3.setDate(now.getDate()+3);
-  const upcoming=bookings.filter(b=>b.status==='confirmed'&&new Date(b.date)>=now&&new Date(b.date)<=in3)
-    .sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const upcoming=bookings.filter(b=>b.status==='confirmed'&&new Date(b.booking_date)>=now&&new Date(b.booking_date)<=in3)
+    .sort((a,b)=>new Date(a.booking_date)-new Date(b.booking_date));
   const upEl=document.getElementById('dash-upcoming');
-  upEl.innerHTML=upcoming.length?upcoming.map(b=>`<div style="padding:.5rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><strong>${b.fname} ${b.lname}</strong><br><span style="color:var(--muted);font-size:.72rem">${b.pkg} · ${b.vehicle}</span></div><div style="text-align:right;font-size:.75rem;color:var(--amber)">${formatDate(b.date)}<br>${b.time}</div></div>`).join(''):'<div style="color:var(--muted);font-size:.8rem">No upcoming bookings in the next 3 days.</div>';
+  upEl.innerHTML=upcoming.length?upcoming.map(b=>`<div style="padding:.5rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><strong>${b.name||'—'}</strong><br><span style="color:var(--muted);font-size:.72rem">${b.pkg||'—'} · ${b.veh_type||'—'}</span></div><div style="text-align:right;font-size:.75rem;color:var(--amber)">${formatDate(b.booking_date)}<br>${b.booking_time||'—'}</div></div>`).join(''):'<div style="color:var(--muted);font-size:.8rem">No upcoming bookings in the next 3 days.</div>';
 }
 
 // ── BOOKINGS ──────────────────────────────────────────────────────────
@@ -872,18 +933,18 @@ let bookingFilter='all',bookingSearch='';
 function renderBookings(){
   let bookings=getBookings();
   if(bookingFilter!=='all')bookings=bookings.filter(b=>b.status===bookingFilter);
-  if(bookingSearch)bookings=bookings.filter(b=>`${b.fname} ${b.lname} ${b.phone} ${b.email} ${b.pkg}`.toLowerCase().includes(bookingSearch.toLowerCase()));
-  bookings.sort((a,b)=>new Date(b.created)-new Date(a.created));
+  if(bookingSearch)bookings=bookings.filter(b=>`${b.name||''} ${b.phone||''} ${b.email||''} ${b.pkg||''}`.toLowerCase().includes(bookingSearch.toLowerCase()));
+  bookings.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
   const tbody=document.getElementById('bookings-body');
   tbody.innerHTML=bookings.length?bookings.map(b=>`
     <tr>
-      <td style="color:var(--muted);font-size:.72rem">${b.id}</td>
-      <td><strong>${b.fname} ${b.lname}</strong><br><span style="color:var(--muted);font-size:.72rem">${b.phone}</span></td>
-      <td>${b.pkg}<br><span style="color:var(--muted);font-size:.72rem">${b.svc==='full'?'Full Service':b.svc==='interior'?'Interior Only':'Exterior Only'}</span></td>
-      <td>${b.vehicle}</td>
-      <td>${formatDate(b.date)}</td>
-      <td>${b.time}</td>
-      <td style="color:var(--amber);font-weight:700">$${b.total}</td>
+      <td style="color:var(--muted);font-size:.72rem">#${b.id}</td>
+      <td><strong>${b.name||'—'}</strong><br><span style="color:var(--muted);font-size:.72rem">${b.phone||'—'}</span></td>
+      <td>${b.pkg||'—'}<br><span style="color:var(--muted);font-size:.72rem">${b.svc_opt||'Full Service'}</span></td>
+      <td>${b.veh_type||'—'}</td>
+      <td>${formatDate(b.booking_date)}</td>
+      <td>${b.booking_time||'—'}</td>
+      <td style="color:var(--amber);font-weight:700">$${b.total||0}</td>
       <td>${statusBadge(b.status)}</td>
       <td>
         <div style="display:flex;gap:.35rem;flex-wrap:wrap">
@@ -902,29 +963,25 @@ function filterBookings(f,el){
   renderBookings();
 }
 function searchBookings(v){bookingSearch=v;renderBookings()}
-function quickStatus(id,status){
-  const b=getBookings();
-  const i=b.findIndex(x=>x.id===id);
-  if(i<0)return;
-  b[i].status=status;
-  saveBookings(b);
-  renderBookings();
-  renderDashboard();
-  updatePendingBadge();
-  toast(`Booking ${status}`,'success');
+async function quickStatus(id,status){
+  try{
+    await updateBookingStatus(id,status);
+    renderBookings();renderDashboard();updatePendingBadge();
+    toast('Booking '+status,'success');
+  }catch(e){toast('Failed to update booking','error');}
 }
 
 // ── BOOKING DETAIL ────────────────────────────────────────────────────
 function openBookingDetail(id){
-  const b=getBookings().find(x=>x.id===id);
+  const b=getBookings().find(x=>x.id==id);
   if(!b)return;
-  document.getElementById('bdm-title').textContent=`Booking ${b.id}`;
+  document.getElementById('bdm-title').textContent='Booking #'+b.id;
   document.getElementById('bdm-body').innerHTML=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
       <div>
         <div class="card-title">Customer</div>
-        <div style="font-size:.95rem;font-weight:700;margin-bottom:.3rem">${b.fname} ${b.lname}</div>
-        <div style="font-size:.82rem;color:var(--muted)">${b.phone}</div>
+        <div style="font-size:.95rem;font-weight:700;margin-bottom:.3rem">${b.name||'—'}</div>
+        <div style="font-size:.82rem;color:var(--muted)">${b.phone||'—'}</div>
         <div style="font-size:.82rem;color:var(--muted)">${b.email||'—'}</div>
       </div>
       <div>
@@ -942,60 +999,69 @@ function openBookingDetail(id){
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
       <div>
-        <div class="card-title">Service</div>
-        <div style="font-weight:700">${b.pkg}</div>
-        <div style="font-size:.8rem;color:var(--muted)">${b.svc==='full'?'Full Service':b.svc==='interior'?'Interior Only':'Exterior Only'}</div>
-        <div style="font-size:.8rem;color:var(--muted)">${b.vehicle} · ${b.condition} condition</div>
+        <div class="card-title">Service Details</div>
+        <div style="font-weight:700">${b.pkg||'—'}</div>
+        <div style="font-size:.8rem;color:var(--muted)">${b.svc_opt||'Full Service'}</div>
+        <div style="font-size:.8rem;color:var(--muted)">${b.veh_type||'—'} · ${b.condition||'—'} condition</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:.3rem">Seats: ${b.seats||'—'} | Mats: ${b.mat_type||'—'}</div>
+        <div style="font-size:.78rem;color:var(--muted)">Interior: ${b.int_color||'—'} | Exterior: ${b.ext_color||'—'}</div>
+        <div style="font-size:.78rem;color:var(--muted)">Alloys: ${b.alloy||'—'} | Pet: ${b.pet||'None'}</div>
       </div>
       <div>
         <div class="card-title">Schedule</div>
-        <div style="font-weight:700">${formatDate(b.date)}</div>
-        <div style="font-size:.8rem;color:var(--muted)">${b.time}</div>
-        <div style="font-size:.8rem;color:var(--muted);margin-top:.3rem">${b.addr}</div>
+        <div style="font-weight:700">${formatDate(b.booking_date)}</div>
+        <div style="font-size:.8rem;color:var(--muted)">${b.booking_time||'—'}</div>
+        <div style="font-size:.8rem;color:var(--muted);margin-top:.3rem">${b.address||'—'}, ${b.city||''} ${b.postal_code||''}</div>
+        ${b.travel_fee>0?`<div style="font-size:.78rem;color:var(--muted)">Travel fee: $${b.travel_fee}</div>`:''}
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
       <div>
-        <div class="card-title">Total</div>
-        <div style="font-size:1.4rem;font-weight:900;color:var(--amber)">$${b.total}</div>
+        <div class="card-title">Pricing</div>
+        <div style="font-size:.8rem;color:var(--muted)">Package: $${b.estimated_price||0}</div>
+        ${b.addons_total>0?`<div style="font-size:.8rem;color:var(--muted)">Add-ons: $${b.addons_total}</div>`:''}
+        ${b.travel_fee>0?`<div style="font-size:.8rem;color:var(--muted)">Travel: $${b.travel_fee}</div>`:''}
+        <div style="font-size:1.4rem;font-weight:900;color:var(--amber)">$${b.total||0}</div>
       </div>
       <div>
         <div class="card-title">Reschedule</div>
-        <div style="display:flex;gap:.4rem">
-          <input class="form-input" type="date" id="bdm-date" value="${b.date}" style="font-size:.78rem;padding:.4rem .6rem">
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+          <input class="form-input" type="date" id="bdm-date" value="${b.booking_date||''}" style="font-size:.78rem;padding:.4rem .6rem">
           <select class="form-input form-select" id="bdm-time" style="font-size:.78rem;padding:.4rem 1.6rem .4rem .6rem">
-            ${['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'].map(t=>`<option ${t===b.time?'selected':''}>${t}</option>`).join('')}
+            ${['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'].map(t=>`<option ${t===b.booking_time?'selected':''}>${t}</option>`).join('')}
           </select>
         </div>
       </div>
     </div>
-    ${b.notes?`<div class="card-title">Notes</div><div style="font-size:.82rem;color:var(--off);background:var(--raised);padding:.75rem;border-radius:var(--radius-sm)">${b.notes}</div>`:''}
+    ${b.addons?`<div class="card-title">Add-ons</div><div style="font-size:.82rem;color:var(--off);background:var(--raised);padding:.75rem;border-radius:var(--radius-sm);margin-bottom:.75rem">${b.addons}</div>`:''}
+    ${b.notes?`<div class="card-title">Customer Notes</div><div style="font-size:.82rem;color:var(--off);background:var(--raised);padding:.75rem;border-radius:var(--radius-sm)">${b.notes}</div>`:''}
   `;
   document.getElementById('bdm-footer').innerHTML=`
     <button class="btn btn-ghost" onclick="closeModal('bookingDetailModal')">Close</button>
-    <button class="btn btn-ghost" onclick="openEditBooking('${b.id}')">Edit</button>
     <button class="btn btn-primary" onclick="saveBookingDetail('${b.id}')">Save Changes</button>
     <button class="btn btn-ghost" onclick="sendWhatsApp('${b.id}')" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.4);color:#25d366">WhatsApp</button>
   `;
   openModal('bookingDetailModal');
 }
-function saveBookingDetail(id){
-  const b=getBookings();
-  const i=b.findIndex(x=>x.id===id);
-  if(i<0)return;
-  b[i].status=document.getElementById('bdm-status').value;
-  b[i].date=document.getElementById('bdm-date').value;
-  b[i].time=document.getElementById('bdm-time').value;
-  saveBookings(b);
-  renderBookings();renderDashboard();updatePendingBadge();
-  closeModal('bookingDetailModal');
-  toast('Booking updated','success');
+async function saveBookingDetail(id){
+  try{
+    const fields={
+      status:document.getElementById('bdm-status').value,
+      booking_date:document.getElementById('bdm-date').value,
+      booking_time:document.getElementById('bdm-time').value
+    };
+    await updateBookingFields(id,fields);
+    renderBookings();renderDashboard();updatePendingBadge();
+    closeModal('bookingDetailModal');
+    toast('Booking updated','success');
+  }catch(e){toast('Failed to update booking','error');}
 }
 function sendWhatsApp(id){
-  const b=getBookings().find(x=>x.id===id);
+  const b=getBookings().find(x=>x.id==id);
   if(!b)return;
   const wa=DB.get('settings',{}).waNumber||'16476468756';
-  const msg=`Hi ${b.fname}! This is Beyond1 Auto & Home Care. Your booking (${b.id}) for ${b.pkg} on ${formatDate(b.date)} at ${b.time} is ${b.status}. Address: ${b.addr}. Total: $${b.total}. Any questions? Reply here!`;
+  const firstName=(b.name||'').split(' ')[0]||'there';
+  const msg=`Hi ${firstName}! This is Beyond1 Auto & Home Care. Your booking #${b.id} for ${b.pkg||'service'} on ${formatDate(b.booking_date)} at ${b.booking_time||'TBD'} is ${b.status}. Address: ${b.address||'—'}. Total: $${b.total||0}. Any questions? Reply here!`;
   window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
@@ -1009,55 +1075,58 @@ function openNewBookingModal(){
   openModal('newBookingModal');
 }
 function openEditBooking(id){
-  const b=getBookings().find(x=>x.id===id);
+  const b=getBookings().find(x=>x.id==id);
   if(!b)return;
   closeModal('bookingDetailModal');
   document.getElementById('nbm-title').textContent='Edit Booking';
   document.getElementById('nb-id').value=b.id;
-  document.getElementById('nb-fname').value=b.fname;
-  document.getElementById('nb-lname').value=b.lname;
-  document.getElementById('nb-phone').value=b.phone;
+  const nameParts=(b.name||'').split(' ');
+  document.getElementById('nb-fname').value=nameParts[0]||'';
+  document.getElementById('nb-lname').value=nameParts.slice(1).join(' ')||'';
+  document.getElementById('nb-phone').value=b.phone||'';
   document.getElementById('nb-email').value=b.email||'';
-  document.getElementById('nb-addr').value=b.addr||'';
+  document.getElementById('nb-addr').value=b.address||'';
   document.getElementById('nb-notes').value=b.notes||'';
   document.getElementById('nb-total').value=b.total||'';
-  document.getElementById('nb-date').value=b.date;
-  document.getElementById('nb-status').value=b.status;
+  document.getElementById('nb-date').value=b.booking_date||'';
+  document.getElementById('nb-status').value=b.status||'pending';
   ['pkg','svc','veh','cond','time'].forEach(f=>{
     const el=document.getElementById('nb-'+f);
-    const val={pkg:b.pkg,svc:b.svc,veh:b.vehicle,cond:b.condition,time:b.time}[f];
+    const val={pkg:b.pkg,svc:b.svc_opt,veh:b.veh_type,cond:b.condition,time:b.booking_time}[f];
     if(el&&val)[...el.options].forEach(o=>{if(o.value===val||o.text===val)o.selected=true});
   });
   openModal('newBookingModal');
 }
-function saveBooking(){
+async function saveBooking(){
   const id=document.getElementById('nb-id').value;
-  const b={
-    id:id||genId('B'),
-    fname:document.getElementById('nb-fname').value.trim(),
-    lname:document.getElementById('nb-lname').value.trim(),
+  const nameParts=(document.getElementById('nb-fname').value.trim()+' '+document.getElementById('nb-lname').value.trim()).trim();
+  const data={
+    name:nameParts,
     phone:document.getElementById('nb-phone').value.trim(),
-    email:document.getElementById('nb-email').value.trim(),
+    email:document.getElementById('nb-email').value.trim()||null,
     pkg:document.getElementById('nb-pkg').value,
-    svc:document.getElementById('nb-svc').value,
-    vehicle:document.getElementById('nb-veh').value,
+    svc_opt:document.getElementById('nb-svc').value,
+    veh_type:document.getElementById('nb-veh').value,
     condition:document.getElementById('nb-cond').value,
-    date:document.getElementById('nb-date').value,
-    time:document.getElementById('nb-time').value,
-    addr:document.getElementById('nb-addr').value.trim(),
+    booking_date:document.getElementById('nb-date').value,
+    booking_time:document.getElementById('nb-time').value,
+    address:document.getElementById('nb-addr').value.trim()||null,
     total:+document.getElementById('nb-total').value||0,
     status:document.getElementById('nb-status').value,
-    notes:document.getElementById('nb-notes').value.trim(),
-    created:id?getBookings().find(x=>x.id===id)?.created||new Date().toISOString():new Date().toISOString()
+    notes:document.getElementById('nb-notes').value.trim()||null,
   };
-  if(!b.fname||!b.phone){toast('Name and phone are required','error');return}
-  const bookings=getBookings();
-  const i=bookings.findIndex(x=>x.id===b.id);
-  if(i>=0)bookings[i]=b;else bookings.unshift(b);
-  saveBookings(bookings);
-  closeModal('newBookingModal');
-  renderBookings();renderDashboard();updatePendingBadge();
-  toast(id?'Booking updated':'Booking added','success');
+  if(!data.name||!data.phone){toast('Name and phone are required','error');return}
+  try{
+    if(id){
+      await updateBookingFields(id,data);
+      toast('Booking updated','success');
+    }else{
+      await insertBooking(data);
+      toast('Booking added','success');
+    }
+    closeModal('newBookingModal');
+    renderBookings();renderDashboard();updatePendingBadge();
+  }catch(e){toast('Failed to save booking','error');}
 }
 
 // ── SCHEDULE / CALENDAR ───────────────────────────────────────────────
@@ -1082,7 +1151,7 @@ function renderCalendar(){
     const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const isToday=today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
     const isBlocked=blocked[dateStr]?.day===true;
-    const dayBookings=bookings.filter(b=>b.date===dateStr&&b.status!=='cancelled');
+    const dayBookings=bookings.filter(b=>b.booking_date===dateStr&&b.status!=='cancelled');
     let cls='cal-day';
     if(isToday)cls+=' today';
     if(isBlocked)cls+=' blocked';
@@ -1101,7 +1170,7 @@ function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++}renderCalenda
 function selectDay(dateStr){
   selectedDay=dateStr;
   const blocked=DB.get('blocked',{});
-  const bookings=getBookings().filter(b=>b.date===dateStr&&b.status!=='cancelled');
+  const bookings=getBookings().filter(b=>b.booking_date===dateStr&&b.status!=='cancelled');
   const isBlocked=blocked[dateStr]?.day===true;
   document.getElementById('selectedDayInfo').style.display='none';
   document.getElementById('selectedDayActions').style.display='block';
@@ -1110,7 +1179,7 @@ function selectDay(dateStr){
   const btn=document.getElementById('blockDayBtn');
   btn.textContent=isBlocked?'Unblock Day':'Block Entire Day';
   btn.className=isBlocked?'btn btn-success btn-sm':'btn btn-danger btn-sm';
-  document.getElementById('dayBookingsList').innerHTML=bookings.length?bookings.map(b=>`<div style="padding:.35rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span>${b.fname} ${b.lname} · ${b.pkg}</span><span style="color:var(--amber)">${b.time}</span></div>`).join(''):'<span style="color:var(--muted)">No bookings.</span>';
+  document.getElementById('dayBookingsList').innerHTML=bookings.length?bookings.map(b=>`<div style="padding:.35rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span>${b.name||'—'} · ${b.pkg||'—'}</span><span style="color:var(--amber)">${b.booking_time||'—'}</span></div>`).join(''):'<span style="color:var(--muted)">No bookings.</span>';
 }
 function toggleBlockDay(){
   if(!selectedDay)return;
@@ -1142,7 +1211,7 @@ function openTimeSlotModal(){
   if(!selectedDay)return;
   document.getElementById('tsm-title').textContent=`Time Slots — ${formatDate(selectedDay)}`;
   const blocked=DB.get('blocked',{});
-  const bookedTimes=getBookings().filter(b=>b.date===selectedDay&&b.status!=='cancelled').map(b=>b.time);
+  const bookedTimes=getBookings().filter(b=>b.booking_date===selectedDay&&b.status!=='cancelled').map(b=>b.booking_time);
   const blockedSlots=blocked[selectedDay]?.slots||[];
   const grid=document.getElementById('timeSlotGrid');
   grid.innerHTML=ALL_SLOTS.map(t=>{
@@ -1178,20 +1247,20 @@ function renderCustomers(){
   const bookings=getBookings();
   const map={};
   bookings.forEach(b=>{
-    const k=b.phone;
-    if(!map[k]){map[k]={fname:b.fname,lname:b.lname,phone:b.phone,email:b.email||'',city:b.addr?.split(',')[1]?.trim()||'',bookings:[],total:0,last:''}}
+    const k=b.phone||b.email||b.name;
+    if(!map[k]){map[k]={name:b.name||'—',phone:b.phone||'—',email:b.email||'',city:b.city||'',bookings:[],total:0,last:''}}
     map[k].bookings.push(b);
     if(b.status==='completed')map[k].total+=+b.total||0;
-    if(!map[k].last||b.date>map[k].last)map[k].last=b.date;
+    if(!map[k].last||b.booking_date>map[k].last)map[k].last=b.booking_date;
   });
   let customers=Object.values(map);
-  if(customerSearch)customers=customers.filter(c=>`${c.fname} ${c.lname} ${c.phone} ${c.email}`.toLowerCase().includes(customerSearch.toLowerCase()));
+  if(customerSearch)customers=customers.filter(c=>`${c.name} ${c.phone} ${c.email}`.toLowerCase().includes(customerSearch.toLowerCase()));
   customers.sort((a,b)=>b.bookings.length-a.bookings.length);
   document.getElementById('customerCount').textContent=`${customers.length} customer${customers.length!==1?'s':''}`;
   const tbody=document.getElementById('customers-body');
   tbody.innerHTML=customers.length?customers.map(c=>`
     <tr>
-      <td><strong>${c.fname} ${c.lname}</strong></td>
+      <td><strong>${c.name}</strong></td>
       <td><a href="tel:${c.phone}" style="color:var(--amber)">${c.phone}</a></td>
       <td style="color:var(--muted)">${c.email||'—'}</td>
       <td style="color:var(--muted)">${c.city||'—'}</td>
@@ -1207,11 +1276,11 @@ function openCustomerDetail(phone){
   if(!bookings.length)return;
   const c=bookings[0];
   const total=bookings.filter(b=>b.status==='completed').reduce((s,b)=>s+(+b.total||0),0);
-  document.getElementById('cm-title').textContent=`${c.fname} ${c.lname}`;
+  document.getElementById('cm-title').textContent=c.name||phone;
   document.getElementById('cm-body').innerHTML=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
       <div><div class="card-title">Contact</div>
-        <div style="font-size:.88rem"><a href="tel:${c.phone}" style="color:var(--amber)">${c.phone}</a></div>
+        <div style="font-size:.88rem"><a href="tel:${c.phone}" style="color:var(--amber)">${c.phone||'—'}</a></div>
         <div style="font-size:.82rem;color:var(--muted)">${c.email||'—'}</div>
       </div>
       <div><div class="card-title">Summary</div>
@@ -1221,7 +1290,7 @@ function openCustomerDetail(phone){
     <div class="card-title">Booking History</div>
     <div class="table-wrap"><table>
       <thead><tr><th>Date</th><th>Service</th><th>Total</th><th>Status</th></tr></thead>
-      <tbody>${bookings.sort((a,b)=>new Date(b.date)-new Date(a.date)).map(b=>`<tr><td>${formatDate(b.date)}</td><td>${b.pkg}</td><td style="color:var(--amber)">$${b.total}</td><td>${statusBadge(b.status)}</td></tr>`).join('')}</tbody>
+      <tbody>${bookings.sort((a,b)=>new Date(b.booking_date)-new Date(a.booking_date)).map(b=>`<tr><td>${formatDate(b.booking_date)}</td><td>${b.pkg||'—'}</td><td style="color:var(--amber)">$${b.total||0}</td><td>${statusBadge(b.status)}</td></tr>`).join('')}</tbody>
     </table></div>`;
   openModal('customerModal');
 }

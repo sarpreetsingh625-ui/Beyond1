@@ -1971,22 +1971,47 @@ ${addonTotal>0?`*Add-ons:* $${addonTotal}\n`:''}*Travel Fee:* ${waived?'Waived':
 *Contact Pref:* ${bk.contact}
 ${bk.notes?`*Notes:* ${bk.notes}`:''}`;
 
-  // Save to admin
-  const saved=JSON.parse(localStorage.getItem('b1_bookings')||'[]');
-  saved.unshift({
-    id:'BK'+Date.now(),
+  // Save to Supabase database
+  const SUPA_URL='https://uivvpudjwxtzozfvnbtl.supabase.co';
+  const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpdnZwdWRqd3h0em96ZnZuYnRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NDcwMTIsImV4cCI6MjA5NzEyMzAxMn0.rr4ZX63pO908ymMmR-A7SPC39ALN3i7pEK7yCHfUUXg';
+  const bookingData={
+    status:'pending',
+    pkg:bk.pkg,
+    svc_opt:svcLabel,
+    veh_type:bk.vehType,
+    seats:bk.seats||null,
+    mat_type:bk.matType||null,
+    int_color:bk.intColor||null,
+    ext_color:bk.extColor||null,
+    alloy:bk.alloy||null,
+    pet:bk.pet||null,
+    condition:bk.condition||null,
+    estimated_price:pkgPrice,
+    address:bk.addr||null,
+    city:bk.city||null,
+    postal_code:bk.postal||null,
+    booking_date:bk.date||null,
+    booking_time:bk.time||null,
+    travel_fee:waived?0:tFee,
+    addons:bk.addons?bk.addons.join(', '):null,
+    addons_total:addonTotal,
     name:bk.fname+' '+bk.lname,
-    phone:bk.phone,email:bk.email||'',
-    service:bk.pkg+' ('+svcLabel+')',
-    vehicle:bk.vehType,
-    date:bk.date||'TBD',time:bk.time||'TBD',
-    address:bk.addr+', '+bk.city+' '+bk.postal,
-    total:total,
-    status:'Pending',
-    notes:bk.notes||'',
-    createdAt:new Date().toISOString()
-  });
-  localStorage.setItem('b1_bookings',JSON.stringify(saved));
+    phone:bk.phone,
+    email:bk.email||null,
+    notes:bk.notes||null,
+    total:total
+  };
+
+  fetch(SUPA_URL+'/rest/v1/bookings',{
+    method:'POST',
+    headers:{
+      'apikey':SUPA_KEY,
+      'Authorization':'Bearer '+SUPA_KEY,
+      'Content-Type':'application/json',
+      'Prefer':'return=minimal'
+    },
+    body:JSON.stringify(bookingData)
+  }).catch(err=>console.warn('Supabase save failed:',err));
 
   const phone='16476468756';
   const url='https://wa.me/'+phone+'?text='+encodeURIComponent(msg);
