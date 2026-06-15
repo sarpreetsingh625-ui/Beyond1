@@ -1794,6 +1794,13 @@ function goStep(dir){
     if(currentStep===6&&(!bk.extColor||!bk.alloy)){alert('Please select your paint colour and alloy type.');return;}
     if(currentStep===7&&!bk.pet){alert('Please select a pet hair option.');return;}
     if(currentStep===8&&!bk.condition){alert('Please select your vehicle condition.');return;}
+    if(currentStep===10){
+      if(!bk.addr){alert('Please enter your street address.');return;}
+      if(!bk.city){alert('Please enter your city.');return;}
+      if(!bk.postal){alert('Please enter your postal code.');return;}
+      if(!bk.date){alert('Please select a preferred date.');return;}
+      if(!bk.time){alert('Please select a preferred time.');return;}
+    }
     if(currentStep===12){
       if(!bk.fname||!bk.lname){alert('Please enter your full name.');return;}
       if(!bk.phone){alert('Please enter your phone number.');return;}

@@ -21,6 +21,7 @@
   }
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -748,6 +749,47 @@ async function supaFetch(path,opts={}){
   return r.json();
 }
 
+// ── EMAILJS CONFIG ──────────────────────────────────────────────────
+const EMAILJS_SERVICE='service_sx766qn';
+const EMAILJS_TEMPLATE='template_36lco3h';
+const EMAILJS_PUBLIC_KEY='iM6gnSVI_OR-NFyG4';
+const ADMIN_EMAIL='sarpreetsingh625@gmail.com';
+(function(){if(typeof emailjs!=='undefined')emailjs.init(EMAILJS_PUBLIC_KEY);})();
+
+// Send notification email to customer when booking status changes
+function sendCustomerNotification(b, status){
+  if(!b.email) return; // no email on file, skip silently
+  const firstName = (b.name||'there').split(' ')[0];
+  const dateStr = formatDate(b.booking_date);
+  const timeStr = b.booking_time || 'TBD';
+  let subject, body;
+  if(status==='confirmed'){
+    subject = 'Your Beyond1 Booking is Confirmed!';
+    body = `Hi ${firstName},\n\nGreat news! Your booking has been CONFIRMED.\n\nBooking Details:\n- Service: ${b.pkg||'—'} (${b.svc_opt||'Full Service'})\n- Vehicle: ${b.veh_type||'—'}\n- Date: ${dateStr} at ${timeStr}\n- Address: ${b.address||'—'}${b.city?', '+b.city:''}\n- Total: $${b.total||0}\n\nOur team will arrive at your location on the scheduled date. Please ensure your vehicle is accessible.\n\nQuestions? Call or text us at (647) 646-8756.\n\nThank you for choosing Beyond1!\n— The Beyond1 Team`;
+  } else if(status==='cancelled'){
+    subject = 'Your Beyond1 Booking Has Been Cancelled';
+    body = `Hi ${firstName},\n\nWe're sorry to inform you that your booking has been CANCELLED.\n\nBooking Details:\n- Service: ${b.pkg||'—'}\n- Date: ${dateStr} at ${timeStr}\n\nIf you have any questions or would like to reschedule, please contact us at (647) 646-8756 or reply to this email.\n\nWe apologize for any inconvenience.\n\n— The Beyond1 Team`;
+  } else if(status==='completed'){
+    subject = 'Thank You — Beyond1 Service Complete!';
+    body = `Hi ${firstName},\n\nThank you! Your Beyond1 service has been completed.\n\nService Summary:\n- Service: ${b.pkg||'—'} (${b.svc_opt||'Full Service'})\n- Date: ${dateStr}\n- Total Paid: $${b.total||0}\n\nWe hope you love the results! We'd really appreciate a review if you have a moment.\n\nSee you next time!\n— The Beyond1 Team`;
+  } else {
+    return; // no notification for other statuses
+  }
+  if(typeof emailjs==='undefined') return;
+  emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+    name: b.name||'Customer',
+    time: dateStr+' at '+timeStr,
+    message: body,
+    to_email: b.email,
+    reply_to: ADMIN_EMAIL
+  }).then(()=>{
+    toast('Customer notified by email','success');
+  }).catch(e=>{
+    console.warn('EmailJS error:',e);
+    toast('Email notification failed — no email on file?','error');
+  });
+}
+
 // ── LOCAL DB (for non-booking data: settings, discounts, blocked dates) ──
 const DB = {
   get(k,d){try{return JSON.parse(localStorage.getItem('b1_'+k))||d}catch{return d}},
@@ -997,6 +1039,9 @@ async function quickStatus(id,status){
     await updateBookingStatus(id,status);
     renderBookings();renderDashboard();updatePendingBadge();
     toast('Booking '+status,'success');
+    // Send customer email notification
+    const b=getBookings().find(x=>x.id==id);
+    if(b) sendCustomerNotification(b,status);
   }catch(e){toast('Failed to update booking','error');}
 }
 
@@ -1074,8 +1119,11 @@ function openBookingDetail(id){
 }
 async function saveBookingDetail(id){
   try{
+    const oldBooking=getBookings().find(x=>x.id==id);
+    const oldStatus=oldBooking?oldBooking.status:null;
+    const newStatus=document.getElementById('bdm-status').value;
     const fields={
-      status:document.getElementById('bdm-status').value,
+      status:newStatus,
       booking_date:document.getElementById('bdm-date').value,
       booking_time:document.getElementById('bdm-time').value
     };
@@ -1083,15 +1131,23 @@ async function saveBookingDetail(id){
     renderBookings();renderDashboard();updatePendingBadge();
     closeModal('bookingDetailModal');
     toast('Booking updated','success');
+    // Send customer notification only if status changed
+    if(oldStatus!==newStatus){
+      const updatedBooking=getBookings().find(x=>x.id==id)||{...oldBooking,...fields};
+      sendCustomerNotification(updatedBooking,newStatus);
+    }
   }catch(e){toast('Failed to update booking','error');}
 }
 function sendWhatsApp(id){
   const b=getBookings().find(x=>x.id==id);
   if(!b)return;
-  const wa=DB.get('settings',{}).waNumber||'16476468756';
+  // Send to customer's phone number (strip non-digits, add country code if needed)
+  let customerPhone=(b.phone||'').replace(/\D/g,'');
+  if(customerPhone.length===10)customerPhone='1'+customerPhone; // add CA/US country code
+  if(!customerPhone){toast('No phone number on file for this customer','error');return;}
   const firstName=(b.name||'').split(' ')[0]||'there';
-  const msg=`Hi ${firstName}! This is Beyond1 Auto & Home Care. Your booking #${b.id} for ${b.pkg||'service'} on ${formatDate(b.booking_date)} at ${b.booking_time||'TBD'} is ${b.status}. Address: ${b.address||'—'}. Total: $${b.total||0}. Any questions? Reply here!`;
-  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`,'_blank');
+  const msg=`Hi ${firstName}! This is Beyond1 Auto & Home Care. Your booking for ${b.pkg||'service'} on ${formatDate(b.booking_date)} at ${b.booking_time||'TBD'} is ${b.status}. Address: ${b.address||'—'}. Total: $${b.total||0}. Any questions? Reply here!`;
+  window.open(`https://wa.me/${customerPhone}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
 // ── NEW / EDIT BOOKING ────────────────────────────────────────────────
@@ -1459,7 +1515,7 @@ function importData(input){
   reader.onload=e=>{
     try{
       const data=JSON.parse(e.target.result);
-      if(data.bookings)saveBookings(data.bookings);
+      // Note: bookings are stored in Supabase, not localStorage — import only local settings
       if(data.discounts)DB.set('discounts',data.discounts);
       if(data.pricing)DB.set('pricing',data.pricing);
       if(data.blocked)DB.set('blocked',data.blocked);
@@ -1471,9 +1527,9 @@ function importData(input){
   reader.readAsText(file);
 }
 function clearAllData(){
-  if(!confirm('This will delete ALL bookings, customers, and settings. Are you sure?'))return;
+  if(!confirm('This will clear all local settings (discounts, pricing, blocked dates, hours). Bookings in Supabase will NOT be deleted. Are you sure?'))return;
   ['bookings','discounts','pricing','blocked','settings','hours','seeded'].forEach(k=>DB.del(k));
-  init();toast('All data cleared','info');
+  init();toast('Local settings cleared','info');
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────
