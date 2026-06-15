@@ -334,6 +334,7 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
 .upload-text{font-size:.82rem;color:var(--muted)}
 .upload-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem}
 .condition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.step-section-label{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#E8891A;margin-bottom:.6rem;margin-top:.25rem}
 .condition-opt{background:var(--raised);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.9rem .7rem;cursor:pointer;transition:all .2s;text-align:center}
 .condition-opt:hover{border-color:rgba(232,137,26,.4)}
 .condition-opt.selected{border-color:var(--amber);background:var(--amber-dim)}
@@ -1033,37 +1034,73 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
       <button class="modal-close" onclick="closeModal()">&times;</button>
     </div>
     <div class="modal-progress">
-      <div class="modal-progress-bar"><div class="modal-progress-fill" id="progressFill" style="width:12.5%"></div></div>
-      <div class="modal-progress-text" id="progressText">Step 1 of 8</div>
+      <div class="modal-progress-bar"><div class="modal-progress-fill" id="progressFill" style="width:10%"></div></div>
+      <div class="modal-progress-text" id="progressText">Step 1 of 10</div>
     </div>
     <div class="modal-body" id="modalBody">
 
       <!-- STEP 1: Choose Package -->
       <div class="step active" id="step1">
         <div class="step-title">Choose your package</div>
-        <div class="step-sub">Select the level of detail that fits your needs. Your exact price will be revealed after we learn about your vehicle.</div>
+        <div class="step-sub">Select the level of detail that fits your needs. Your exact price is revealed after we learn about your vehicle.</div>
         <div class="opt-grid" id="pkgOpts" style="grid-template-columns:1fr"></div>
       </div>
 
-      <!-- STEP 2: Service Option (Interior/Exterior/Full) — skipped for Essential Refresh -->
+      <!-- STEP 2: Service Option — skipped for Essential Refresh -->
       <div class="step" id="step2">
         <div class="step-title">What would you like included?</div>
         <div class="step-sub">Choose your service focus for this visit.</div>
         <div class="opt-grid opt-grid-3" id="svcOptGrid">
           <div class="opt" onclick="selectOpt(this,'svcOpt','full')" data-val="full">
-            <div class="opt-icon">✨</div>
+            <div class="opt-icon">
+              <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 30 L12 18 Q13 14 18 14 L30 14 Q35 14 36 18 L40 30" stroke="#E8891A" stroke-width="2.5" fill="none"/>
+                <rect x="6" y="28" width="36" height="10" rx="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="14" cy="38" r="4" fill="#333" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="34" cy="38" r="4" fill="#333" stroke="#E8891A" stroke-width="2"/>
+                <path d="M6 32 L42 32" stroke="#E8891A" stroke-width="1.5"/>
+                <path d="M18 14 L16 28 M30 14 L32 28" stroke="#666" stroke-width="1.5"/>
+                <!-- sparkle inside -->
+                <path d="M20 22 L22 20 L24 22 L22 24 Z" fill="#E8891A"/>
+                <path d="M26 20 L27 19 L28 20 L27 21 Z" fill="#E8891A"/>
+              </svg>
+            </div>
             <div class="opt-name">Full Service</div>
             <div class="opt-desc">Interior + Exterior — best value</div>
           </div>
           <div class="opt" onclick="selectOpt(this,'svcOpt','interior')" data-val="interior">
-            <div class="opt-icon">🪑</div>
+            <div class="opt-icon">
+              <svg viewBox="0 0 48 48" width="38" height="38" fill="none">
+                <!-- Car seat icon -->
+                <rect x="10" y="14" width="14" height="18" rx="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/>
+                <rect x="10" y="28" width="20" height="6" rx="2" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/>
+                <path d="M24 20 L32 20 L32 34 L24 34" stroke="#E8891A" stroke-width="2" fill="none"/>
+                <!-- steering wheel -->
+                <circle cx="36" cy="18" r="6" fill="none" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="36" cy="18" r="2" fill="#E8891A"/>
+                <line x1="36" y1="12" x2="36" y2="24" stroke="#E8891A" stroke-width="1.5"/>
+                <line x1="30" y1="18" x2="42" y2="18" stroke="#E8891A" stroke-width="1.5"/>
+              </svg>
+            </div>
             <div class="opt-name">Interior Only</div>
-            <div class="opt-desc">Deep clean inside only</div>
+            <div class="opt-desc">Deep clean inside your vehicle</div>
           </div>
           <div class="opt" onclick="selectOpt(this,'svcOpt','exterior')" data-val="exterior">
-            <div class="opt-icon">🚿</div>
+            <div class="opt-icon">
+              <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#E8891A" stroke-width="2">
+                <!-- Car outline -->
+                <path d="M8 30 L12 20 Q13 16 18 16 L30 16 Q35 16 36 20 L40 30" stroke="#E8891A" stroke-width="2.5" fill="none"/>
+                <rect x="6" y="28" width="36" height="8" rx="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="14" cy="36" r="3.5" fill="#333" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="34" cy="36" r="3.5" fill="#333" stroke="#E8891A" stroke-width="2"/>
+                <!-- water drops -->
+                <path d="M42 10 Q43 8 44 10 Q44 12.5 42 12.5 Q40 12.5 40 10 Q41 8 42 10Z" fill="#4FC3F7"/>
+                <path d="M45 15 Q46 13 47 15 Q47 17 45 17 Q43 17 43 15 Q44 13 45 15Z" fill="#4FC3F7"/>
+                <path d="M40 16 Q41 14 42 16 Q42 18 40 18 Q38 18 38 16 Q39 14 40 16Z" fill="#4FC3F7"/>
+              </svg>
+            </div>
             <div class="opt-name">Exterior Only</div>
-            <div class="opt-desc">Wash, wax &amp; protect outside only</div>
+            <div class="opt-desc">Wash, wax &amp; protect outside</div>
           </div>
         </div>
       </div>
@@ -1071,160 +1108,341 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
       <!-- STEP 3: Vehicle Type -->
       <div class="step" id="step3">
         <div class="step-title">What type of vehicle?</div>
-        <div class="step-sub">Vehicle size affects pricing. Select the closest match.</div>
+        <div class="step-sub">Select the closest match to your vehicle.</div>
         <div class="opt-grid" id="vehOpts"></div>
       </div>
 
-      <!-- STEP 4: Seat Material -->
+      <!-- STEP 4: Interior — Seats + Mats combined (shown for interior/full only) -->
       <div class="step" id="step4">
-        <div class="step-title">What are your seats made of?</div>
-        <div class="step-sub">Different materials require different products and techniques.</div>
-        <div class="opt-grid">
-          <div class="opt" onclick="selectOpt(this,'seats','Fabric / Cloth')" data-val="Fabric / Cloth">
-            <div class="opt-icon">🧵</div>
+        <div class="step-title">Tell us about your interior</div>
+        <div class="step-sub">Select your seat type and mat type — this helps us bring the right products.</div>
+
+        <div class="step-section-label">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="#E8891A" stroke-width="1.8"><rect x="3" y="4" width="8" height="12" rx="2"/><rect x="3" y="13" width="14" height="4" rx="1"/><path d="M11 8 L17 8 L17 16 L11 16"/></svg>
+          Seat Type
+        </div>
+        <div class="opt-grid opt-grid-3" id="seatOpts">
+          <div class="opt" onclick="selectOpt(this,'seats','Fabric')" data-val="Fabric">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <rect x="6" y="8" width="12" height="16" rx="2" fill="#2a2a2a" stroke="#E8891A" stroke-width="1.8"/>
+                <rect x="6" y="21" width="18" height="6" rx="1.5" fill="#2a2a2a" stroke="#E8891A" stroke-width="1.8"/>
+                <path d="M18 12 L28 12 L28 27 L18 27" stroke="#E8891A" stroke-width="1.8" fill="none"/>
+                <!-- fabric texture lines -->
+                <line x1="8" y1="12" x2="16" y2="12" stroke="#555" stroke-width="1"/>
+                <line x1="8" y1="15" x2="16" y2="15" stroke="#555" stroke-width="1"/>
+                <line x1="8" y1="18" x2="16" y2="18" stroke="#555" stroke-width="1"/>
+              </svg>
+            </div>
             <div class="opt-name">Fabric / Cloth</div>
-            <div class="opt-desc">Standard shampoo &amp; hot water extraction</div>
-            <div class="opt-price">+$0</div>
+            <div class="opt-desc">Standard fabric seats</div>
           </div>
           <div class="opt" onclick="selectOpt(this,'seats','Leather')" data-val="Leather">
-            <div class="opt-icon">🧴</div>
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <rect x="6" y="8" width="12" height="16" rx="2" fill="#2a2a2a" stroke="#E8891A" stroke-width="1.8"/>
+                <rect x="6" y="21" width="18" height="6" rx="1.5" fill="#2a2a2a" stroke="#E8891A" stroke-width="1.8"/>
+                <path d="M18 12 L28 12 L28 27 L18 27" stroke="#E8891A" stroke-width="1.8" fill="none"/>
+                <!-- leather shine effect -->
+                <path d="M9 10 Q11 9 13 10" stroke="#E8891A" stroke-width="1.2" fill="none" opacity="0.6"/>
+                <path d="M20 14 Q22 13 24 14" stroke="#E8891A" stroke-width="1.2" fill="none" opacity="0.6"/>
+              </svg>
+            </div>
             <div class="opt-name">Leather</div>
-            <div class="opt-desc">Leather cleaner, conditioner &amp; protection</div>
-            <div class="opt-price">+$15</div>
+            <div class="opt-desc">Genuine or faux leather</div>
           </div>
-          <div class="opt" onclick="selectOpt(this,'seats','Leatherette / PU')" data-val="Leatherette / PU">
-            <div class="opt-icon">🪑</div>
-            <div class="opt-name">Leatherette / PU</div>
-            <div class="opt-desc">Gentle PU-safe cleaner &amp; conditioner</div>
-            <div class="opt-price">+$10</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'seats','Suede / Alcantara')" data-val="Suede / Alcantara">
-            <div class="opt-icon">✨</div>
+          <div class="opt" onclick="selectOpt(this,'seats','Suede')" data-val="Suede">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <rect x="6" y="8" width="12" height="16" rx="2" fill="#2a2a2a" stroke="#E8891A" stroke-width="1.8"/>
+                <rect x="6" y="21" width="18" height="6" rx="1.5" fill="#2a2a2a" stroke="#E8891A" stroke-width="1.8"/>
+                <path d="M18 12 L28 12 L28 27 L18 27" stroke="#E8891A" stroke-width="1.8" fill="none"/>
+                <!-- suede/alcantara dots -->
+                <circle cx="9" cy="12" r="0.8" fill="#E8891A"/>
+                <circle cx="12" cy="14" r="0.8" fill="#E8891A"/>
+                <circle cx="9" cy="16" r="0.8" fill="#E8891A"/>
+                <circle cx="12" cy="18" r="0.8" fill="#E8891A"/>
+              </svg>
+            </div>
             <div class="opt-name">Suede / Alcantara</div>
-            <div class="opt-desc">Specialty care — gentle brush &amp; cleaner</div>
-            <div class="opt-price">+$30</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'seats','Mixed')" data-val="Mixed">
-            <div class="opt-icon">🔀</div>
-            <div class="opt-name">Mixed</div>
-            <div class="opt-desc">Combination of leather &amp; fabric</div>
-            <div class="opt-price">+$10</div>
+            <div class="opt-desc">Premium specialty material</div>
           </div>
         </div>
+
+        <div class="step-section-label" style="margin-top:1.25rem">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="#E8891A" stroke-width="1.8"><rect x="2" y="13" width="16" height="5" rx="1.5"/><rect x="2" y="13" width="16" height="2.5" rx="1"/></svg>
+          Floor Mats
+        </div>
+        <div class="opt-grid" style="grid-template-columns:1fr 1fr" id="matOpts">
+          <div class="opt" onclick="selectOpt(this,'matType','Rubber')" data-val="Rubber">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <rect x="5" y="14" width="30" height="16" rx="2" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.8"/>
+                <!-- rubber ridges -->
+                <line x1="8" y1="18" x2="32" y2="18" stroke="#444" stroke-width="2"/>
+                <line x1="8" y1="22" x2="32" y2="22" stroke="#444" stroke-width="2"/>
+                <line x1="8" y1="26" x2="32" y2="26" stroke="#444" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="opt-name">Rubber / All-Weather</div>
+            <div class="opt-desc">Rubber, 3D or all-weather mats</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'matType','Carpet')" data-val="Carpet">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <rect x="5" y="14" width="30" height="16" rx="2" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.8"/>
+                <!-- carpet texture -->
+                <line x1="8" y1="17" x2="8" y2="28" stroke="#555" stroke-width="1.2"/>
+                <line x1="12" y1="17" x2="12" y2="28" stroke="#555" stroke-width="1.2"/>
+                <line x1="16" y1="17" x2="16" y2="28" stroke="#555" stroke-width="1.2"/>
+                <line x1="20" y1="17" x2="20" y2="28" stroke="#555" stroke-width="1.2"/>
+                <line x1="24" y1="17" x2="24" y2="28" stroke="#555" stroke-width="1.2"/>
+                <line x1="28" y1="17" x2="28" y2="28" stroke="#555" stroke-width="1.2"/>
+                <line x1="32" y1="17" x2="32" y2="28" stroke="#555" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <div class="opt-name">Fabric / Carpet Mats</div>
+            <div class="opt-desc">Fabric or carpet floor mats</div>
+          </div>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.75rem;text-align:center">Have both rubber and carpet mats? Select whichever covers most of your floor.</p>
       </div>
 
-      <!-- STEP 5: Floor Mat Type -->
+      <!-- STEP 5: Interior Colour (shown for interior/full only) -->
       <div class="step" id="step5">
-        <div class="step-title">What type of floor mats do you have?</div>
-        <div class="step-sub">This determines the cleaning method we use on your floors.</div>
-        <div class="opt-grid">
-          <div class="opt" onclick="selectOpt(this,'matType','Standard Rubber')" data-val="Standard Rubber">
-            <div class="opt-icon">⚫</div>
-            <div class="opt-name">Standard Rubber</div>
-            <div class="opt-desc">Quick rinse, scrub &amp; dry</div>
-            <div class="opt-price">+$0</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'matType','Carpet Mats')" data-val="Carpet Mats">
-            <div class="opt-icon">🟥</div>
-            <div class="opt-name">Carpet Mats</div>
-            <div class="opt-desc">Shampoo &amp; hot water extraction</div>
-            <div class="opt-price">+$10</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'matType','All-Weather / 3D')" data-val="All-Weather / 3D">
-            <div class="opt-icon">🟧</div>
-            <div class="opt-name">All-Weather / 3D</div>
-            <div class="opt-desc">Deep clean around raised edges</div>
-            <div class="opt-price">+$5</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'matType','No Mats')" data-val="No Mats">
-            <div class="opt-icon">❌</div>
-            <div class="opt-name">No Mats</div>
-            <div class="opt-desc">Floor carpet only</div>
-            <div class="opt-price">+$0</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 6: Interior Color -->
-      <div class="step" id="step6">
         <div class="step-title">What colour is your interior?</div>
-        <div class="step-sub">Light interiors show more and require extra care to restore.</div>
-        <div class="opt-grid">
-          <div class="opt" onclick="selectOpt(this,'matColor','Dark (Black / Charcoal)')" data-val="Dark (Black / Charcoal)">
-            <div class="opt-icon">⚫</div>
-            <div class="opt-name">Dark (Black / Charcoal)</div>
-            <div class="opt-desc">Standard products — hides dirt well</div>
-            <div class="opt-price">+$0</div>
+        <div class="step-sub">Interior colour affects the products and time needed for a perfect result.</div>
+        <div class="opt-grid opt-grid-3" id="intColorOpts">
+          <div class="opt" onclick="selectOpt(this,'intColor','Dark')" data-val="Dark">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <circle cx="20" cy="20" r="14" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="20" cy="20" r="8" fill="#111" stroke="#555" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="opt-name">Dark</div>
+            <div class="opt-desc">Black, charcoal or dark grey</div>
           </div>
-          <div class="opt" onclick="selectOpt(this,'matColor','Medium (Grey / Tan)')" data-val="Medium (Grey / Tan)">
-            <div class="opt-icon">🔘</div>
-            <div class="opt-name">Medium (Grey / Tan)</div>
-            <div class="opt-desc">Extra attention to stain areas</div>
-            <div class="opt-price">+$5</div>
+          <div class="opt" onclick="selectOpt(this,'intColor','Medium')" data-val="Medium">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <circle cx="20" cy="20" r="14" fill="#6b6b6b" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="20" cy="20" r="8" fill="#888" stroke="#999" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="opt-name">Medium</div>
+            <div class="opt-desc">Grey, tan or medium tones</div>
           </div>
-          <div class="opt" onclick="selectOpt(this,'matColor','Light (Beige / White)')" data-val="Light (Beige / White)">
-            <div class="opt-icon">⚪</div>
-            <div class="opt-name">Light (Beige / White)</div>
-            <div class="opt-desc">Intensive stain treatment required</div>
-            <div class="opt-price">+$15</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'matColor','Two-Tone')" data-val="Two-Tone">
-            <div class="opt-icon">🎨</div>
-            <div class="opt-name">Two-Tone</div>
-            <div class="opt-desc">Mixed light &amp; dark — extra care needed</div>
-            <div class="opt-price">+$10</div>
+          <div class="opt" onclick="selectOpt(this,'intColor','Light')" data-val="Light">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <circle cx="20" cy="20" r="14" fill="#e8dcc8" stroke="#E8891A" stroke-width="2"/>
+                <circle cx="20" cy="20" r="8" fill="#f5efe0" stroke="#ccc" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="opt-name">Light</div>
+            <div class="opt-desc">Beige, cream or white</div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 7: Vehicle Condition -->
+      <!-- STEP 6: Exterior — Paint Colour + Alloy Type (shown for exterior/full only) -->
+      <div class="step" id="step6">
+        <div class="step-title">Tell us about your exterior</div>
+        <div class="step-sub">Paint colour and wheel type affect the care and time needed for a flawless finish.</div>
+
+        <div class="step-section-label">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="#E8891A" stroke-width="1.8"><circle cx="10" cy="10" r="7"/><path d="M10 3 Q14 7 10 10 Q6 13 10 17"/></svg>
+          Paint Colour
+        </div>
+        <div class="opt-grid opt-grid-3" id="extColorOpts">
+          <div class="opt" onclick="selectOpt(this,'extColor','Black')" data-val="Black">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <path d="M6 28 L10 18 Q11 14 16 14 L24 14 Q29 14 30 18 L34 28" fill="#111" stroke="#E8891A" stroke-width="1.8"/>
+                <rect x="4" y="26" width="32" height="8" rx="2" fill="#111" stroke="#E8891A" stroke-width="1.8"/>
+                <circle cx="11" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/>
+                <circle cx="29" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="opt-name">Black</div>
+            <div class="opt-desc">Shows every mark — needs extra care</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'extColor','White / Silver')" data-val="White / Silver">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <path d="M6 28 L10 18 Q11 14 16 14 L24 14 Q29 14 30 18 L34 28" fill="#d0d0d0" stroke="#E8891A" stroke-width="1.8"/>
+                <rect x="4" y="26" width="32" height="8" rx="2" fill="#d0d0d0" stroke="#E8891A" stroke-width="1.8"/>
+                <circle cx="11" cy="34" r="3" fill="#bbb" stroke="#E8891A" stroke-width="1.5"/>
+                <circle cx="29" cy="34" r="3" fill="#bbb" stroke="#E8891A" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="opt-name">White / Silver</div>
+            <div class="opt-desc">Standard care</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'extColor','Other Colour')" data-val="Other Colour">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <path d="M6 28 L10 18 Q11 14 16 14 L24 14 Q29 14 30 18 L34 28" fill="#1a3a6b" stroke="#E8891A" stroke-width="1.8"/>
+                <rect x="4" y="26" width="32" height="8" rx="2" fill="#1a3a6b" stroke="#E8891A" stroke-width="1.8"/>
+                <circle cx="11" cy="34" r="3" fill="#152d55" stroke="#E8891A" stroke-width="1.5"/>
+                <circle cx="29" cy="34" r="3" fill="#152d55" stroke="#E8891A" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="opt-name">Other Colour</div>
+            <div class="opt-desc">Blue, red, grey, green etc.</div>
+          </div>
+        </div>
+
+        <div class="step-section-label" style="margin-top:1.25rem">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="#E8891A" stroke-width="1.8"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="3"/><line x1="10" y1="3" x2="10" y2="7"/><line x1="10" y1="13" x2="10" y2="17"/><line x1="3" y1="10" x2="7" y2="10"/><line x1="13" y1="10" x2="17" y2="10"/></svg>
+          Wheel / Alloy Type
+        </div>
+        <div class="opt-grid" style="grid-template-columns:1fr 1fr" id="alloyOpts">
+          <div class="opt" onclick="selectOpt(this,'alloy','Standard')" data-val="Standard">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <circle cx="20" cy="20" r="14" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.8"/>
+                <circle cx="20" cy="20" r="5" fill="#111" stroke="#E8891A" stroke-width="1.5"/>
+                <!-- 5 simple spokes -->
+                <line x1="20" y1="15" x2="20" y2="7" stroke="#E8891A" stroke-width="1.5"/>
+                <line x1="20" y1="25" x2="20" y2="33" stroke="#E8891A" stroke-width="1.5"/>
+                <line x1="15" y1="20" x2="7" y2="20" stroke="#E8891A" stroke-width="1.5"/>
+                <line x1="25" y1="20" x2="33" y2="20" stroke="#E8891A" stroke-width="1.5"/>
+                <line x1="16" y1="16" x2="10" y2="10" stroke="#E8891A" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="opt-name">Standard Alloys</div>
+            <div class="opt-desc">Simple spoke or solid design</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'alloy','Complex')" data-val="Complex">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <circle cx="20" cy="20" r="14" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.8"/>
+                <circle cx="20" cy="20" r="4" fill="#111" stroke="#E8891A" stroke-width="1.5"/>
+                <!-- many complex spokes -->
+                <line x1="20" y1="16" x2="20" y2="7" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="20" y1="24" x2="20" y2="33" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="16" y1="20" x2="7" y2="20" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="24" y1="20" x2="33" y2="20" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="17" y1="17" x2="11" y2="11" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="23" y1="17" x2="29" y2="11" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="17" y1="23" x2="11" y2="29" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="23" y1="23" x2="29" y2="29" stroke="#E8891A" stroke-width="1.2"/>
+                <!-- mesh detail -->
+                <circle cx="20" cy="12" r="1.5" fill="#E8891A"/>
+                <circle cx="28" cy="16" r="1.5" fill="#E8891A"/>
+                <circle cx="28" cy="24" r="1.5" fill="#E8891A"/>
+                <circle cx="12" cy="16" r="1.5" fill="#E8891A"/>
+              </svg>
+            </div>
+            <div class="opt-name">Complex / Multi-Spoke</div>
+            <div class="opt-desc">Many spokes, mesh or striped design</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7: Pet Hair -->
       <div class="step" id="step7">
-        <div class="step-title">What's the condition of your vehicle?</div>
-        <div class="step-sub">Be honest — this helps us arrive prepared with the right products and time.</div>
-        <div class="condition-grid">
-          <div class="condition-opt" onclick="selectOpt(this,'condition','Like New — minimal use')" data-val="Like New — minimal use">
-            <div class="condition-icon">😊</div>
-            <div class="condition-name">Like New</div>
-            <div class="condition-desc">Minimal use, barely any dirt. Quick service.</div>
-            <div class="condition-add">+$0</div>
+        <div class="step-title">Any pets in the vehicle?</div>
+        <div class="step-sub">Pet hair and odour require extra products and time. Be honest — it helps us arrive prepared.</div>
+        <div class="opt-grid opt-grid-3" id="petOpts">
+          <div class="opt" onclick="selectOpt(this,'pet','None')" data-val="None">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none" stroke="#E8891A" stroke-width="1.8">
+                <circle cx="20" cy="20" r="14" stroke="#555"/>
+                <line x1="12" y1="12" x2="28" y2="28" stroke="#E8891A" stroke-width="2.5"/>
+                <line x1="28" y1="12" x2="12" y2="28" stroke="#E8891A" stroke-width="2.5"/>
+              </svg>
+            </div>
+            <div class="opt-name">No Pets</div>
+            <div class="opt-desc">No pet hair or odour</div>
           </div>
-          <div class="condition-opt" onclick="selectOpt(this,'condition','Good — regular daily driver')" data-val="Good — regular daily driver">
-            <div class="condition-icon">🙂</div>
-            <div class="condition-name">Good</div>
-            <div class="condition-desc">Regular daily driver, minor dust &amp; dirt.</div>
-            <div class="condition-add">+$0</div>
+          <div class="opt" onclick="selectOpt(this,'pet','Light')" data-val="Light">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <!-- dog/cat paw icon -->
+                <circle cx="20" cy="22" r="7" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.8"/>
+                <circle cx="14" cy="15" r="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.5"/>
+                <circle cx="20" cy="13" r="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.5"/>
+                <circle cx="26" cy="15" r="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.5"/>
+                <!-- few hair lines -->
+                <line x1="30" y1="28" x2="34" y2="24" stroke="#E8891A" stroke-width="1.2" opacity="0.6"/>
+                <line x1="10" y1="28" x2="6" y2="24" stroke="#E8891A" stroke-width="1.2" opacity="0.6"/>
+              </svg>
+            </div>
+            <div class="opt-name">Light Pet Hair</div>
+            <div class="opt-desc">Some hair, no strong odour</div>
           </div>
-          <div class="condition-opt" onclick="selectOpt(this,'condition','Dirty — needs thorough clean')" data-val="Dirty — needs thorough clean">
-            <div class="condition-icon">😐</div>
-            <div class="condition-name">Dirty</div>
-            <div class="condition-desc">Visible stains, pet hair, some odour.</div>
-            <div class="condition-add">+$20</div>
-          </div>
-          <div class="condition-opt" onclick="selectOpt(this,'condition','Very Dirty — heavy soiling')" data-val="Very Dirty — heavy soiling">
-            <div class="condition-icon">😬</div>
-            <div class="condition-name">Very Dirty</div>
-            <div class="condition-desc">Heavy soiling, strong odour, deep stains.</div>
-            <div class="condition-add">+$40</div>
-          </div>
-          <div class="condition-opt" onclick="selectOpt(this,'condition','Extreme — pet hair / odour')" data-val="Extreme — pet hair / odour">
-            <div class="condition-icon">😱</div>
-            <div class="condition-name">Extreme</div>
-            <div class="condition-desc">Long neglect, heavy pet hair, biohazard level.</div>
-            <div class="condition-add">+$65</div>
+          <div class="opt" onclick="selectOpt(this,'pet','Heavy')" data-val="Heavy">
+            <div class="opt-icon">
+              <svg viewBox="0 0 40 40" width="32" height="32" fill="none">
+                <circle cx="20" cy="22" r="7" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.8"/>
+                <circle cx="14" cy="15" r="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.5"/>
+                <circle cx="20" cy="13" r="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.5"/>
+                <circle cx="26" cy="15" r="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="1.5"/>
+                <!-- many hair lines -->
+                <line x1="30" y1="28" x2="36" y2="22" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="10" y1="28" x2="4" y2="22" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="32" y1="20" x2="38" y2="18" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="8" y1="20" x2="2" y2="18" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="20" y1="30" x2="20" y2="36" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="14" y1="32" x2="12" y2="38" stroke="#E8891A" stroke-width="1.2"/>
+                <line x1="26" y1="32" x2="28" y2="38" stroke="#E8891A" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <div class="opt-name">Heavy Pet Hair / Odour</div>
+            <div class="opt-desc">Lots of hair, noticeable odour</div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 8: Price Reveal -->
+      <!-- STEP 8: Vehicle Condition -->
       <div class="step" id="step8">
-        <div class="step-title">Your personalised quote 💰</div>
-        <div class="step-sub">Based on everything you told us — here is exactly what you'll pay.</div>
-        <div class="price-reveal-box" id="priceRevealBox"></div>
-        <p style="font-size:.75rem;color:var(--muted);margin-top:1rem;line-height:1.5;text-align:center">This is your estimated price. Final price confirmed on arrival. Add-ons and travel fee may apply in the next steps.</p>
+        <div class="step-title">Overall vehicle condition?</div>
+        <div class="step-sub">This helps us arrive with the right products and enough time to do a perfect job.</div>
+        <div class="condition-grid">
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Like New')" data-val="Like New">
+            <div class="condition-icon">
+              <svg viewBox="0 0 32 32" width="28" height="28" fill="none"><circle cx="16" cy="16" r="12" fill="#1a1a1a" stroke="#34C97A" stroke-width="2"/><path d="M10 16 L14 20 L22 12" stroke="#34C97A" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="condition-name">Like New</div>
+            <div class="condition-desc">Barely used, minimal dirt</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Good')" data-val="Good">
+            <div class="condition-icon">
+              <svg viewBox="0 0 32 32" width="28" height="28" fill="none"><circle cx="16" cy="16" r="12" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="12" cy="14" r="2" fill="#E8891A"/><circle cx="20" cy="14" r="2" fill="#E8891A"/><path d="M11 20 Q16 23 21 20" stroke="#E8891A" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            </div>
+            <div class="condition-name">Good</div>
+            <div class="condition-desc">Regular daily driver, minor dust</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Dirty')" data-val="Dirty">
+            <div class="condition-icon">
+              <svg viewBox="0 0 32 32" width="28" height="28" fill="none"><circle cx="16" cy="16" r="12" fill="#1a1a1a" stroke="#f0a500" stroke-width="2"/><circle cx="12" cy="14" r="2" fill="#f0a500"/><circle cx="20" cy="14" r="2" fill="#f0a500"/><path d="M11 21 Q16 19 21 21" stroke="#f0a500" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            </div>
+            <div class="condition-name">Dirty</div>
+            <div class="condition-desc">Visible stains, some odour</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Very Dirty')" data-val="Very Dirty">
+            <div class="condition-icon">
+              <svg viewBox="0 0 32 32" width="28" height="28" fill="none"><circle cx="16" cy="16" r="12" fill="#1a1a1a" stroke="#e05252" stroke-width="2"/><line x1="10" y1="12" x2="14" y2="16" stroke="#e05252" stroke-width="2"/><line x1="14" y1="12" x2="10" y2="16" stroke="#e05252" stroke-width="2"/><line x1="18" y1="12" x2="22" y2="16" stroke="#e05252" stroke-width="2"/><line x1="22" y1="12" x2="18" y2="16" stroke="#e05252" stroke-width="2"/><path d="M11 22 Q16 18 21 22" stroke="#e05252" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            </div>
+            <div class="condition-name">Very Dirty</div>
+            <div class="condition-desc">Heavy soiling, strong odour</div>
+          </div>
+        </div>
       </div>
 
-      <!-- STEP 9: Address & Schedule -->
+      <!-- STEP 9: Price Reveal -->
       <div class="step" id="step9">
+        <div class="step-title">Your personalised quote</div>
+        <div class="step-sub">Based on your vehicle and selections — here is your estimated price.</div>
+        <div class="price-reveal-box" id="priceRevealBox"></div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:1rem;line-height:1.5;text-align:center">Estimated price. Final confirmed on arrival. Travel fee and add-ons may apply in the next steps.</p>
+      </div>
+
+      <!-- STEP 10: Address & Schedule -->
+      <div class="step" id="step10">
         <div class="step-title">Where should we come?</div>
         <div class="step-sub">We'll calculate your travel fee automatically.</div>
         <div class="form-group">
@@ -1265,15 +1483,15 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
         </div>
       </div>
 
-      <!-- STEP 10: Add-ons -->
-      <div class="step" id="step10">
+      <!-- STEP 11: Add-ons -->
+      <div class="step" id="step11">
         <div class="step-title">Add-on services</div>
         <div class="step-sub">Combine home care with your auto service and save — we're already at your door.</div>
         <div class="addon-grid" id="addonGrid"></div>
       </div>
 
-      <!-- STEP 11: Contact Details -->
-      <div class="step" id="step11">
+      <!-- STEP 12: Contact Details -->
+      <div class="step" id="step12">
         <div class="step-title">Your contact details</div>
         <div class="step-sub">We'll confirm your booking within 2–3 hours.</div>
         <div class="form-row">
@@ -1304,15 +1522,15 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Additional Notes (optional)</label>
-          <textarea class="form-input" id="notes" rows="3" placeholder="Any specific requests, gate codes, parking instructions..." oninput="bk.notes=this.value" style="resize:vertical"></textarea>
+          <label class="form-label">Notes (optional)</label>
+          <textarea class="form-input" id="notes" rows="3" placeholder="Anything we should know about your vehicle..." oninput="bk.notes=this.value"></textarea>
         </div>
       </div>
 
-      <!-- STEP 12: Review & Submit -->
-      <div class="step" id="step12">
+      <!-- STEP 13: Review & Submit -->
+      <div class="step" id="step13">
         <div class="step-title">Review your booking</div>
-        <div class="step-sub">Everything look good? Submit to send your request via WhatsApp.</div>
+        <div class="step-sub">Everything look right? Hit send and we'll confirm within 2–3 hours.</div>
         <div class="summary-box" id="summaryBox"></div>
         <p style="font-size:.75rem;color:var(--muted);line-height:1.5;margin-top:1rem">By submitting, you agree to be contacted by Beyond1 Auto &amp; Home Care to confirm your booking. This is a booking request — not a confirmed appointment until we reply.</p>
       </div>
@@ -1364,113 +1582,88 @@ let bk = {};
 function resetBk(){
   bk = {
     svcType:'', pkg:'', svcOpt:'full',
-    vehType:'', seats:'', matType:'', matColor:'', condition:'',
+    vehType:'', seats:'', matType:'', intColor:'', extColor:'', alloy:'', pet:'', condition:'',
     addr:'', city:'', postal:'', date:'', time:'',
     addons:[], travelFee:0,
-    fname:'', lname:'', phone:'', email:'', contact:'text', notes:'',
-    // surcharges
-    seatSurcharge:0, matSurcharge:0, colorSurcharge:0, condSurcharge:0
+    fname:'', lname:'', phone:'', email:'', contact:'text', notes:''
   };
 }
 resetBk();
 let currentStep = 1;
-const TOTAL_STEPS = 11; // pkg → svcOpt → veh → seats → matType → matColor → condition → priceReveal → address → addons → contact → review
 
 // ── BASE PRICING TABLES ─────────────────────────────────────────────
-// Essential Refresh — Full Detail only
 const PRICE_ER = {
-  'Sedan':       69,
-  'Compact SUV': 79,
-  'Large SUV':   89,
-  'Truck':       79,
-  'Van':         89,
+  'Sedan':69,'Compact SUV':79,'Large SUV':89,'Truck':79,'Van':89
 };
-// Deep Clean
 const PRICE_DC = {
-  'Sedan':       {full:139, interior:109, exterior:79},
-  'Compact SUV': {full:149, interior:119, exterior:89},
-  'Large SUV':   {full:169, interior:139, exterior:99},
-  'Truck':       {full:149, interior:129, exterior:89},
-  'Van':         {full:169, interior:149, exterior:99},
+  'Sedan':      {full:139,interior:109,exterior:79},
+  'Compact SUV':{full:149,interior:119,exterior:89},
+  'Large SUV':  {full:169,interior:139,exterior:99},
+  'Truck':      {full:149,interior:129,exterior:89},
+  'Van':        {full:169,interior:149,exterior:99}
 };
-// Premium Restoration
 const PRICE_PR = {
-  'Sedan':       {full:229, interior:179, exterior:129},
-  'Compact SUV': {full:249, interior:199, exterior:149},
-  'Large SUV':   {full:279, interior:219, exterior:169},
-  'Truck':       {full:249, interior:209, exterior:149},
-  'Van':         {full:279, interior:229, exterior:169},
+  'Sedan':      {full:229,interior:179,exterior:129},
+  'Compact SUV':{full:249,interior:199,exterior:149},
+  'Large SUV':  {full:279,interior:219,exterior:169},
+  'Truck':      {full:249,interior:209,exterior:149},
+  'Van':        {full:279,interior:229,exterior:169}
 };
 
-// ── SURCHARGE TABLES ────────────────────────────────────────────────
-// Seat material (applies to interior/full only)
-const SEAT_SURCHARGE = {
-  'Fabric / Cloth':    0,
-  'Leather':           15,
-  'Leatherette / PU':  10,
-  'Suede / Alcantara': 30,
-  'Mixed':             10,
-};
-// Mat type
-const MAT_SURCHARGE = {
-  'Standard Rubber':   0,
-  'Carpet Mats':       10,
-  'All-Weather / 3D':  5,
-  'No Mats':           0,
-};
-// Interior color (dark hides dirt, light shows everything)
-const COLOR_SURCHARGE = {
-  'Dark (Black / Charcoal)': 0,
-  'Medium (Grey / Tan)':     5,
-  'Light (Beige / White)':   15,
-  'Two-Tone':                10,
-};
-// Vehicle condition
-const CONDITION_SURCHARGE = {
-  'Like New — minimal use':       0,
-  'Good — regular daily driver':  0,
-  'Dirty — needs thorough clean': 20,
-  'Very Dirty — heavy soiling':   40,
-  'Extreme — pet hair / odour':   65,
-};
+// ── HIDDEN SURCHARGE TABLES ─────────────────────────────────────────
+// Seat: Leather = easy = $0. Fabric = more work = $10. Suede = specialty = $20.
+const SEAT_SUR = {'Fabric':10,'Leather':0,'Suede':20};
+// Mat: Rubber/3D = easy = $0. Carpet = extraction needed = $10.
+const MAT_SUR  = {'Rubber':0,'Carpet':10};
+// Interior colour: Dark = $0. Medium = $5. Light = $15.
+const INT_COL_SUR = {'Dark':0,'Medium':5,'Light':15};
+// Exterior colour: Black = hardest (shows every mark) = $10. White/Silver = $0. Other = $5.
+const EXT_COL_SUR = {'Black':10,'White / Silver':0,'Other Colour':5};
+// Alloy: Standard = $0. Complex/multi-spoke = $15.
+const ALLOY_SUR = {'Standard':0,'Complex':15};
+// Pet hair: None = $0. Light = $30. Heavy = $60.
+const PET_SUR = {'None':0,'Light':30,'Heavy':60};
+// Condition: Like New/Good = $0. Dirty = $20. Very Dirty = $40.
+const COND_SUR = {'Like New':0,'Good':0,'Dirty':20,'Very Dirty':40};
 
 function getBasePrice(){
-  const veh = bk.vehType || 'Sedan';
-  const opt = bk.svcOpt || 'full';
-  if(bk.pkg==='Essential Refresh') return PRICE_ER[veh] || 69;
-  if(bk.pkg==='Deep Clean'){
-    const row = PRICE_DC[veh] || PRICE_DC['Sedan'];
-    return row[opt] || 139;
-  }
-  if(bk.pkg==='Premium Restoration'){
-    const row = PRICE_PR[veh] || PRICE_PR['Sedan'];
-    return row[opt] || 229;
-  }
+  const veh = bk.vehType||'Sedan';
+  const opt = bk.svcOpt||'full';
+  if(bk.pkg==='Essential Refresh') return PRICE_ER[veh]||69;
+  if(bk.pkg==='Deep Clean'){const r=PRICE_DC[veh]||PRICE_DC['Sedan'];return r[opt]||139;}
+  if(bk.pkg==='Premium Restoration'){const r=PRICE_PR[veh]||PRICE_PR['Sedan'];return r[opt]||229;}
   return 0;
 }
 
 function calcSurcharges(){
-  const isInterior = bk.svcOpt==='interior' || bk.svcOpt==='full';
-  bk.seatSurcharge  = isInterior ? (SEAT_SURCHARGE[bk.seats]  || 0) : 0;
-  bk.matSurcharge   = isInterior ? (MAT_SURCHARGE[bk.matType]  || 0) : 0;
-  bk.colorSurcharge = isInterior ? (COLOR_SURCHARGE[bk.matColor]|| 0) : 0;
-  bk.condSurcharge  = CONDITION_SURCHARGE[bk.condition] || 0;
+  const isInt = bk.svcOpt==='interior'||bk.svcOpt==='full';
+  const isExt = bk.svcOpt==='exterior'||bk.svcOpt==='full';
+  let s = 0;
+  if(isInt){
+    s += SEAT_SUR[bk.seats]||0;
+    s += MAT_SUR[bk.matType]||0;
+    s += INT_COL_SUR[bk.intColor]||0;
+    s += PET_SUR[bk.pet]||0;
+  }
+  if(isExt){
+    s += EXT_COL_SUR[bk.extColor]||0;
+    s += ALLOY_SUR[bk.alloy]||0;
+  }
+  s += COND_SUR[bk.condition]||0;
+  return s;
 }
 
-function getPrice(){
-  calcSurcharges();
-  return getBasePrice() + bk.seatSurcharge + bk.matSurcharge + bk.colorSurcharge + bk.condSurcharge;
-}
+function getPrice(){return getBasePrice()+calcSurcharges();}
 
 const ADDONS = [
-  {name:'Sofa Extraction',      standalone:95, withCar:75},
-  {name:'Carpet Extraction',    standalone:80, withCar:60},
-  {name:'Bin Cleaning x1',      standalone:25, withCar:20},
-  {name:'Bin Cleaning x2',      standalone:45, withCar:35},
-  {name:'Mattress Sanitize',    standalone:70, withCar:50},
-  {name:'Driveway Wash',        standalone:120, withCar:90},
-  {name:'Floor Mat Wash',       standalone:20, withCar:15},
-  {name:'Engine Bay Clean',     standalone:80, withCar:65},
+  {name:'Sofa Extraction',   icon:'🛋️', standalone:95, withCar:75},
+  {name:'Carpet Extraction', icon:'🏠', standalone:80, withCar:60},
+  {name:'Bin Cleaning x1',   icon:'🗑️', standalone:25, withCar:20},
+  {name:'Bin Cleaning x2',   icon:'🗑️', standalone:45, withCar:35},
+  {name:'Mattress Sanitize', icon:'🛏️', standalone:70, withCar:50},
+  {name:'Driveway Wash',     icon:'🏡', standalone:120, withCar:90},
+  {name:'Floor Mat Wash',    icon:'🧹', standalone:20, withCar:15},
+  {name:'Engine Bay Clean',  icon:'🔧', standalone:80, withCar:65},
 ];
 
 const POSTAL_ZONE = {
@@ -1482,84 +1675,79 @@ const POSTAL_ZONE = {
   'L7C':2,'L7E':2,'L7G':2,'L7K':2,'L9T':2,'L7J':2,
   'L0N':3,'N0B':3,'N1H':3,
 };
-const TRAVEL_FEES = [0,10,20,35];
-const ZONE_LABELS = ['0–20 km (free)','20–40 km (+$10)','40–60 km (+$20)','60–70 km (+$35)'];
+const TRAVEL_FEES=[0,10,20,35];
+const ZONE_LABELS=['0–20 km (free)','20–40 km (+$10)','40–60 km (+$20)','60–70 km (+$35)'];
 
 function calcTravel(){
-  const raw = (document.getElementById('addr-postal')||{value:''}).value.toUpperCase().replace(/\s/g,'');
-  const prefix = raw.substring(0,3);
-  const box = document.getElementById('travelFeeBox');
-  if(!box) return;
+  const raw=(document.getElementById('addr-postal')||{value:''}).value.toUpperCase().replace(/\s/g,'');
+  const prefix=raw.substring(0,3);
+  const box=document.getElementById('travelFeeBox');
+  if(!box)return;
   if(prefix.length<3){box.style.display='none';bk.travelFee=0;return;}
-  const zone = POSTAL_ZONE[prefix];
+  const zone=POSTAL_ZONE[prefix];
   if(zone===undefined){
     box.style.display='block';
     box.innerHTML='<span style="color:#E8891A">We may serve your area — we will confirm when reviewing your booking.</span>';
     bk.travelFee=35;return;
   }
-  bk.travelFee = TRAVEL_FEES[zone];
+  bk.travelFee=TRAVEL_FEES[zone];
   box.style.display='block';
-  const feeText = bk.travelFee===0
-    ? '<strong style="color:#34C97A">✓ No travel fee for your area</strong>'
-    : '<strong style="color:#E8891A">+$'+bk.travelFee+' travel fee</strong>';
-  box.innerHTML = feeText + ' — ' + ZONE_LABELS[zone];
+  const feeText=bk.travelFee===0
+    ?'<strong style="color:#34C97A">✓ No travel fee for your area</strong>'
+    :'<strong style="color:#E8891A">+$'+bk.travelFee+' travel fee</strong>';
+  box.innerHTML=feeText+' — '+ZONE_LABELS[zone];
 }
 
 function calcTotal(){
-  const pkgPrice = getPrice();
-  const isAuto = bk.svcType!=='home';
+  const pkgPrice=getPrice();
+  const isAuto=bk.svcType!=='home';
   let addonTotal=0;
   bk.addons.forEach(a=>{
     const addon=ADDONS.find(x=>x.name===a);
-    if(addon) addonTotal += isAuto ? addon.withCar : addon.standalone;
+    if(addon)addonTotal+=isAuto?addon.withCar:addon.standalone;
   });
-  const tFee = bk.travelFee||0;
-  const waived = tFee>0 && (pkgPrice+addonTotal)>=250;
-  return {pkgPrice, addonTotal, tFee, waived, total: pkgPrice+addonTotal+(waived?0:tFee)};
+  const tFee=bk.travelFee||0;
+  const waived=tFee>0&&(pkgPrice+addonTotal)>=250;
+  return{pkgPrice,addonTotal,tFee,waived,total:pkgPrice+addonTotal+(waived?0:tFee)};
 }
 
-// ── STEP DEFINITIONS ────────────────────────────────────────────────
-// Step IDs: 1=pkg, 2=svcOpt, 3=veh, 4=seats, 5=matType, 6=matColor, 7=condition, 8=priceReveal, 9=address, 10=addons, 11=contact, 12=review
-// We use TOTAL_STEPS=12 for the full auto flow
-const FULL_STEPS  = [1,2,3,4,5,6,7,8,9,10,11,12];
-const ER_STEPS    = [1,3,4,5,6,7,8,9,10,11,12];   // skip step 2 (svcOpt)
-const HOME_STEPS  = [1,9,10,11,12];                 // home only
-const TOTAL_STEPS_COUNT = 12;
+// ── FLOW DEFINITIONS ────────────────────────────────────────────────
+// Steps: 1=pkg, 2=svcOpt, 3=veh, 4=seats+mats(int), 5=intColor(int), 6=extColor+alloy(ext), 7=pet(int), 8=condition, 9=priceReveal, 10=address, 11=addons, 12=contact, 13=review
+// Essential Refresh = full detail only, skip svcOpt
+// Interior only: skip step 6 (exterior)
+// Exterior only: skip steps 4,5,7 (interior)
+// Home: skip vehicle steps
 
 function getFlow(){
-  if(bk.svcType==='home') return HOME_STEPS;
-  if(bk.pkg==='Essential Refresh') return ER_STEPS;
-  return FULL_STEPS;
+  if(bk.svcType==='home') return [1,10,11,12,13];
+  if(bk.pkg==='Essential Refresh') return [1,3,4,5,6,7,8,9,10,11,12,13];
+  const opt=bk.svcOpt||'full';
+  if(opt==='interior') return [1,2,3,4,5,7,8,9,10,11,12,13];   // skip ext step 6
+  if(opt==='exterior') return [1,2,3,6,8,9,10,11,12,13];        // skip int steps 4,5,7
+  return [1,2,3,4,5,6,7,8,9,10,11,12,13];                       // full
 }
 
 function getNextStep(dir){
-  const flow = getFlow();
-  const idx = flow.indexOf(currentStep);
-  if(idx===-1) return dir>0 ? flow[0] : flow[flow.length-1];
-  const next = idx + dir;
-  if(next<0||next>=flow.length) return null;
+  const flow=getFlow();
+  const idx=flow.indexOf(currentStep);
+  if(idx===-1)return dir>0?flow[0]:flow[flow.length-1];
+  const next=idx+dir;
+  if(next<0||next>=flow.length)return null;
   return flow[next];
 }
 
 // ── MODAL OPEN/CLOSE ────────────────────────────────────────────────
 function openModal(){
-  resetBk();
-  currentStep=1;
+  resetBk();currentStep=1;
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow='hidden';
   renderStep();
 }
-function openModalWith(pkg, svcOpt){
+function openModalWith(pkg,svcOpt){
   openModal();
-  bk.pkg = pkg;
-  bk.svcOpt = svcOpt || 'full';
-  bk.svcType = 'auto-full';
-  if(pkg==='Essential Refresh'){
-    bk.svcOpt='full';
-    currentStep=3;
-  } else {
-    currentStep=2;
-  }
+  bk.pkg=pkg;bk.svcOpt=svcOpt||'full';bk.svcType='auto-full';
+  if(pkg==='Essential Refresh'){bk.svcOpt='full';currentStep=3;}
+  else{currentStep=2;}
   renderStep();
 }
 function closeModal(){
@@ -1567,286 +1755,258 @@ function closeModal(){
   document.body.style.overflow='';
 }
 function handleOverlayClick(e){
-  if(e.target===document.getElementById('modalOverlay')) closeModal();
+  if(e.target===document.getElementById('modalOverlay'))closeModal();
 }
 
 // ── STEP NAVIGATION ─────────────────────────────────────────────────
 function goStep(dir){
-  // Validation on forward
   if(dir>0){
-    if(currentStep===1 && !bk.pkg){alert('Please select a package to continue.');return;}
-    if(currentStep===2 && !bk.svcOpt){alert('Please select a service option.');return;}
-    if(currentStep===3 && !bk.vehType){alert('Please select your vehicle type.');return;}
-    if(currentStep===4 && !bk.seats){alert('Please select your seat material.');return;}
-    if(currentStep===5 && !bk.matType){alert('Please select your mat type.');return;}
-    if(currentStep===6 && !bk.matColor){alert('Please select your interior color.');return;}
-    if(currentStep===7 && !bk.condition){alert('Please select your vehicle condition.');return;}
-    if(currentStep===11){
+    if(currentStep===1&&!bk.pkg){alert('Please select a package to continue.');return;}
+    if(currentStep===2&&!bk.svcOpt){alert('Please select a service option.');return;}
+    if(currentStep===3&&!bk.vehType){alert('Please select your vehicle type.');return;}
+    if(currentStep===4&&(!bk.seats||!bk.matType)){alert('Please select both your seat type and mat type.');return;}
+    if(currentStep===5&&!bk.intColor){alert('Please select your interior colour.');return;}
+    if(currentStep===6&&(!bk.extColor||!bk.alloy)){alert('Please select your paint colour and alloy type.');return;}
+    if(currentStep===7&&!bk.pet){alert('Please select a pet hair option.');return;}
+    if(currentStep===8&&!bk.condition){alert('Please select your vehicle condition.');return;}
+    if(currentStep===12){
       if(!bk.fname||!bk.lname){alert('Please enter your full name.');return;}
       if(!bk.phone){alert('Please enter your phone number.');return;}
     }
   }
-
-  const next = getNextStep(dir);
-  if(next===null) return;
-  currentStep = next;
+  const next=getNextStep(dir);
+  if(next===null)return;
+  currentStep=next;
   renderStep();
 }
 
 function renderStep(){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  const el = document.getElementById('step'+currentStep);
-  if(el) el.classList.add('active');
+  const el=document.getElementById('step'+currentStep);
+  if(el)el.classList.add('active');
 
-  // Progress
-  const flow = getFlow();
-  const idx = flow.indexOf(currentStep);
-  const pct = Math.round(((idx+1)/flow.length)*100);
-  document.getElementById('progressFill').style.width = pct+'%';
-  document.getElementById('progressText').textContent = 'Step '+(idx+1)+' of '+flow.length;
+  const flow=getFlow();
+  const idx=flow.indexOf(currentStep);
+  const pct=Math.round(((idx+1)/flow.length)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent='Step '+(idx+1)+' of '+flow.length;
+  document.getElementById('btnBack').style.display=idx>0?'block':'none';
 
-  // Back button
-  document.getElementById('btnBack').style.display = idx>0 ? 'block' : 'none';
-
-  // Next button
-  const btnNext = document.getElementById('btnNext');
-  if(currentStep===12){
-    btnNext.textContent = '📲 Send Booking via WhatsApp';
-    btnNext.onclick = submitBooking;
-  } else if(currentStep===8){
-    btnNext.textContent = 'Looks Good — Continue →';
-    btnNext.onclick = ()=>goStep(1);
+  const btnNext=document.getElementById('btnNext');
+  if(currentStep===13){
+    btnNext.textContent='📲 Send Booking via WhatsApp';
+    btnNext.onclick=submitBooking;
+  } else if(currentStep===9){
+    btnNext.textContent='Looks Good — Continue →';
+    btnNext.onclick=()=>goStep(1);
   } else {
-    btnNext.textContent = 'Continue →';
-    btnNext.onclick = ()=>goStep(1);
+    btnNext.textContent='Continue →';
+    btnNext.onclick=()=>goStep(1);
   }
 
-  // Render dynamic content
-  if(currentStep===1) renderPackages();
-  if(currentStep===3) renderVehicles();
-  if(currentStep===8) renderPriceReveal();
-  if(currentStep===10) renderAddons();
-  if(currentStep===12) renderSummary();
+  if(currentStep===1) renderPkgOpts();
+  if(currentStep===3) renderVehOpts();
+  if(currentStep===9) renderPriceReveal();
+  if(currentStep===11) renderAddons();
+  if(currentStep===13) renderSummary();
 }
 
-// ── STEP RENDERERS ──────────────────────────────────────────────────
-function renderPackages(){
-  const el = document.getElementById('pkgOpts');
-  if(!el) return;
-  const packages = [
-    {name:'Essential Refresh', tier:'Tier 1', icon:'🧹',
-     desc:'Complete maintenance detail — interior & exterior. Perfect for regular upkeep.',
-     note:'Full Service Only — price revealed after vehicle details'},
-    {name:'Deep Clean', tier:'Tier 2', icon:'🫧',
-     desc:'Thorough deep clean with steam, extraction and shampoo. Choose your service focus.',
-     note:'Interior / Exterior / Full — price revealed after vehicle details'},
-    {name:'Premium Restoration', tier:'Tier 3', icon:'✨',
-     desc:'The full premium experience — paint protection, leather care, odour elimination.',
-     note:'Interior / Exterior / Full — price revealed after vehicle details'},
-  ];
-  el.innerHTML = packages.map(p=>`
-    <div class="opt${bk.pkg===p.name?' selected':''}" onclick="selectOpt(this,'pkg','${p.name}')" data-val="${p.name}" style="display:flex;gap:.75rem;align-items:flex-start">
-      <div style="font-size:1.6rem;flex-shrink:0">${p.icon}</div>
-      <div style="flex:1">
-        <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:.2rem">${p.tier}</div>
-        <div class="opt-name">${p.name}</div>
-        <div class="opt-desc">${p.desc}</div>
-        <div style="font-size:.7rem;color:var(--muted);margin-top:.4rem;font-style:italic">${p.note}</div>
-      </div>
-    </div>`).join('');
-}
-
-function renderVehicles(){
-  const el = document.getElementById('vehOpts');
-  if(!el) return;
-  const vehs = [
-    {name:'Sedan',       icon:'🚗', desc:'Sedan, coupe, hatchback'},
-    {name:'Compact SUV', icon:'🚙', desc:'Compact crossover, small SUV'},
-    {name:'Large SUV',   icon:'🛻', desc:'Full-size SUV, 3-row, minivan'},
-    {name:'Truck',       icon:'🚚', desc:'Pickup truck, work truck'},
-  ];
-  el.innerHTML = vehs.map(v=>`
-    <div class="opt${bk.vehType===v.name?' selected':''}" onclick="selectOpt(this,'vehType','${v.name}')" data-val="${v.name}">
-      <div class="opt-icon">${v.icon}</div>
-      <div class="opt-name">${v.name}</div>
-      <div class="opt-desc">${v.desc}</div>
-    </div>`).join('');
-}
-
-function renderPriceReveal(){
-  const el = document.getElementById('priceRevealBox');
-  if(!el) return;
-  calcSurcharges();
-  const base = getBasePrice();
-  const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'Full Service';
-
-  let rows = '';
-  rows += `<div class="summary-row"><span>📦 ${bk.pkg} — ${svcOptLabel}</span><span>$${base}</span></div>`;
-  rows += `<div class="summary-row"><span>🚗 Vehicle: ${bk.vehType}</span><span>included</span></div>`;
-
-  if(bk.seatSurcharge>0)  rows += `<div class="summary-row"><span>💺 Seat material: ${bk.seats}</span><span>+$${bk.seatSurcharge}</span></div>`;
-  else if(bk.seats)       rows += `<div class="summary-row"><span>💺 Seat material: ${bk.seats}</span><span style="color:#34C97A">No extra charge</span></div>`;
-
-  if(bk.matSurcharge>0)   rows += `<div class="summary-row"><span>🧹 Mat type: ${bk.matType}</span><span>+$${bk.matSurcharge}</span></div>`;
-  else if(bk.matType)     rows += `<div class="summary-row"><span>🧹 Mat type: ${bk.matType}</span><span style="color:#34C97A">No extra charge</span></div>`;
-
-  if(bk.colorSurcharge>0) rows += `<div class="summary-row"><span>🎨 Interior color: ${bk.matColor}</span><span>+$${bk.colorSurcharge}</span></div>`;
-  else if(bk.matColor)    rows += `<div class="summary-row"><span>🎨 Interior color: ${bk.matColor}</span><span style="color:#34C97A">No extra charge</span></div>`;
-
-  if(bk.condSurcharge>0)  rows += `<div class="summary-row"><span>🔍 Condition: ${bk.condition}</span><span>+$${bk.condSurcharge}</span></div>`;
-  else if(bk.condition)   rows += `<div class="summary-row"><span>🔍 Condition: ${bk.condition}</span><span style="color:#34C97A">No extra charge</span></div>`;
-
-  const total = getPrice();
-  rows += `<div class="summary-row total"><span>Your Estimated Price</span><span>$${total}</span></div>`;
-
-  el.innerHTML = rows;
-}
-
-function renderAddons(){
-  const isAuto = bk.svcType!=='home';
-  const el = document.getElementById('addonGrid');
-  if(!el) return;
-  el.innerHTML = ADDONS.map(a=>`
-    <div class="addon-item${bk.addons.includes(a.name)?' selected':''}" onclick="toggleAddon('${a.name}',this)">
-      <div class="addon-name">${a.name}</div>
-      <div class="addon-price">$${isAuto?a.withCar:a.standalone}</div>
-      ${isAuto && a.standalone!==a.withCar ? '<div class="addon-save">Save $'+(a.standalone-a.withCar)+' vs standalone</div>' : ''}
-    </div>`).join('');
-}
-
-function toggleAddon(name, el){
-  const idx = bk.addons.indexOf(name);
-  if(idx>-1){bk.addons.splice(idx,1);el.classList.remove('selected');}
-  else{bk.addons.push(name);el.classList.add('selected');}
-}
-
-function renderSummary(){
-  const {pkgPrice, addonTotal, tFee, waived, total} = calcTotal();
-  const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'';
-  const isAuto = bk.svcType!=='home';
-  let addonRows = '';
-  bk.addons.forEach(a=>{
-    const addon=ADDONS.find(x=>x.name===a);
-    if(addon){
-      const p=isAuto?addon.withCar:addon.standalone;
-      addonRows+=`<div class="summary-row"><span>${a}</span><span>$${p}</span></div>`;
-    }
-  });
-
-  const addrEl = document.getElementById('addr-street');
-  const cityEl = document.getElementById('addr-city');
-  const postalEl = document.getElementById('addr-postal');
-  const dateEl = document.getElementById('bookDate');
-  const timeEl = document.getElementById('bookTime');
-  if(addrEl) bk.addr=addrEl.value;
-  if(cityEl) bk.city=cityEl.value;
-  if(postalEl) bk.postal=postalEl.value;
-  if(dateEl) bk.date=dateEl.value;
-  if(timeEl) bk.time=timeEl.value;
-
-  document.getElementById('summaryBox').innerHTML = `
-    <div class="summary-row"><span>Package</span><span>${bk.pkg}${svcOptLabel?' — '+svcOptLabel:''}</span></div>
-    <div class="summary-row"><span>Vehicle</span><span>${bk.vehType||'N/A'}</span></div>
-    ${bk.seats?'<div class="summary-row"><span>Seat Material</span><span>'+bk.seats+'</span></div>':''}
-    ${bk.matType?'<div class="summary-row"><span>Mat Type</span><span>'+bk.matType+'</span></div>':''}
-    ${bk.matColor?'<div class="summary-row"><span>Interior Color</span><span>'+bk.matColor+'</span></div>':''}
-    ${bk.condition?'<div class="summary-row"><span>Condition</span><span>'+bk.condition+'</span></div>':''}
-    <div class="summary-row"><span>Base Service Price</span><span>$${pkgPrice}</span></div>
-    ${addonRows}
-    <div class="summary-row"><span>Travel Fee</span><span>${waived?'<span style="color:#34C97A">Waived</span>':tFee===0?'<span style="color:#34C97A">Free</span>':'$'+tFee}</span></div>
-    ${bk.addr?'<div class="summary-row"><span>Address</span><span>'+bk.addr+', '+(bk.city||'')+'</span></div>':''}
-    ${bk.date?'<div class="summary-row"><span>Date</span><span>'+bk.date+'</span></div>':''}
-    ${bk.time?'<div class="summary-row"><span>Time</span><span>'+bk.time+'</span></div>':''}
-    <div class="summary-row total"><span>Estimated Total</span><span>$${total}</span></div>`;
-}
-
-function selectOpt(el, key, val){
-  const grid = el.closest('.opt-grid,.condition-grid,.opt-grid-3,.opt-grid-2');
+// ── OPTION SELECTION ────────────────────────────────────────────────
+function selectOpt(el,key,val){
+  const grid=el.closest('.opt-grid,.condition-grid');
   if(grid) grid.querySelectorAll('.opt,.condition-opt').forEach(o=>o.classList.remove('selected'));
   el.classList.add('selected');
-  bk[key] = val;
-  // Set svcType when package selected
+  bk[key]=val;
+  // update svcType when pkg changes
   if(key==='pkg'){
-    bk.svcType = val==='Home Care' ? 'home' : 'auto-full';
+    bk.svcType=val==='Home Care'?'home':'auto-full';
+  }
+  // re-evaluate flow when svcOpt changes
+  if(key==='svcOpt'){
+    // clear irrelevant data
+    if(val==='exterior'){bk.seats='';bk.matType='';bk.intColor='';bk.pet='';}
+    if(val==='interior'){bk.extColor='';bk.alloy='';}
   }
 }
 
-function submitBooking(){
-  // Collect contact fields
-  const fnEl=document.getElementById('fname'), lnEl=document.getElementById('lname');
-  const phEl=document.getElementById('phone'), emEl=document.getElementById('email');
-  const noEl=document.getElementById('notes'), cpEl=document.getElementById('contactPref');
-  const adEl=document.getElementById('addr-street'), ciEl=document.getElementById('addr-city');
-  const poEl=document.getElementById('addr-postal'), dtEl=document.getElementById('bookDate');
-  const tmEl=document.getElementById('bookTime');
-  if(fnEl) bk.fname=fnEl.value;
-  if(lnEl) bk.lname=lnEl.value;
-  if(phEl) bk.phone=phEl.value;
-  if(emEl) bk.email=emEl.value;
-  if(noEl) bk.notes=noEl.value;
-  if(cpEl) bk.contact=cpEl.value;
-  if(adEl) bk.addr=adEl.value;
-  if(ciEl) bk.city=ciEl.value;
-  if(poEl) bk.postal=poEl.value;
-  if(dtEl) bk.date=dtEl.value;
-  if(tmEl) bk.time=tmEl.value;
-
-  if(!bk.fname||!bk.lname||!bk.phone){alert('Please complete your contact details first.');return;}
-
-  const {pkgPrice, addonTotal, tFee, waived, total} = calcTotal();
-  const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'';
-
-  const msg =
-    '*Beyond1 — New Booking Request* \u{1F697}\u2728\n\n'+
-    '\u{1F464} '+bk.fname+' '+bk.lname+'\n'+
-    '\u{1F4F1} '+bk.phone+(bk.email?' · '+bk.email:'')+'\n'+
-    '\u{1F4CD} '+(bk.addr||'TBD')+', '+(bk.city||'')+', '+(bk.postal||'')+'\n'+
-    '\u{1F4C5} '+(bk.date||'Date TBD')+(bk.time?' at '+bk.time:'')+'\n'+
-    '\u{1F4DE} Preferred contact: '+bk.contact+'\n\n'+
-    '\u{1F4E6} Package: '+bk.pkg+(svcOptLabel?' \u2014 '+svcOptLabel:'')+'\n'+
-    '\u{1F697} Vehicle: '+(bk.vehType||'N/A')+'\n'+
-    '\u{1F4BA} Seats: '+(bk.seats||'Not specified')+'\n'+
-    '\u{1F9F9} Mats: '+(bk.matType||'Not specified')+'\n'+
-    '\u{1F3A8} Interior color: '+(bk.matColor||'Not specified')+'\n'+
-    '\u{1F50D} Condition: '+(bk.condition||'Not specified')+'\n'+
-    '\u2795 Add-ons: '+(bk.addons.length?bk.addons.join(', '):'None')+'\n'+
-    '\u{1F6A8} Travel fee: '+(waived?'Waived (order over $250)':tFee===0?'Free':'$'+tFee)+'\n'+
-    '\u{1F4B0} Estimated total: $'+total+'\n\n'+
-    '\u{1F4DD} Notes: '+(bk.notes||'None')+'\n\n'+
-    '_Sent from beyond1detailing.vercel.app_';
-
-  // Save to admin portal shared localStorage
-  const newBooking = {
-    id: 'B'+Date.now().toString(36).toUpperCase(),
-    fname: bk.fname, lname: bk.lname,
-    phone: bk.phone, email: bk.email||'',
-    pkg: bk.pkg||'', svc: bk.svcOpt||'full',
-    vehicle: bk.vehType||'N/A',
-    seats: bk.seats||'', matType: bk.matType||'',
-    matColor: bk.matColor||'', condition: bk.condition||'',
-    date: bk.date||'', time: bk.time||'',
-    addr: (bk.addr||'')+(bk.city?', '+bk.city:'')+(bk.postal?', '+bk.postal:''),
-    total: total, status: 'pending',
-    notes: bk.notes||'', addons: bk.addons||[],
-    travelFee: waived?0:tFee,
-    svcOpt: svcOptLabel,
-    created: new Date().toISOString(),
-    source: 'website'
-  };
-  try{
-    const existing = JSON.parse(localStorage.getItem('b1_bookings')||'[]');
-    existing.unshift(newBooking);
-    localStorage.setItem('b1_bookings', JSON.stringify(existing));
-    localStorage.setItem('b1_lastBooking', JSON.stringify(newBooking));
-  }catch(e){}
-
-  window.open('https://wa.me/16476468756?text='+encodeURIComponent(msg),'_blank');
-  closeModal();
-  setTimeout(()=>alert('Thank you! Your booking request has been sent via WhatsApp. We will confirm within 2\u20133 hours. \u{1F389}'),400);
+// ── RENDER PACKAGES ─────────────────────────────────────────────────
+function renderPkgOpts(){
+  const grid=document.getElementById('pkgOpts');
+  if(!grid)return;
+  const pkgs=[
+    {name:'Essential Refresh',tier:'Tier 1',from:69,icon:'<svg viewBox="0 0 40 40" width="36" height="36" fill="none"><path d="M6 28 L10 18 Q11 14 16 14 L24 14 Q29 14 30 18 L34 28" stroke="#E8891A" stroke-width="2" fill="none"/><rect x="4" y="26" width="32" height="8" rx="2" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="11" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/><circle cx="29" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/><path d="M14 18 L26 18" stroke="#555" stroke-width="1.5"/></svg>',desc:'A complete maintenance detail — interior & exterior. Perfect for regular upkeep.',badge:''},
+    {name:'Deep Clean',tier:'Tier 2',from:139,icon:'<svg viewBox="0 0 40 40" width="36" height="36" fill="none"><path d="M6 28 L10 18 Q11 14 16 14 L24 14 Q29 14 30 18 L34 28" stroke="#E8891A" stroke-width="2" fill="none"/><rect x="4" y="26" width="32" height="8" rx="2" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="11" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/><circle cx="29" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/><path d="M30 10 Q32 8 34 10 Q34 13 30 13 Q26 13 26 10 Q28 8 30 10Z" fill="#4FC3F7"/><path d="M34 15 Q36 13 38 15 Q38 18 34 18 Q30 18 30 15 Q32 13 34 15Z" fill="#4FC3F7"/></svg>',desc:'Thorough deep clean with steam, extraction and shampoo. Choose interior, exterior or full.',badge:'Most Popular'},
+    {name:'Premium Restoration',tier:'Tier 3',from:229,icon:'<svg viewBox="0 0 40 40" width="36" height="36" fill="none"><path d="M6 28 L10 18 Q11 14 16 14 L24 14 Q29 14 30 18 L34 28" stroke="#E8891A" stroke-width="2" fill="none"/><rect x="4" y="26" width="32" height="8" rx="2" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="11" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/><circle cx="29" cy="34" r="3" fill="#222" stroke="#E8891A" stroke-width="1.5"/><path d="M20 6 L21.5 10 L26 10 L22.5 13 L24 17 L20 14.5 L16 17 L17.5 13 L14 10 L18.5 10 Z" fill="#E8891A"/></svg>',desc:'The full premium experience — paint protection, leather care, odour elimination and more.',badge:''},
+  ];
+  grid.innerHTML=pkgs.map(p=>`
+    <div class="opt ${bk.pkg===p.name?'selected':''}" onclick="selectOpt(this,'pkg','${p.name}')" data-val="${p.name}" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem">
+      <div style="flex-shrink:0">${p.icon}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.2rem">
+          <div class="opt-name" style="margin:0">${p.name}</div>
+          ${p.badge?`<span style="background:#E8891A;color:#000;font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:20px">${p.badge}</span>`:''}
+        </div>
+        <div class="opt-desc" style="margin:0 0 .35rem">${p.desc}</div>
+        <div style="font-size:.8rem;color:#E8891A;font-weight:600">Starting from $${p.from}</div>
+      </div>
+    </div>
+  `).join('');
 }
 
-// ── KEYBOARD CLOSE ──────────────────────────────────────────────────
+// ── RENDER VEHICLE OPTIONS ───────────────────────────────────────────
+function renderVehOpts(){
+  const grid=document.getElementById('vehOpts');
+  if(!grid)return;
+  const vehs=[
+    {val:'Sedan',icon:'<svg viewBox="0 0 48 32" width="52" height="34" fill="none"><path d="M4 22 L8 12 Q9 8 14 8 L34 8 Q39 8 40 12 L44 22" stroke="#E8891A" stroke-width="2" fill="none"/><rect x="2" y="20" width="44" height="9" rx="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="11" cy="29" r="4" fill="#222" stroke="#E8891A" stroke-width="2"/><circle cx="37" cy="29" r="4" fill="#222" stroke="#E8891A" stroke-width="2"/><path d="M14 8 L12 20 M34 8 L36 20" stroke="#555" stroke-width="1.5"/></svg>',label:'Sedan / Coupe',desc:'Regular car'},
+    {val:'Compact SUV',icon:'<svg viewBox="0 0 52 34" width="56" height="36" fill="none"><path d="M4 24 L7 12 Q8 8 13 8 L39 8 Q44 8 45 12 L48 24" stroke="#E8891A" stroke-width="2" fill="none"/><rect x="2" y="22" width="48" height="10" rx="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="12" cy="32" r="4.5" fill="#222" stroke="#E8891A" stroke-width="2"/><circle cx="40" cy="32" r="4.5" fill="#222" stroke="#E8891A" stroke-width="2"/><rect x="7" y="8" width="38" height="1.5" rx="1" fill="#555"/></svg>',label:'Compact SUV',desc:'5-seat SUV / crossover'},
+    {val:'Large SUV',icon:'<svg viewBox="0 0 56 36" width="60" height="38" fill="none"><path d="M4 26 L6 12 Q7 8 12 8 L44 8 Q49 8 50 12 L52 26" stroke="#E8891A" stroke-width="2" fill="none"/><rect x="2" y="24" width="52" height="10" rx="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="12" cy="34" r="5" fill="#222" stroke="#E8891A" stroke-width="2"/><circle cx="44" cy="34" r="5" fill="#222" stroke="#E8891A" stroke-width="2"/><rect x="6" y="8" width="44" height="2" rx="1" fill="#555"/></svg>',label:'Large SUV / Minivan',desc:'7-seat SUV, minivan'},
+    {val:'Truck',icon:'<svg viewBox="0 0 56 34" width="60" height="36" fill="none"><path d="M4 24 L6 14 Q7 10 12 10 L28 10 L28 6 L44 6 L44 24" stroke="#E8891A" stroke-width="2" fill="none"/><rect x="2" y="22" width="52" height="9" rx="3" fill="#1a1a1a" stroke="#E8891A" stroke-width="2"/><circle cx="12" cy="31" r="4" fill="#222" stroke="#E8891A" stroke-width="2"/><circle cx="42" cy="31" r="4" fill="#222" stroke="#E8891A" stroke-width="2"/><line x1="28" y1="6" x2="28" y2="24" stroke="#E8891A" stroke-width="1.5"/></svg>',label:'Pickup Truck',desc:'Full-size pickup'},
+  ];
+  grid.innerHTML=vehs.map(v=>`
+    <div class="opt ${bk.vehType===v.val?'selected':''}" onclick="selectOpt(this,'vehType','${v.val}')" data-val="${v.val}">
+      <div class="opt-icon">${v.icon}</div>
+      <div class="opt-name">${v.label}</div>
+      <div class="opt-desc">${v.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER PRICE REVEAL ─────────────────────────────────────────────
+function renderPriceReveal(){
+  const box=document.getElementById('priceRevealBox');
+  if(!box)return;
+  const base=getBasePrice();
+  const total=getPrice();
+  const svcLabel=bk.svcOpt==='interior'?'Interior Only':bk.svcOpt==='exterior'?'Exterior Only':'Full Service (Interior + Exterior)';
+  box.innerHTML=`
+    <div style="text-align:center;margin-bottom:1.25rem">
+      <div style="font-size:2.75rem;font-weight:900;color:#E8891A;line-height:1">$${total}</div>
+      <div style="font-size:.85rem;color:var(--muted);margin-top:.35rem">Estimated price for your vehicle</div>
+    </div>
+    <div style="background:var(--raised);border-radius:10px;padding:1rem;font-size:.85rem">
+      <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border)">
+        <span>${bk.pkg} — ${svcLabel}</span><span style="font-weight:600">$${base}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border)">
+        <span>Vehicle: ${bk.vehType}</span><span style="color:var(--muted)">Included</span>
+      </div>
+      ${total>base?`<div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border)"><span>Vehicle details & condition</span><span style="color:#E8891A;font-weight:600">+$${total-base}</span></div>`:''}
+      <div style="display:flex;justify-content:space-between;padding:.5rem 0;font-weight:700;font-size:.95rem">
+        <span>Your Estimated Price</span><span style="color:#E8891A">$${total}</span>
+      </div>
+    </div>`;
+}
+
+// ── RENDER ADD-ONS ───────────────────────────────────────────────────
+function renderAddons(){
+  const grid=document.getElementById('addonGrid');
+  if(!grid)return;
+  const isAuto=bk.svcType!=='home';
+  grid.innerHTML=ADDONS.map(a=>{
+    const price=isAuto?a.withCar:a.standalone;
+    const sel=bk.addons.includes(a.name);
+    return`<div class="addon-item ${sel?'selected':''}" onclick="toggleAddon(this,'${a.name}')">
+      <div style="font-size:1.5rem">${a.icon}</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:.9rem">${a.name}</div>${isAuto?'<div style="font-size:.75rem;color:#34C97A">Save with car service</div>':''}</div>
+      <div style="font-weight:700;color:#E8891A">$${price}</div>
+    </div>`;
+  }).join('');
+}
+function toggleAddon(el,name){
+  el.classList.toggle('selected');
+  const idx=bk.addons.indexOf(name);
+  if(idx===-1)bk.addons.push(name);else bk.addons.splice(idx,1);
+}
+
+// ── RENDER SUMMARY ───────────────────────────────────────────────────
+function renderSummary(){
+  const box=document.getElementById('summaryBox');
+  if(!box)return;
+  const{pkgPrice,addonTotal,tFee,waived,total}=calcTotal();
+  const svcLabel=bk.svcOpt==='interior'?'Interior Only':bk.svcOpt==='exterior'?'Exterior Only':'Full Service';
+  const rows=[
+    ['Package',`${bk.pkg} — ${svcLabel}`,''],
+    ['Vehicle',bk.vehType,''],
+    ['Date & Time',`${bk.date||'TBD'} at ${bk.time||'TBD'}`,''],
+    ['Address',`${bk.addr}, ${bk.city} ${bk.postal}`,''],
+    ['Package Price','','$'+pkgPrice],
+  ];
+  if(addonTotal>0)rows.push(['Add-ons','','$'+addonTotal]);
+  if(tFee>0&&!waived)rows.push(['Travel Fee','','$'+tFee]);
+  if(waived)rows.push(['Travel Fee','Waived — order over $250','$0']);
+  rows.push(['TOTAL','','$'+total]);
+  box.innerHTML=`<table style="width:100%;border-collapse:collapse;font-size:.85rem">${rows.map((r,i)=>`
+    <tr style="${i===rows.length-1?'font-weight:700;font-size:1rem;border-top:2px solid var(--border)':'border-bottom:1px solid var(--border)'}">
+      <td style="padding:.5rem .25rem;color:var(--muted)">${r[0]}</td>
+      <td style="padding:.5rem .25rem">${r[1]}</td>
+      <td style="padding:.5rem .25rem;text-align:right;color:#E8891A">${r[2]}</td>
+    </tr>`).join('')}</table>
+    <div style="margin-top:.75rem;font-size:.8rem;color:var(--muted)">Contact: ${bk.fname} ${bk.lname} · ${bk.phone}</div>`;
+}
+
+// ── SUBMIT ───────────────────────────────────────────────────────────
+function submitBooking(){
+  const{pkgPrice,addonTotal,tFee,waived,total}=calcTotal();
+  const svcLabel=bk.svcOpt==='interior'?'Interior Only':bk.svcOpt==='exterior'?'Exterior Only':'Full Service';
+  const petLabel=bk.pet&&bk.pet!=='None'?`\nPet Hair: ${bk.pet}`:'';
+  const msg=`*New Booking Request — Beyond1*
+---
+*Package:* ${bk.pkg} (${svcLabel})
+*Vehicle:* ${bk.vehType}
+*Seats:* ${bk.seats||'N/A'} | *Mats:* ${bk.matType||'N/A'}
+*Interior Colour:* ${bk.intColor||'N/A'} | *Exterior Colour:* ${bk.extColor||'N/A'}
+*Alloys:* ${bk.alloy||'N/A'} | *Condition:* ${bk.condition}${petLabel}
+---
+*Date:* ${bk.date||'TBD'} at ${bk.time||'TBD'}
+*Address:* ${bk.addr}, ${bk.city} ${bk.postal}
+---
+*Package Price:* $${pkgPrice}
+${addonTotal>0?`*Add-ons:* $${addonTotal}\n`:''}*Travel Fee:* ${waived?'Waived':'$'+tFee}
+*TOTAL ESTIMATE:* $${total}
+---
+*Customer:* ${bk.fname} ${bk.lname}
+*Phone:* ${bk.phone}
+*Email:* ${bk.email||'N/A'}
+*Contact Pref:* ${bk.contact}
+${bk.notes?`*Notes:* ${bk.notes}`:''}`;
+
+  // Save to admin
+  const saved=JSON.parse(localStorage.getItem('b1_bookings')||'[]');
+  saved.unshift({
+    id:'BK'+Date.now(),
+    name:bk.fname+' '+bk.lname,
+    phone:bk.phone,email:bk.email||'',
+    service:bk.pkg+' ('+svcLabel+')',
+    vehicle:bk.vehType,
+    date:bk.date||'TBD',time:bk.time||'TBD',
+    address:bk.addr+', '+bk.city+' '+bk.postal,
+    total:total,
+    status:'Pending',
+    notes:bk.notes||'',
+    createdAt:new Date().toISOString()
+  });
+  localStorage.setItem('b1_bookings',JSON.stringify(saved));
+
+  const phone='16476468756';
+  const url='https://wa.me/'+phone+'?text='+encodeURIComponent(msg);
+  window.open(url,'_blank');
+  closeModal();
+  alert('Booking request sent! We will confirm within 2–3 hours. Thank you for choosing Beyond1!');
+}
+
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// ── INIT ─────────────────────────────────────────────────────────────
+(function initPkgTabListeners(){
+  document.querySelectorAll('.pkg-tab').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      const parent=this.closest('.pkg-tabs');
+      if(parent)parent.querySelectorAll('.pkg-tab').forEach(b=>b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+})();
 </script>
 </body>
 </html>
