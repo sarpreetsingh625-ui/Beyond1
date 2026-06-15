@@ -504,18 +504,12 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
           <div class="pkg-tagline">A complete maintenance detail — interior &amp; exterior included. Perfect for regular upkeep.</div>
           <div class="pkg-price-block">
             <span class="pkg-from">Starting from</span>
-            <span class="pkg-price" id="er-price">$69</span>
+            <span class="pkg-price">$69</span>
             <span class="pkg-price-suffix">/ vehicle</span>
           </div>
         </div>
         <div class="pkg-body">
-          <div class="pkg-price-range">
-            <div class="pkg-price-range-title">Pricing by Vehicle</div>
-            <div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">$69 – $109</span></div>
-            <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">$79 – $129</span></div>
-            <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">$89 – $139</span></div>
-          </div>
-          <div style="font-size:.72rem;color:var(--amber);font-weight:600;margin-bottom:.9rem;padding:.4rem .7rem;background:var(--amber-dim);border-radius:6px;display:inline-block">&#10003; Full Detail — Interior &amp; Exterior Included</div>
+          <div style="font-size:.72rem;color:var(--amber);font-weight:600;margin-bottom:1rem;padding:.5rem .8rem;background:var(--amber-dim);border-radius:6px;display:inline-block">&#10003; Full Detail — Interior &amp; Exterior Included</div>
           <ul class="pkg-features">
             <li>Exterior hand wash &amp; rinse</li>
             <li>Wheel &amp; tire cleaning + tire shine</li>
@@ -526,7 +520,8 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
             <li>Interior &amp; exterior windows</li>
             <li>Air freshener applied</li>
           </ul>
-          <button class="pkg-cta pkg-cta-ghost" onclick="openModalWith('Essential Refresh','full')">Choose Package &rarr;</button>
+          <div class="pkg-quote-hint">&#128274; Your exact price is calculated based on your vehicle, condition &amp; materials — build your package to see it.</div>
+          <button class="pkg-cta pkg-cta-ghost" onclick="openModalWith('Essential Refresh','full')">Build My Package &amp; See Price &rarr;</button>
         </div>
       </div>
 
@@ -539,25 +534,17 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
           <div class="pkg-tagline">A thorough deep clean with steam, extraction and shampoo. Choose interior only, exterior only, or full service.</div>
           <div class="pkg-price-block">
             <span class="pkg-from">Starting from</span>
-            <span class="pkg-price" id="dc-price">$139</span>
+            <span class="pkg-price">$139</span>
             <span class="pkg-price-suffix">/ vehicle</span>
           </div>
         </div>
         <div class="pkg-body">
-          <div class="pkg-service-tabs" id="dc-tabs">
-            <button class="pkg-tab active" onclick="selectPkgTab('dc','full',this)">Full Service</button>
-            <button class="pkg-tab" onclick="selectPkgTab('dc','interior',this)">Interior Only</button>
-            <button class="pkg-tab" onclick="selectPkgTab('dc','exterior',this)">Exterior Only</button>
+          <div class="pkg-service-tabs">
+            <button class="pkg-tab active" onclick="openModalWith('Deep Clean','full')">Full Service</button>
+            <button class="pkg-tab" onclick="openModalWith('Deep Clean','interior')">Interior Only</button>
+            <button class="pkg-tab" onclick="openModalWith('Deep Clean','exterior')">Exterior Only</button>
           </div>
-          <div class="pkg-price-range" id="dc-price-range">
-            <div class="pkg-price-range-title">Pricing by Vehicle</div>
-            <div id="dc-price-rows">
-              <div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">$139 – $199</span></div>
-              <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">$149 – $219</span></div>
-              <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">$169 – $239</span></div>
-            </div>
-          </div>
-          <ul class="pkg-features" id="dc-features">
+          <ul class="pkg-features">
             <li>Everything in Essential Refresh</li>
             <li>Steam cleaning throughout</li>
             <li>Hot water extraction</li>
@@ -567,7 +554,8 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
             <li>Exterior spray wax &amp; buff</li>
             <li>Brake dust removal</li>
           </ul>
-          <button class="pkg-cta pkg-cta-main" id="dc-cta" onclick="openModalWith('Deep Clean','full')">Choose Package &rarr;</button>
+          <div class="pkg-quote-hint">&#128274; Your exact price is calculated based on your vehicle, condition &amp; materials — build your package to see it.</div>
+          <button class="pkg-cta pkg-cta-main" onclick="openModalWith('Deep Clean','full')">Build My Package &amp; See Price &rarr;</button>
         </div>
       </div>
 
@@ -579,25 +567,17 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
           <div class="pkg-tagline">The full premium experience. Paint protection, leather care, odour elimination and more. Interior, exterior or full.</div>
           <div class="pkg-price-block">
             <span class="pkg-from">Starting from</span>
-            <span class="pkg-price" id="pr-price">$229</span>
+            <span class="pkg-price">$229</span>
             <span class="pkg-price-suffix">/ vehicle</span>
           </div>
         </div>
         <div class="pkg-body">
-          <div class="pkg-service-tabs" id="pr-tabs">
-            <button class="pkg-tab active" onclick="selectPkgTab('pr','full',this)">Full Service</button>
-            <button class="pkg-tab" onclick="selectPkgTab('pr','interior',this)">Interior Only</button>
-            <button class="pkg-tab" onclick="selectPkgTab('pr','exterior',this)">Exterior Only</button>
+          <div class="pkg-service-tabs">
+            <button class="pkg-tab active" onclick="openModalWith('Premium Restoration','full')">Full Service</button>
+            <button class="pkg-tab" onclick="openModalWith('Premium Restoration','interior')">Interior Only</button>
+            <button class="pkg-tab" onclick="openModalWith('Premium Restoration','exterior')">Exterior Only</button>
           </div>
-          <div class="pkg-price-range" id="pr-price-range">
-            <div class="pkg-price-range-title">Pricing by Vehicle</div>
-            <div id="pr-price-rows">
-              <div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">$229 – $299</span></div>
-              <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">$249 – $319</span></div>
-              <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">$279 – $349</span></div>
-            </div>
-          </div>
-          <ul class="pkg-features" id="pr-features">
+          <ul class="pkg-features">
             <li>Everything in Deep Clean</li>
             <li>Leather conditioning &amp; protection</li>
             <li>Odour elimination treatment</li>
@@ -607,7 +587,8 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
             <li>UV protectant on all plastics</li>
             <li>Premium fragrance applied</li>
           </ul>
-          <button class="pkg-cta pkg-cta-ghost" id="pr-cta" onclick="openModalWith('Premium Restoration','full')">Choose Package &rarr;</button>
+          <div class="pkg-quote-hint">&#128274; Your exact price is calculated based on your vehicle, condition &amp; materials — build your package to see it.</div>
+          <button class="pkg-cta pkg-cta-ghost" onclick="openModalWith('Premium Restoration','full')">Build My Package &amp; See Price &rarr;</button>
         </div>
       </div>
 
@@ -1047,40 +1028,17 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
     </div>
     <div class="modal-body" id="modalBody">
 
-      <!-- STEP 1: Service Type -->
+      <!-- STEP 1: Choose Package -->
       <div class="step active" id="step1">
-        <div class="step-title">What service do you need?</div>
-        <div class="step-sub">Choose your primary service type to get started.</div>
-        <div class="opt-grid">
-          <div class="opt" onclick="selectOpt(this,'svcType','auto-full')" data-val="auto-full">
-            <div class="opt-icon">🚗</div>
-            <div class="opt-name">Auto Detailing</div>
-            <div class="opt-desc">Interior, exterior or full detail for your vehicle</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'svcType','home')" data-val="home">
-            <div class="opt-icon">🏠</div>
-            <div class="opt-name">Home Care</div>
-            <div class="opt-desc">Sofa, carpet, bin cleaning &amp; more</div>
-          </div>
-          <div class="opt" onclick="selectOpt(this,'svcType','both')" data-val="both">
-            <div class="opt-icon">✨</div>
-            <div class="opt-name">Auto + Home</div>
-            <div class="opt-desc">Combine both in one visit and save</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 2: Package -->
-      <div class="step" id="step2">
         <div class="step-title">Choose your package</div>
-        <div class="step-sub">Select the level of detail that fits your needs.</div>
+        <div class="step-sub">Select the level of detail that fits your needs. Your exact price will be revealed after we learn about your vehicle.</div>
         <div class="opt-grid" id="pkgOpts" style="grid-template-columns:1fr"></div>
       </div>
 
-      <!-- STEP 3: Service Option (Interior/Exterior/Full) — only for Deep Clean & Premium -->
-      <div class="step" id="step3">
-        <div class="step-title">Choose your service option</div>
-        <div class="step-sub" id="step3Sub">Select what you'd like included in this service.</div>
+      <!-- STEP 2: Service Option (Interior/Exterior/Full) — skipped for Essential Refresh -->
+      <div class="step" id="step2">
+        <div class="step-title">What would you like included?</div>
+        <div class="step-sub">Choose your service focus for this visit.</div>
         <div class="opt-grid opt-grid-3" id="svcOptGrid">
           <div class="opt" onclick="selectOpt(this,'svcOpt','full')" data-val="full">
             <div class="opt-icon">✨</div>
@@ -1100,70 +1058,212 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
         </div>
       </div>
 
-      <!-- STEP 4: Vehicle Type -->
-      <div class="step" id="step4">
+      <!-- STEP 3: Vehicle Type -->
+      <div class="step" id="step3">
         <div class="step-title">What type of vehicle?</div>
         <div class="step-sub">Vehicle size affects pricing. Select the closest match.</div>
         <div class="opt-grid" id="vehOpts"></div>
       </div>
 
-      <!-- STEP 5: Vehicle Condition -->
-      <div class="step" id="step5">
-        <div class="step-title">What's the condition of your vehicle?</div>
-        <div class="step-sub">This helps us arrive prepared with the right products and time allocation.</div>
-        <div class="condition-grid">
-          <div class="condition-opt" onclick="selectOpt(this,'condition','light')">
-            <div class="condition-icon">😊</div>
-            <div class="condition-name">Light</div>
-            <div class="condition-desc">Regular use, no major stains</div>
+      <!-- STEP 4: Seat Material -->
+      <div class="step" id="step4">
+        <div class="step-title">What are your seats made of?</div>
+        <div class="step-sub">Different materials require different products and techniques.</div>
+        <div class="opt-grid">
+          <div class="opt" onclick="selectOpt(this,'seats','Fabric / Cloth')" data-val="Fabric / Cloth">
+            <div class="opt-icon">🧵</div>
+            <div class="opt-name">Fabric / Cloth</div>
+            <div class="opt-desc">Standard shampoo &amp; hot water extraction</div>
+            <div class="opt-price">+$0</div>
           </div>
-          <div class="condition-opt" onclick="selectOpt(this,'condition','moderate')">
-            <div class="condition-icon">😐</div>
-            <div class="condition-name">Moderate</div>
-            <div class="condition-desc">Some stains, pet hair or odour</div>
+          <div class="opt" onclick="selectOpt(this,'seats','Leather')" data-val="Leather">
+            <div class="opt-icon">🧴</div>
+            <div class="opt-name">Leather</div>
+            <div class="opt-desc">Leather cleaner, conditioner &amp; protection</div>
+            <div class="opt-price">+$15</div>
           </div>
-          <div class="condition-opt" onclick="selectOpt(this,'condition','heavy')">
-            <div class="condition-icon">😬</div>
-            <div class="condition-name">Heavy</div>
-            <div class="condition-desc">Heavy soiling, long neglect</div>
+          <div class="opt" onclick="selectOpt(this,'seats','Leatherette / PU')" data-val="Leatherette / PU">
+            <div class="opt-icon">🪑</div>
+            <div class="opt-name">Leatherette / PU</div>
+            <div class="opt-desc">Gentle PU-safe cleaner &amp; conditioner</div>
+            <div class="opt-price">+$10</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'seats','Suede / Alcantara')" data-val="Suede / Alcantara">
+            <div class="opt-icon">✨</div>
+            <div class="opt-name">Suede / Alcantara</div>
+            <div class="opt-desc">Specialty care — gentle brush &amp; cleaner</div>
+            <div class="opt-price">+$30</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'seats','Mixed')" data-val="Mixed">
+            <div class="opt-icon">🔀</div>
+            <div class="opt-name">Mixed</div>
+            <div class="opt-desc">Combination of leather &amp; fabric</div>
+            <div class="opt-price">+$10</div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 6: Address -->
+      <!-- STEP 5: Floor Mat Type -->
+      <div class="step" id="step5">
+        <div class="step-title">What type of floor mats do you have?</div>
+        <div class="step-sub">This determines the cleaning method we use on your floors.</div>
+        <div class="opt-grid">
+          <div class="opt" onclick="selectOpt(this,'matType','Standard Rubber')" data-val="Standard Rubber">
+            <div class="opt-icon">⚫</div>
+            <div class="opt-name">Standard Rubber</div>
+            <div class="opt-desc">Quick rinse, scrub &amp; dry</div>
+            <div class="opt-price">+$0</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'matType','Carpet Mats')" data-val="Carpet Mats">
+            <div class="opt-icon">🟥</div>
+            <div class="opt-name">Carpet Mats</div>
+            <div class="opt-desc">Shampoo &amp; hot water extraction</div>
+            <div class="opt-price">+$10</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'matType','All-Weather / 3D')" data-val="All-Weather / 3D">
+            <div class="opt-icon">🟧</div>
+            <div class="opt-name">All-Weather / 3D</div>
+            <div class="opt-desc">Deep clean around raised edges</div>
+            <div class="opt-price">+$5</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'matType','No Mats')" data-val="No Mats">
+            <div class="opt-icon">❌</div>
+            <div class="opt-name">No Mats</div>
+            <div class="opt-desc">Floor carpet only</div>
+            <div class="opt-price">+$0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: Interior Color -->
       <div class="step" id="step6">
+        <div class="step-title">What colour is your interior?</div>
+        <div class="step-sub">Light interiors show more and require extra care to restore.</div>
+        <div class="opt-grid">
+          <div class="opt" onclick="selectOpt(this,'matColor','Dark (Black / Charcoal)')" data-val="Dark (Black / Charcoal)">
+            <div class="opt-icon">⚫</div>
+            <div class="opt-name">Dark (Black / Charcoal)</div>
+            <div class="opt-desc">Standard products — hides dirt well</div>
+            <div class="opt-price">+$0</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'matColor','Medium (Grey / Tan)')" data-val="Medium (Grey / Tan)">
+            <div class="opt-icon">🔘</div>
+            <div class="opt-name">Medium (Grey / Tan)</div>
+            <div class="opt-desc">Extra attention to stain areas</div>
+            <div class="opt-price">+$5</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'matColor','Light (Beige / White)')" data-val="Light (Beige / White)">
+            <div class="opt-icon">⚪</div>
+            <div class="opt-name">Light (Beige / White)</div>
+            <div class="opt-desc">Intensive stain treatment required</div>
+            <div class="opt-price">+$15</div>
+          </div>
+          <div class="opt" onclick="selectOpt(this,'matColor','Two-Tone')" data-val="Two-Tone">
+            <div class="opt-icon">🎨</div>
+            <div class="opt-name">Two-Tone</div>
+            <div class="opt-desc">Mixed light &amp; dark — extra care needed</div>
+            <div class="opt-price">+$10</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7: Vehicle Condition -->
+      <div class="step" id="step7">
+        <div class="step-title">What's the condition of your vehicle?</div>
+        <div class="step-sub">Be honest — this helps us arrive prepared with the right products and time.</div>
+        <div class="condition-grid">
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Like New — minimal use')" data-val="Like New — minimal use">
+            <div class="condition-icon">😊</div>
+            <div class="condition-name">Like New</div>
+            <div class="condition-desc">Minimal use, barely any dirt. Quick service.</div>
+            <div class="condition-add">+$0</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Good — regular daily driver')" data-val="Good — regular daily driver">
+            <div class="condition-icon">🙂</div>
+            <div class="condition-name">Good</div>
+            <div class="condition-desc">Regular daily driver, minor dust &amp; dirt.</div>
+            <div class="condition-add">+$0</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Dirty — needs thorough clean')" data-val="Dirty — needs thorough clean">
+            <div class="condition-icon">😐</div>
+            <div class="condition-name">Dirty</div>
+            <div class="condition-desc">Visible stains, pet hair, some odour.</div>
+            <div class="condition-add">+$20</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Very Dirty — heavy soiling')" data-val="Very Dirty — heavy soiling">
+            <div class="condition-icon">😬</div>
+            <div class="condition-name">Very Dirty</div>
+            <div class="condition-desc">Heavy soiling, strong odour, deep stains.</div>
+            <div class="condition-add">+$40</div>
+          </div>
+          <div class="condition-opt" onclick="selectOpt(this,'condition','Extreme — pet hair / odour')" data-val="Extreme — pet hair / odour">
+            <div class="condition-icon">😱</div>
+            <div class="condition-name">Extreme</div>
+            <div class="condition-desc">Long neglect, heavy pet hair, biohazard level.</div>
+            <div class="condition-add">+$65</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 8: Price Reveal -->
+      <div class="step" id="step8">
+        <div class="step-title">Your personalised quote 💰</div>
+        <div class="step-sub">Based on everything you told us — here is exactly what you'll pay.</div>
+        <div class="price-reveal-box" id="priceRevealBox"></div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:1rem;line-height:1.5;text-align:center">This is your estimated price. Final price confirmed on arrival. Add-ons and travel fee may apply in the next steps.</p>
+      </div>
+
+      <!-- STEP 9: Address & Schedule -->
+      <div class="step" id="step9">
         <div class="step-title">Where should we come?</div>
         <div class="step-sub">We'll calculate your travel fee automatically.</div>
         <div class="form-group">
           <label class="form-label">Street Address</label>
-          <input class="form-input" type="text" id="addr" placeholder="123 Main Street" oninput="bk.addr=this.value">
+          <input class="form-input" type="text" id="addr-street" placeholder="123 Main Street" oninput="bk.addr=this.value">
         </div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">City</label>
-            <input class="form-input" type="text" id="city" placeholder="Brampton" oninput="bk.city=this.value">
+            <input class="form-input" type="text" id="addr-city" placeholder="Brampton" oninput="bk.city=this.value">
           </div>
           <div class="form-group">
             <label class="form-label">Postal Code</label>
-            <input class="form-input" type="text" id="postal" placeholder="L6P 0A1" oninput="bk.postal=this.value;calcTravel()">
+            <input class="form-input" type="text" id="addr-postal" placeholder="L6P 0A1" oninput="bk.postal=this.value;calcTravel()">
           </div>
         </div>
-        <div class="travel-box" id="travelFeeBox"></div>
+        <div class="travel-box" id="travelFeeBox" style="display:none"></div>
         <div class="form-group">
           <label class="form-label">Preferred Date</label>
           <input class="form-input" type="date" id="bookDate" oninput="bk.date=this.value">
         </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Time</label>
+          <select class="form-input form-select" id="bookTime" onchange="bk.time=this.value">
+            <option value="">Select a time...</option>
+            <option value="8:00 AM">8:00 AM</option>
+            <option value="9:00 AM">9:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="12:00 PM">12:00 PM (Noon)</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="3:00 PM">3:00 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+            <option value="5:00 PM">5:00 PM</option>
+            <option value="6:00 PM">6:00 PM</option>
+          </select>
+        </div>
       </div>
 
-      <!-- STEP 7: Add-ons -->
-      <div class="step" id="step7">
+      <!-- STEP 10: Add-ons -->
+      <div class="step" id="step10">
         <div class="step-title">Add-on services</div>
         <div class="step-sub">Combine home care with your auto service and save — we're already at your door.</div>
         <div class="addon-grid" id="addonGrid"></div>
       </div>
 
-      <!-- STEP 8: Contact Details -->
-      <div class="step" id="step8">
+      <!-- STEP 11: Contact Details -->
+      <div class="step" id="step11">
         <div class="step-title">Your contact details</div>
         <div class="step-sub">We'll confirm your booking within 2–3 hours.</div>
         <div class="form-row">
@@ -1199,15 +1299,14 @@ button{cursor:pointer;font-family:var(--font);border:none;outline:none}
         </div>
       </div>
 
-      <!-- STEP 9: Review & Submit -->
-      <div class="step" id="step9">
+      <!-- STEP 12: Review & Submit -->
+      <div class="step" id="step12">
         <div class="step-title">Review your booking</div>
         <div class="step-sub">Everything look good? Submit to send your request via WhatsApp.</div>
         <div class="summary-box" id="summaryBox"></div>
-        <p style="font-size:.75rem;color:var(--muted);line-height:1.5">By submitting, you agree to be contacted by Beyond1 Auto &amp; Home Care to confirm your booking. This is a booking request — not a confirmed appointment until we reply.</p>
+        <p style="font-size:.75rem;color:var(--muted);line-height:1.5;margin-top:1rem">By submitting, you agree to be contacted by Beyond1 Auto &amp; Home Care to confirm your booking. This is a booking request — not a confirmed appointment until we reply.</p>
       </div>
 
-    </div>
     <div class="modal-footer">
       <button class="modal-btn modal-btn-back" id="btnBack" onclick="goStep(-1)" style="display:none">&#8592; Back</button>
       <button class="modal-btn modal-btn-next" id="btnNext" onclick="goStep(1)">Continue &rarr;</button>
@@ -1232,8 +1331,6 @@ const revealObs = new IntersectionObserver((entries)=>{
 },{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
 
-// ── COUNTER ANIMATION ───────────────────────────────────────────────
-
 // ── SERVICE TABS ────────────────────────────────────────────────────
 function showSvc(id,btn){
   document.querySelectorAll('.svc-panel').forEach(p=>p.classList.remove('on'));
@@ -1242,75 +1339,43 @@ function showSvc(id,btn){
   btn.classList.add('active');
 }
 
-// ── PACKAGE CARD TABS (on main page) ───────────────────────────────
-const DC_PRICES = {
-  full:     {sedan:'$139 – $199', compact:'$149 – $219', large:'$169 – $239', start:139},
-  interior: {sedan:'$109 – $159', compact:'$119 – $179', large:'$139 – $199', start:109},
-  exterior: {sedan:'$79 – $119',  compact:'$89 – $129',  large:'$99 – $139',  start:79},
-};
-const PR_PRICES = {
-  full:     {sedan:'$229 – $299', compact:'$249 – $319', large:'$279 – $349', start:229},
-  interior: {sedan:'$179 – $239', compact:'$199 – $259', large:'$219 – $279', start:179},
-  exterior: {sedan:'$129 – $169', compact:'$149 – $189', large:'$169 – $209', start:129},
-};
-const DC_FEATURES = {
-  full:     ['Everything in Essential Refresh','Steam cleaning throughout','Hot water extraction','Seat & carpet shampoo','Heavy stain treatment','Vent & cup holder detail','Exterior spray wax & buff','Brake dust removal'],
-  interior: ['Full interior vacuum','Steam cleaning throughout','Hot water extraction','Seat & carpet shampoo','Heavy stain treatment','Vent & cup holder detail','Headliner wipe-down','Air freshener applied'],
-  exterior: ['Foam cannon pre-soak','Hand wash & rinse','Wheel & tire cleaning','Tire shine','Clay bar decontamination','Spray wax & buff','Brake dust removal','6-week paint sealant'],
-};
-const PR_FEATURES = {
-  full:     ['Everything in Deep Clean','Leather conditioning & protection','Odour elimination treatment','Clay bar decontamination','Ceramic wax coating','Paint enhancement polish','UV protectant on all plastics','Premium fragrance applied'],
-  interior: ['Everything in Deep Clean Interior','Leather conditioning & protection','Odour elimination treatment','UV protectant on all plastics','Headliner deep clean','Premium fragrance applied','Stain guard application'],
-  exterior: ['Everything in Deep Clean Exterior','Clay bar decontamination','Paint enhancement polish','Ceramic wax coating','Deep wheel & brake clean','12-month paint sealant','Trim & plastic dressing'],
-};
-
+// ── PACKAGE CARD TABS (on main page) ────────────────────────────────
+// These just open the booking modal — no prices shown on page
 function selectPkgTab(pkg, type, btn){
-  const prices = pkg==='dc' ? DC_PRICES : PR_PRICES;
-  const features = pkg==='dc' ? DC_FEATURES : PR_FEATURES;
-  const p = prices[type];
-
-  // Update tabs
   btn.closest('.pkg-service-tabs').querySelectorAll('.pkg-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-
-  // Update price display
-  document.getElementById(pkg==='dc'?'dc-price':'pr-price').textContent = '$'+p.start;
-
-  // Update price rows
-  document.getElementById(pkg==='dc'?'dc-price-rows':'pr-price-rows').innerHTML =
-    `<div class="pkg-price-row"><span class="pkg-price-label">Sedan / Coupe</span><span class="pkg-price-val">${p.sedan}</span></div>
-     <div class="pkg-price-row"><span class="pkg-price-label">Compact SUV / Truck</span><span class="pkg-price-val">${p.compact}</span></div>
-     <div class="pkg-price-row"><span class="pkg-price-label">Large SUV / Van</span><span class="pkg-price-val">${p.large}</span></div>`;
-
-  // Update features
-  const featureEl = document.getElementById(pkg==='dc'?'dc-features':'pr-features');
-  featureEl.innerHTML = features[type].map(f=>`<li>${f}</li>`).join('');
-
-  // Update CTA
   const ctaEl = document.getElementById(pkg==='dc'?'dc-cta':'pr-cta');
   const pkgName = pkg==='dc' ? 'Deep Clean' : 'Premium Restoration';
   ctaEl.onclick = ()=>openModalWith(pkgName, type);
 }
 
 // ── BOOKING STATE ───────────────────────────────────────────────────
-let bk = {
-  svcType:'', pkg:'', svcOpt:'full', vehType:'', condition:'',
-  addr:'', city:'', postal:'', date:'', addons:[], travelFee:0,
-  fname:'', lname:'', phone:'', email:'', contact:'text', notes:''
-};
+let bk = {};
+function resetBk(){
+  bk = {
+    svcType:'', pkg:'', svcOpt:'full',
+    vehType:'', seats:'', matType:'', matColor:'', condition:'',
+    addr:'', city:'', postal:'', date:'', time:'',
+    addons:[], travelFee:0,
+    fname:'', lname:'', phone:'', email:'', contact:'text', notes:'',
+    // surcharges
+    seatSurcharge:0, matSurcharge:0, colorSurcharge:0, condSurcharge:0
+  };
+}
+resetBk();
 let currentStep = 1;
-const TOTAL_STEPS = 9;
+const TOTAL_STEPS = 11; // pkg → svcOpt → veh → seats → matType → matColor → condition → priceReveal → address → addons → contact → review
 
-// ── PRICING TABLES ──────────────────────────────────────────────────
-// Essential Refresh — Full Detail only, no service option split
+// ── BASE PRICING TABLES ─────────────────────────────────────────────
+// Essential Refresh — Full Detail only
 const PRICE_ER = {
-  'Sedan':       {full:69},
-  'Compact SUV': {full:79},
-  'Large SUV':   {full:89},
-  'Truck':       {full:79},
-  'Van':         {full:89},
+  'Sedan':       69,
+  'Compact SUV': 79,
+  'Large SUV':   89,
+  'Truck':       79,
+  'Van':         89,
 };
-// Deep Clean — three service options
+// Deep Clean
 const PRICE_DC = {
   'Sedan':       {full:139, interior:109, exterior:79},
   'Compact SUV': {full:149, interior:119, exterior:89},
@@ -1318,7 +1383,7 @@ const PRICE_DC = {
   'Truck':       {full:149, interior:129, exterior:89},
   'Van':         {full:169, interior:149, exterior:99},
 };
-// Premium Restoration — three service options
+// Premium Restoration
 const PRICE_PR = {
   'Sedan':       {full:229, interior:179, exterior:129},
   'Compact SUV': {full:249, interior:199, exterior:149},
@@ -1327,20 +1392,71 @@ const PRICE_PR = {
   'Van':         {full:279, interior:229, exterior:169},
 };
 
-function getPrice(){
+// ── SURCHARGE TABLES ────────────────────────────────────────────────
+// Seat material (applies to interior/full only)
+const SEAT_SURCHARGE = {
+  'Fabric / Cloth':    0,
+  'Leather':           15,
+  'Leatherette / PU':  10,
+  'Suede / Alcantara': 30,
+  'Mixed':             10,
+};
+// Mat type
+const MAT_SURCHARGE = {
+  'Standard Rubber':   0,
+  'Carpet Mats':       10,
+  'All-Weather / 3D':  5,
+  'No Mats':           0,
+};
+// Interior color (dark hides dirt, light shows everything)
+const COLOR_SURCHARGE = {
+  'Dark (Black / Charcoal)': 0,
+  'Medium (Grey / Tan)':     5,
+  'Light (Beige / White)':   15,
+  'Two-Tone':                10,
+};
+// Vehicle condition
+const CONDITION_SURCHARGE = {
+  'Like New — minimal use':       0,
+  'Good — regular daily driver':  0,
+  'Dirty — needs thorough clean': 20,
+  'Very Dirty — heavy soiling':   40,
+  'Extreme — pet hair / odour':   65,
+};
+
+function getBasePrice(){
   const veh = bk.vehType || 'Sedan';
   const opt = bk.svcOpt || 'full';
-  if(bk.pkg==='Essential Refresh') return (PRICE_ER[veh]||PRICE_ER['Sedan']).full;
-  if(bk.pkg==='Deep Clean') return (PRICE_DC[veh]||PRICE_DC['Sedan'])[opt]||139;
-  if(bk.pkg==='Premium Restoration') return (PRICE_PR[veh]||PRICE_PR['Sedan'])[opt]||229;
+  if(bk.pkg==='Essential Refresh') return PRICE_ER[veh] || 69;
+  if(bk.pkg==='Deep Clean'){
+    const row = PRICE_DC[veh] || PRICE_DC['Sedan'];
+    return row[opt] || 139;
+  }
+  if(bk.pkg==='Premium Restoration'){
+    const row = PRICE_PR[veh] || PRICE_PR['Sedan'];
+    return row[opt] || 229;
+  }
   return 0;
+}
+
+function calcSurcharges(){
+  const isInterior = bk.svcOpt==='interior' || bk.svcOpt==='full';
+  bk.seatSurcharge  = isInterior ? (SEAT_SURCHARGE[bk.seats]  || 0) : 0;
+  bk.matSurcharge   = isInterior ? (MAT_SURCHARGE[bk.matType]  || 0) : 0;
+  bk.colorSurcharge = isInterior ? (COLOR_SURCHARGE[bk.matColor]|| 0) : 0;
+  bk.condSurcharge  = CONDITION_SURCHARGE[bk.condition] || 0;
+}
+
+function getPrice(){
+  calcSurcharges();
+  return getBasePrice() + bk.seatSurcharge + bk.matSurcharge + bk.colorSurcharge + bk.condSurcharge;
 }
 
 const ADDONS = [
   {name:'Sofa Extraction',      standalone:95, withCar:75},
   {name:'Carpet Extraction',    standalone:80, withCar:60},
-  {name:'Bin Cleaning ×1',      standalone:25, withCar:20},
-  {name:'Bin Cleaning ×2',      standalone:45, withCar:35},
+  {name:'Bin Cleaning x1',      standalone:25, withCar:20},
+  {name:'Bin Cleaning x2',      standalone:45, withCar:35},
   {name:'Mattress Sanitize',    standalone:70, withCar:50},
   {name:'Driveway Wash',        standalone:120, withCar:90},
   {name:'Floor Mat Wash',       standalone:20, withCar:15},
@@ -1360,40 +1476,64 @@ const TRAVEL_FEES = [0,10,20,35];
 const ZONE_LABELS = ['0–20 km (free)','20–40 km (+$10)','40–60 km (+$20)','60–70 km (+$35)'];
 
 function calcTravel(){
-  const raw = (document.getElementById('postal').value||'').toUpperCase().replace(/\s/g,'');
+  const raw = (document.getElementById('addr-postal')||{value:''}).value.toUpperCase().replace(/\s/g,'');
   const prefix = raw.substring(0,3);
   const box = document.getElementById('travelFeeBox');
+  if(!box) return;
   if(prefix.length<3){box.style.display='none';bk.travelFee=0;return;}
   const zone = POSTAL_ZONE[prefix];
   if(zone===undefined){
     box.style.display='block';
-    box.innerHTML='We may serve your area — we will confirm when reviewing your booking.';
+    box.innerHTML='<span style="color:#E8891A">We may serve your area — we will confirm when reviewing your booking.</span>';
     bk.travelFee=35;return;
   }
   bk.travelFee = TRAVEL_FEES[zone];
   box.style.display='block';
   const feeText = bk.travelFee===0
     ? '<strong style="color:#34C97A">✓ No travel fee for your area</strong>'
-    : `<strong style="color:#E8891A">+$${bk.travelFee} travel fee</strong>`;
-  const waiver = bk.travelFee>0 && calcTotal()>=250
-    ? ' <strong style="color:#34C97A">Travel fee waived — order over $250!</strong>'
-    : '';
-  box.innerHTML = `${feeText} — ${ZONE_LABELS[zone]}.${waiver}`;
+    : '<strong style="color:#E8891A">+$'+bk.travelFee+' travel fee</strong>';
+  box.innerHTML = feeText + ' — ' + ZONE_LABELS[zone];
 }
 
 function calcTotal(){
-  let total = getPrice();
+  const pkgPrice = getPrice();
   const isAuto = bk.svcType!=='home';
+  let addonTotal=0;
   bk.addons.forEach(a=>{
-    const addon = ADDONS.find(x=>x.name===a);
-    if(addon) total += isAuto ? addon.withCar : addon.standalone;
+    const addon=ADDONS.find(x=>x.name===a);
+    if(addon) addonTotal += isAuto ? addon.withCar : addon.standalone;
   });
-  return total;
+  const tFee = bk.travelFee||0;
+  const waived = tFee>0 && (pkgPrice+addonTotal)>=250;
+  return {pkgPrice, addonTotal, tFee, waived, total: pkgPrice+addonTotal+(waived?0:tFee)};
+}
+
+// ── STEP DEFINITIONS ────────────────────────────────────────────────
+// Step IDs: 1=pkg, 2=svcOpt, 3=veh, 4=seats, 5=matType, 6=matColor, 7=condition, 8=priceReveal, 9=address, 10=addons, 11=contact, 12=review
+// We use TOTAL_STEPS=12 for the full auto flow
+const FULL_STEPS  = [1,2,3,4,5,6,7,8,9,10,11,12];
+const ER_STEPS    = [1,3,4,5,6,7,8,9,10,11,12];   // skip step 2 (svcOpt)
+const HOME_STEPS  = [1,9,10,11,12];                 // home only
+const TOTAL_STEPS_COUNT = 12;
+
+function getFlow(){
+  if(bk.svcType==='home') return HOME_STEPS;
+  if(bk.pkg==='Essential Refresh') return ER_STEPS;
+  return FULL_STEPS;
+}
+
+function getNextStep(dir){
+  const flow = getFlow();
+  const idx = flow.indexOf(currentStep);
+  if(idx===-1) return dir>0 ? flow[0] : flow[flow.length-1];
+  const next = idx + dir;
+  if(next<0||next>=flow.length) return null;
+  return flow[next];
 }
 
 // ── MODAL OPEN/CLOSE ────────────────────────────────────────────────
 function openModal(){
-  bk = {svcType:'',pkg:'',svcOpt:'full',vehType:'',condition:'',addr:'',city:'',postal:'',date:'',addons:[],travelFee:0,fname:'',lname:'',phone:'',email:'',contact:'text',notes:''};
+  resetBk();
   currentStep=1;
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -1404,7 +1544,12 @@ function openModalWith(pkg, svcOpt){
   bk.pkg = pkg;
   bk.svcOpt = svcOpt || 'full';
   bk.svcType = 'auto-full';
-  currentStep = 2;
+  if(pkg==='Essential Refresh'){
+    bk.svcOpt='full';
+    currentStep=3;
+  } else {
+    currentStep=2;
+  }
   renderStep();
 }
 function closeModal(){
@@ -1417,79 +1562,77 @@ function handleOverlayClick(e){
 
 // ── STEP NAVIGATION ─────────────────────────────────────────────────
 function goStep(dir){
-  const next = currentStep + dir;
-  if(next<1||next>TOTAL_STEPS) return;
-
-  // Validation
+  // Validation on forward
   if(dir>0){
-    if(currentStep===1 && !bk.svcType){alert('Please select a service type.');return;}
-    if(currentStep===2 && !bk.pkg){alert('Please select a package.');return;}
-    if(currentStep===3 && !bk.svcOpt){alert('Please select a service option.');return;}
-    if(currentStep===4 && !bk.vehType && bk.svcType!=='home'){alert('Please select your vehicle type.');return;}
-    if(currentStep===5 && !bk.condition && bk.svcType!=='home'){alert('Please select vehicle condition.');return;}
-    if(currentStep===8){
-      if(!bk.fname||!bk.lname){alert('Please enter your name.');return;}
+    if(currentStep===1 && !bk.pkg){alert('Please select a package to continue.');return;}
+    if(currentStep===2 && !bk.svcOpt){alert('Please select a service option.');return;}
+    if(currentStep===3 && !bk.vehType){alert('Please select your vehicle type.');return;}
+    if(currentStep===4 && !bk.seats){alert('Please select your seat material.');return;}
+    if(currentStep===5 && !bk.matType){alert('Please select your mat type.');return;}
+    if(currentStep===6 && !bk.matColor){alert('Please select your interior color.');return;}
+    if(currentStep===7 && !bk.condition){alert('Please select your vehicle condition.');return;}
+    if(currentStep===11){
+      if(!bk.fname||!bk.lname){alert('Please enter your full name.');return;}
       if(!bk.phone){alert('Please enter your phone number.');return;}
     }
   }
 
-  // Skip step 3 (service option) for Essential Refresh
-  if(dir>0 && currentStep===2 && bk.pkg==='Essential Refresh'){
-    bk.svcOpt='full';
-    currentStep = 4; // skip step 3
-    renderStep(); return;
-  }
-  // Going back from step 4, skip step 3 if Essential Refresh
-  if(dir<0 && currentStep===4 && bk.pkg==='Essential Refresh'){
-    currentStep = 2; renderStep(); return;
-  }
-  // Skip steps 3,4,5 for home-only
-  if(dir>0 && currentStep===2 && bk.svcType==='home'){
-    currentStep=6; renderStep(); return;
-  }
-  if(dir<0 && currentStep===6 && bk.svcType==='home'){
-    currentStep=2; renderStep(); return;
-  }
-
+  const next = getNextStep(dir);
+  if(next===null) return;
   currentStep = next;
   renderStep();
 }
 
 function renderStep(){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step'+currentStep).classList.add('active');
+  const el = document.getElementById('step'+currentStep);
+  if(el) el.classList.add('active');
 
   // Progress
-  const pct = Math.round((currentStep/TOTAL_STEPS)*100);
+  const flow = getFlow();
+  const idx = flow.indexOf(currentStep);
+  const pct = Math.round(((idx+1)/flow.length)*100);
   document.getElementById('progressFill').style.width = pct+'%';
-  document.getElementById('progressText').textContent = `Step ${currentStep} of ${TOTAL_STEPS}`;
+  document.getElementById('progressText').textContent = 'Step '+(idx+1)+' of '+flow.length;
 
   // Back button
-  document.getElementById('btnBack').style.display = currentStep>1 ? 'block' : 'none';
+  document.getElementById('btnBack').style.display = idx>0 ? 'block' : 'none';
 
-  // Next button label
+  // Next button
   const btnNext = document.getElementById('btnNext');
-  if(currentStep===TOTAL_STEPS){
+  if(currentStep===12){
     btnNext.textContent = '📲 Send Booking via WhatsApp';
     btnNext.onclick = submitBooking;
+  } else if(currentStep===8){
+    btnNext.textContent = 'Looks Good — Continue →';
+    btnNext.onclick = ()=>goStep(1);
   } else {
     btnNext.textContent = 'Continue →';
     btnNext.onclick = ()=>goStep(1);
   }
 
-  // Render dynamic steps
-  if(currentStep===2) renderPackages();
-  if(currentStep===4) renderVehicles();
-  if(currentStep===7) renderAddons();
-  if(currentStep===9) renderSummary();
+  // Render dynamic content
+  if(currentStep===1) renderPackages();
+  if(currentStep===3) renderVehicles();
+  if(currentStep===8) renderPriceReveal();
+  if(currentStep===10) renderAddons();
+  if(currentStep===12) renderSummary();
 }
 
+// ── STEP RENDERERS ──────────────────────────────────────────────────
 function renderPackages(){
   const el = document.getElementById('pkgOpts');
+  if(!el) return;
   const packages = [
-    {name:'Essential Refresh', tier:'Tier 1', icon:'🧹', desc:'Complete maintenance detail — interior & exterior included. Perfect for regular upkeep.', price:'From $69', note:'Full Service Only'},
-    {name:'Deep Clean', tier:'Tier 2', icon:'🫧', desc:'Thorough deep clean with steam, extraction and shampoo. Choose interior, exterior or full.', price:'From $109', note:'Interior / Exterior / Full'},
-    {name:'Premium Restoration', tier:'Tier 3', icon:'✨', desc:'The full premium experience — paint protection, leather care, odour elimination and more.', price:'From $179', note:'Interior / Exterior / Full'},
+    {name:'Essential Refresh', tier:'Tier 1', icon:'🧹',
+     desc:'Complete maintenance detail — interior & exterior. Perfect for regular upkeep.',
+     note:'Full Service Only — price revealed after vehicle details'},
+    {name:'Deep Clean', tier:'Tier 2', icon:'🫧',
+     desc:'Thorough deep clean with steam, extraction and shampoo. Choose your service focus.',
+     note:'Interior / Exterior / Full — price revealed after vehicle details'},
+    {name:'Premium Restoration', tier:'Tier 3', icon:'✨',
+     desc:'The full premium experience — paint protection, leather care, odour elimination.',
+     note:'Interior / Exterior / Full — price revealed after vehicle details'},
   ];
   el.innerHTML = packages.map(p=>`
     <div class="opt${bk.pkg===p.name?' selected':''}" onclick="selectOpt(this,'pkg','${p.name}')" data-val="${p.name}" style="display:flex;gap:.75rem;align-items:flex-start">
@@ -1498,16 +1641,14 @@ function renderPackages(){
         <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:.2rem">${p.tier}</div>
         <div class="opt-name">${p.name}</div>
         <div class="opt-desc">${p.desc}</div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.5rem">
-          <span class="opt-price">${p.price}</span>
-          <span style="font-size:.68rem;color:var(--muted)">${p.note}</span>
-        </div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:.4rem;font-style:italic">${p.note}</div>
       </div>
     </div>`).join('');
 }
 
 function renderVehicles(){
   const el = document.getElementById('vehOpts');
+  if(!el) return;
   const vehs = [
     {name:'Sedan',       icon:'🚗', desc:'Sedan, coupe, hatchback'},
     {name:'Compact SUV', icon:'🚙', desc:'Compact crossover, small SUV'},
@@ -1519,26 +1660,47 @@ function renderVehicles(){
       <div class="opt-icon">${v.icon}</div>
       <div class="opt-name">${v.name}</div>
       <div class="opt-desc">${v.desc}</div>
-      <div class="opt-price">From $${getVehPrice(v.name)}</div>
     </div>`).join('');
 }
 
-function getVehPrice(veh){
-  const opt = bk.svcOpt||'full';
-  if(bk.pkg==='Essential Refresh') return (PRICE_ER[veh]||PRICE_ER['Sedan']).full;
-  if(bk.pkg==='Deep Clean') return (PRICE_DC[veh]||PRICE_DC['Sedan'])[opt]||139;
-  if(bk.pkg==='Premium Restoration') return (PRICE_PR[veh]||PRICE_PR['Sedan'])[opt]||229;
-  return 0;
+function renderPriceReveal(){
+  const el = document.getElementById('priceRevealBox');
+  if(!el) return;
+  calcSurcharges();
+  const base = getBasePrice();
+  const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'Full Service';
+
+  let rows = '';
+  rows += `<div class="summary-row"><span>📦 ${bk.pkg} — ${svcOptLabel}</span><span>$${base}</span></div>`;
+  rows += `<div class="summary-row"><span>🚗 Vehicle: ${bk.vehType}</span><span>included</span></div>`;
+
+  if(bk.seatSurcharge>0)  rows += `<div class="summary-row"><span>💺 Seat material: ${bk.seats}</span><span>+$${bk.seatSurcharge}</span></div>`;
+  else if(bk.seats)       rows += `<div class="summary-row"><span>💺 Seat material: ${bk.seats}</span><span style="color:#34C97A">No extra charge</span></div>`;
+
+  if(bk.matSurcharge>0)   rows += `<div class="summary-row"><span>🧹 Mat type: ${bk.matType}</span><span>+$${bk.matSurcharge}</span></div>`;
+  else if(bk.matType)     rows += `<div class="summary-row"><span>🧹 Mat type: ${bk.matType}</span><span style="color:#34C97A">No extra charge</span></div>`;
+
+  if(bk.colorSurcharge>0) rows += `<div class="summary-row"><span>🎨 Interior color: ${bk.matColor}</span><span>+$${bk.colorSurcharge}</span></div>`;
+  else if(bk.matColor)    rows += `<div class="summary-row"><span>🎨 Interior color: ${bk.matColor}</span><span style="color:#34C97A">No extra charge</span></div>`;
+
+  if(bk.condSurcharge>0)  rows += `<div class="summary-row"><span>🔍 Condition: ${bk.condition}</span><span>+$${bk.condSurcharge}</span></div>`;
+  else if(bk.condition)   rows += `<div class="summary-row"><span>🔍 Condition: ${bk.condition}</span><span style="color:#34C97A">No extra charge</span></div>`;
+
+  const total = getPrice();
+  rows += `<div class="summary-row total"><span>Your Estimated Price</span><span>$${total}</span></div>`;
+
+  el.innerHTML = rows;
 }
 
 function renderAddons(){
   const isAuto = bk.svcType!=='home';
   const el = document.getElementById('addonGrid');
+  if(!el) return;
   el.innerHTML = ADDONS.map(a=>`
     <div class="addon-item${bk.addons.includes(a.name)?' selected':''}" onclick="toggleAddon('${a.name}',this)">
       <div class="addon-name">${a.name}</div>
       <div class="addon-price">$${isAuto?a.withCar:a.standalone}</div>
-      ${isAuto && a.standalone!==a.withCar ? `<div class="addon-save">Save $${a.standalone-a.withCar} vs standalone</div>` : ''}
+      ${isAuto && a.standalone!==a.withCar ? '<div class="addon-save">Save $'+(a.standalone-a.withCar)+' vs standalone</div>' : ''}
     </div>`).join('');
 }
 
@@ -1549,106 +1711,128 @@ function toggleAddon(name, el){
 }
 
 function renderSummary(){
+  const {pkgPrice, addonTotal, tFee, waived, total} = calcTotal();
   const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'';
-  const svcTypeLabel = bk.svcType==='home'?'Home Care Only':bk.svcType==='both'?'Auto + Home':'Auto Detailing';
-  const pkgPrice = getPrice();
   const isAuto = bk.svcType!=='home';
   let addonRows = '';
-  let addonTotal = 0;
   bk.addons.forEach(a=>{
-    const addon = ADDONS.find(x=>x.name===a);
+    const addon=ADDONS.find(x=>x.name===a);
     if(addon){
-      const p = isAuto?addon.withCar:addon.standalone;
-      addonTotal+=p;
+      const p=isAuto?addon.withCar:addon.standalone;
       addonRows+=`<div class="summary-row"><span>${a}</span><span>$${p}</span></div>`;
     }
   });
-  const tFee = bk.travelFee||0;
-  const waived = tFee>0 && (pkgPrice+addonTotal)>=250;
-  const total = pkgPrice + addonTotal + (waived?0:tFee);
+
+  const addrEl = document.getElementById('addr-street');
+  const cityEl = document.getElementById('addr-city');
+  const postalEl = document.getElementById('addr-postal');
+  const dateEl = document.getElementById('bookDate');
+  const timeEl = document.getElementById('bookTime');
+  if(addrEl) bk.addr=addrEl.value;
+  if(cityEl) bk.city=cityEl.value;
+  if(postalEl) bk.postal=postalEl.value;
+  if(dateEl) bk.date=dateEl.value;
+  if(timeEl) bk.time=timeEl.value;
 
   document.getElementById('summaryBox').innerHTML = `
-    <div class="summary-row"><span>Service Type</span><span>${svcTypeLabel}</span></div>
-    ${bk.pkg?`<div class="summary-row"><span>${bk.pkg}${svcOptLabel?' — '+svcOptLabel:''}</span><span>$${pkgPrice}</span></div>`:''}
-    ${bk.vehType?`<div class="summary-row"><span>Vehicle</span><span>${bk.vehType}</span></div>`:''}
-    ${bk.condition?`<div class="summary-row"><span>Condition</span><span>${bk.condition}</span></div>`:''}
+    <div class="summary-row"><span>Package</span><span>${bk.pkg}${svcOptLabel?' — '+svcOptLabel:''}</span></div>
+    <div class="summary-row"><span>Vehicle</span><span>${bk.vehType||'N/A'}</span></div>
+    ${bk.seats?'<div class="summary-row"><span>Seat Material</span><span>'+bk.seats+'</span></div>':''}
+    ${bk.matType?'<div class="summary-row"><span>Mat Type</span><span>'+bk.matType+'</span></div>':''}
+    ${bk.matColor?'<div class="summary-row"><span>Interior Color</span><span>'+bk.matColor+'</span></div>':''}
+    ${bk.condition?'<div class="summary-row"><span>Condition</span><span>'+bk.condition+'</span></div>':''}
+    <div class="summary-row"><span>Base Service Price</span><span>$${pkgPrice}</span></div>
     ${addonRows}
     <div class="summary-row"><span>Travel Fee</span><span>${waived?'<span style="color:#34C97A">Waived</span>':tFee===0?'<span style="color:#34C97A">Free</span>':'$'+tFee}</span></div>
-    ${bk.addr?`<div class="summary-row"><span>Address</span><span>${bk.addr}, ${bk.city}</span></div>`:''}
-    ${bk.date?`<div class="summary-row"><span>Date</span><span>${bk.date}</span></div>`:''}
-    <div class="summary-row total"><span>Estimated Total</span><span>from $${total}</span></div>`;
+    ${bk.addr?'<div class="summary-row"><span>Address</span><span>'+bk.addr+', '+(bk.city||'')+'</span></div>':''}
+    ${bk.date?'<div class="summary-row"><span>Date</span><span>'+bk.date+'</span></div>':''}
+    ${bk.time?'<div class="summary-row"><span>Time</span><span>'+bk.time+'</span></div>':''}
+    <div class="summary-row total"><span>Estimated Total</span><span>$${total}</span></div>`;
 }
 
 function selectOpt(el, key, val){
-  const grid = el.closest('.opt-grid,.condition-grid,.opt-grid-3');
+  const grid = el.closest('.opt-grid,.condition-grid,.opt-grid-3,.opt-grid-2');
   if(grid) grid.querySelectorAll('.opt,.condition-opt').forEach(o=>o.classList.remove('selected'));
   el.classList.add('selected');
   bk[key] = val;
-  if(key==='vehType') renderVehicles();
+  // Set svcType when package selected
+  if(key==='pkg'){
+    bk.svcType = val==='Home Care' ? 'home' : 'auto-full';
+  }
 }
 
 function submitBooking(){
+  // Collect contact fields
+  const fnEl=document.getElementById('fname'), lnEl=document.getElementById('lname');
+  const phEl=document.getElementById('phone'), emEl=document.getElementById('email');
+  const noEl=document.getElementById('notes'), cpEl=document.getElementById('contactPref');
+  const adEl=document.getElementById('addr-street'), ciEl=document.getElementById('addr-city');
+  const poEl=document.getElementById('addr-postal'), dtEl=document.getElementById('bookDate');
+  const tmEl=document.getElementById('bookTime');
+  if(fnEl) bk.fname=fnEl.value;
+  if(lnEl) bk.lname=lnEl.value;
+  if(phEl) bk.phone=phEl.value;
+  if(emEl) bk.email=emEl.value;
+  if(noEl) bk.notes=noEl.value;
+  if(cpEl) bk.contact=cpEl.value;
+  if(adEl) bk.addr=adEl.value;
+  if(ciEl) bk.city=ciEl.value;
+  if(poEl) bk.postal=poEl.value;
+  if(dtEl) bk.date=dtEl.value;
+  if(tmEl) bk.time=tmEl.value;
+
   if(!bk.fname||!bk.lname||!bk.phone){alert('Please complete your contact details first.');return;}
+
+  const {pkgPrice, addonTotal, tFee, waived, total} = calcTotal();
   const svcOptLabel = {full:'Full Service (Interior + Exterior)',interior:'Interior Only',exterior:'Exterior Only'}[bk.svcOpt]||'';
-  const svcTypeLabel = bk.svcType==='home'?'Home Care Only':bk.svcType==='both'?'Auto + Home':'Auto Detailing';
-  const pkgPrice = getPrice();
-  const isAuto = bk.svcType!=='home';
-  let addonTotal=0;
-  bk.addons.forEach(a=>{const ad=ADDONS.find(x=>x.name===a);if(ad)addonTotal+=isAuto?ad.withCar:ad.standalone;});
-  const tFee = bk.travelFee||0;
-  const waived = tFee>0&&(pkgPrice+addonTotal)>=250;
-  const total = pkgPrice+addonTotal+(waived?0:tFee);
 
-  const msg = `*Beyond1 — New Booking Request* 🚗✨\n\n`+
-    `👤 ${bk.fname} ${bk.lname}\n`+
-    `📱 ${bk.phone}${bk.email?' · '+bk.email:''}\n`+
-    `📍 ${bk.addr||'TBD'}, ${bk.city||''}, ${bk.postal||''}\n`+
-    `📅 ${bk.date||'Date TBD'}\n`+
-    `📞 Preferred contact: ${bk.contact}\n\n`+
-    `🔧 Service: ${svcTypeLabel}\n`+
-    `📦 Package: ${bk.pkg||'Home Care Only'}${svcOptLabel?' — '+svcOptLabel:''}\n`+
-    `🚗 Vehicle: ${bk.vehType||'N/A'}\n`+
-    `🛣️ Condition: ${bk.condition||'Not specified'}\n`+
-    `➕ Add-ons: ${bk.addons.length?bk.addons.join(', '):'None'}\n`+
-    `🚘 Travel fee: ${waived?'Waived (order over $250)':tFee===0?'Free':'$'+tFee}\n`+
-    `💰 Estimated total: from $${total}\n\n`+
-    `📝 Notes: ${bk.notes||'None'}\n\n`+
-    `_Sent from beyond1detailing.ca_`;
+  const msg =
+    '*Beyond1 — New Booking Request* \u{1F697}\u2728\n\n'+
+    '\u{1F464} '+bk.fname+' '+bk.lname+'\n'+
+    '\u{1F4F1} '+bk.phone+(bk.email?' · '+bk.email:'')+'\n'+
+    '\u{1F4CD} '+(bk.addr||'TBD')+', '+(bk.city||'')+', '+(bk.postal||'')+'\n'+
+    '\u{1F4C5} '+(bk.date||'Date TBD')+(bk.time?' at '+bk.time:'')+'\n'+
+    '\u{1F4DE} Preferred contact: '+bk.contact+'\n\n'+
+    '\u{1F4E6} Package: '+bk.pkg+(svcOptLabel?' \u2014 '+svcOptLabel:'')+'\n'+
+    '\u{1F697} Vehicle: '+(bk.vehType||'N/A')+'\n'+
+    '\u{1F4BA} Seats: '+(bk.seats||'Not specified')+'\n'+
+    '\u{1F9F9} Mats: '+(bk.matType||'Not specified')+'\n'+
+    '\u{1F3A8} Interior color: '+(bk.matColor||'Not specified')+'\n'+
+    '\u{1F50D} Condition: '+(bk.condition||'Not specified')+'\n'+
+    '\u2795 Add-ons: '+(bk.addons.length?bk.addons.join(', '):'None')+'\n'+
+    '\u{1F6A8} Travel fee: '+(waived?'Waived (order over $250)':tFee===0?'Free':'$'+tFee)+'\n'+
+    '\u{1F4B0} Estimated total: $'+total+'\n\n'+
+    '\u{1F4DD} Notes: '+(bk.notes||'None')+'\n\n'+
+    '_Sent from beyond1detailing.vercel.app_';
 
-  // ── Save booking to admin portal shared data store ──────────────────
+  // Save to admin portal shared localStorage
   const newBooking = {
-    id: 'B' + Date.now().toString(36).toUpperCase(),
-    fname: bk.fname,
-    lname: bk.lname,
-    phone: bk.phone,
-    email: bk.email||'',
-    pkg: bk.pkg||'Home Care',
-    svc: bk.svcOpt||'full',
+    id: 'B'+Date.now().toString(36).toUpperCase(),
+    fname: bk.fname, lname: bk.lname,
+    phone: bk.phone, email: bk.email||'',
+    pkg: bk.pkg||'', svc: bk.svcOpt||'full',
     vehicle: bk.vehType||'N/A',
-    condition: bk.condition||'',
-    date: bk.date||'',
-    time: bk.time||'',
+    seats: bk.seats||'', matType: bk.matType||'',
+    matColor: bk.matColor||'', condition: bk.condition||'',
+    date: bk.date||'', time: bk.time||'',
     addr: (bk.addr||'')+(bk.city?', '+bk.city:'')+(bk.postal?', '+bk.postal:''),
-    total: total,
-    status: 'pending',
-    notes: bk.notes||'',
-    addons: bk.addons||[],
+    total: total, status: 'pending',
+    notes: bk.notes||'', addons: bk.addons||[],
     travelFee: waived?0:tFee,
-    svcType: svcTypeLabel,
     svcOpt: svcOptLabel,
     created: new Date().toISOString(),
     source: 'website'
   };
-  try {
+  try{
     const existing = JSON.parse(localStorage.getItem('b1_bookings')||'[]');
     existing.unshift(newBooking);
     localStorage.setItem('b1_bookings', JSON.stringify(existing));
-    // Also bump pending badge for admin
     localStorage.setItem('b1_lastBooking', JSON.stringify(newBooking));
-  } catch(e){}
+  }catch(e){}
+
   window.open('https://wa.me/16476468756?text='+encodeURIComponent(msg),'_blank');
   closeModal();
-  setTimeout(()=>alert('Thank you! Your booking request has been sent via WhatsApp. We will confirm within 2–3 hours. 🎉'),400);
+  setTimeout(()=>alert('Thank you! Your booking request has been sent via WhatsApp. We will confirm within 2\u20133 hours. \u{1F389}'),400);
 }
 
 // ── KEYBOARD CLOSE ──────────────────────────────────────────────────
