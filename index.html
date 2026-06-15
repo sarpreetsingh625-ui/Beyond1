@@ -2040,19 +2040,9 @@ ${bk.notes?`*Notes:* ${bk.notes}`:''}`;
     // Send email notification via EmailJS
     const svcLabel2=bk.svcOpt==='interior'?'Interior Only':bk.svcOpt==='exterior'?'Exterior Only':'Full Service';
     emailjs.send('service_sx766qn','template_36lco3h',{
-      to_email:'sarpreetsingh625@gmail.com',
-      customer_name: bk.fname+' '+bk.lname,
-      customer_phone: bk.phone,
-      customer_email: bk.email||'N/A',
-      package: bk.pkg,
-      service: svcLabel2,
-      vehicle: bk.vehType,
-      booking_date: bk.date||'TBD',
-      booking_time: bk.time||'TBD',
-      address: (bk.addr||'')+', '+(bk.city||'')+' '+(bk.postal||''),
-      total: '$'+total,
-      notes: bk.notes||'None',
-      message: 'New booking from '+bk.fname+' '+bk.lname+' for '+bk.pkg+' on '+(bk.date||'TBD')+'. Total: $'+total+'. Phone: '+bk.phone
+      name: bk.fname+' '+bk.lname,
+      time: (bk.date||'TBD')+' at '+(bk.time||'TBD'),
+      message: 'New Booking Request\n\nCustomer: '+bk.fname+' '+bk.lname+'\nPhone: '+bk.phone+'\nEmail: '+(bk.email||'N/A')+'\nPackage: '+bk.pkg+' ('+svcLabel2+')\nVehicle: '+bk.vehType+'\nDate: '+(bk.date||'TBD')+' at '+(bk.time||'TBD')+'\nAddress: '+(bk.addr||'')+', '+(bk.city||'')+' '+(bk.postal||'')+'\nTotal: $'+total+'\nNotes: '+(bk.notes||'None')
     }).catch(e=>console.warn('EmailJS error:',e));
     showBookingSuccess(bk);
   }).catch(err=>{
