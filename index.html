@@ -3,6 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>
+// If opened as installed PWA on iOS, redirect to admin portal
+(function(){
+  var isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+  if(isStandalone){
+    window.location.replace('/beyond1-admin.html');
+  }
+  // Also unregister any stale service workers
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(function(regs){
+      regs.forEach(function(reg){ reg.update(); });
+    });
+  }
+})();
+</script>
 <meta name="description" content="Beyond1 Auto & Home Care — Premium mobile detailing in Brampton & GTA. We come to you. Interior, exterior & home care services.">
 <title>Beyond1 Auto & Home Care — Premium Mobile Detailing Brampton & GTA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
