@@ -1,8 +1,9 @@
-const CACHE_NAME = 'beyond1-admin-v1';
+const CACHE_NAME = 'beyond1-admin-v2';
 const OFFLINE_URL = '/beyond1-admin.html';
 
 const PRECACHE_ASSETS = [
   '/beyond1-admin.html',
+  '/beyond1-admin.html?locale=en',
   '/manifest.json',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png'

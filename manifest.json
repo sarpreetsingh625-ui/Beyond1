@@ -2,7 +2,7 @@
   "name": "Beyond1 Admin",
   "short_name": "Beyond1",
   "description": "Beyond1 Auto & Home Care — Admin Portal",
-  "start_url": "/beyond1-admin.html",
+  "start_url": "/beyond1-admin.html?locale=en",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",

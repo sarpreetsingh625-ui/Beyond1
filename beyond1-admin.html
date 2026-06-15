@@ -12,6 +12,15 @@
 <meta name="apple-mobile-web-app-title" content="Beyond1">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<script>
+// iOS standalone fix: if launched from home screen without the expected path, redirect
+(function(){
+  var isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+  if(isStandalone && window.location.pathname !== '/beyond1-admin.html'){
+    window.location.replace('/beyond1-admin.html?locale=en');
+  }
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
