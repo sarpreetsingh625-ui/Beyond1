@@ -235,6 +235,9 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .empty-state svg{width:40px;height:40px;stroke:var(--border2);fill:none;stroke-width:1.5;margin:0 auto 1rem}
 .empty-state p{font-size:.88rem}
 
+/* ── BOTTOM NAV (mobile only) ───────────────────────────────────────── */
+.bottom-nav{display:none}
+
 /* ── RESPONSIVE ─────────────────────────────────────────────────────── */
 @media(max-width:900px){
   .sidebar{width:56px;overflow:hidden}
@@ -245,10 +248,139 @@ tr:hover td{background:rgba(255,255,255,.02)}
   .price-row{grid-template-columns:1fr 1fr}
 }
 @media(max-width:600px){
-  .stat-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:1fr 1fr}
   .time-slots{grid-template-columns:repeat(3,1fr)}
   .cal-grid{gap:2px}
   .cal-day{min-height:50px}
+}
+
+/* ── MOBILE FULL REDESIGN (≤ 640px) ─────────────────────────────────── */
+@media(max-width:640px){
+  /* Hide desktop sidebar entirely */
+  .sidebar{display:none !important}
+
+  /* App takes full width */
+  #app{height:100dvh;height:100vh}
+  .layout{flex-direction:column;height:100%}
+  .main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+
+  /* Topbar */
+  .topbar{padding:.75rem 1rem;min-height:52px}
+  .topbar-title{font-size:.95rem}
+  .topbar-actions .btn span{display:none}
+  .topbar-actions .btn{padding:.45rem .65rem}
+
+  /* Content area — leave room for bottom nav */
+  .content{padding:.85rem;padding-bottom:80px}
+
+  /* Stat grid — 2 columns on mobile */
+  .stat-grid{grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1rem}
+  .stat-card{padding:.9rem}
+  .stat-val{font-size:1.4rem}
+  .stat-label{font-size:.62rem}
+  .stat-sub{font-size:.65rem}
+
+  /* Dashboard layout — stack vertically */
+  #panel-dashboard > div[style*='grid-template-columns:1.5fr']{display:flex !important;flex-direction:column !important;gap:.75rem !important}
+
+  /* Cards */
+  .card{padding:.9rem}
+  .card-title{font-size:.65rem;margin-bottom:.6rem}
+
+  /* Forms */
+  .form-row,.form-row-3{grid-template-columns:1fr}
+  .form-group{margin-bottom:.75rem}
+
+  /* Tables — hide on mobile, replaced by booking cards */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{min-width:600px}
+  /* Bookings table specifically gets card view */
+  #bookings-body tr{display:none}
+  .booking-card{display:flex;flex-direction:column;gap:.5rem;background:var(--raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.9rem;margin-bottom:.6rem}
+  .booking-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
+  .booking-card-name{font-size:.9rem;font-weight:700;color:var(--white)}
+  .booking-card-phone{font-size:.72rem;color:var(--muted);margin-top:.1rem}
+  .booking-card-mid{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+  .booking-card-svc{font-size:.78rem;color:var(--off)}
+  .booking-card-date{font-size:.72rem;color:var(--muted)}
+  .booking-card-price{font-size:.82rem;font-weight:700;color:var(--amber)}
+  .booking-card-actions{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.3rem}
+
+  /* Schedule panel — stack vertically */
+  #panel-schedule > div[style*='grid-template-columns']{display:flex !important;flex-direction:column !important;gap:.75rem !important}
+  .cal-day{min-height:44px;padding:.3rem .35rem}
+  .cal-day-num{font-size:.7rem}
+  .cal-grid{gap:2px}
+
+  /* Pricing table — horizontal scroll */
+  .price-row{grid-template-columns:1.2fr 1fr 1fr 1fr;gap:.35rem}
+  .price-input{padding:.4rem .5rem .4rem 1.2rem;font-size:.75rem}
+  .price-tier{padding:.85rem .9rem}
+
+  /* Modals — full screen on mobile */
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal{max-width:100%;max-height:92dvh;max-height:92vh;border-radius:var(--radius) var(--radius) 0 0;border-bottom:none}
+
+  /* Booking detail modal grid — stack */
+  #bdm-body > div[style*='grid-template-columns:1fr 1fr']{display:flex !important;flex-direction:column !important;gap:.75rem !important}
+
+  /* Tab bar — scrollable */
+  .tab-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;border-radius:var(--radius-sm)}
+  .tab-btn{white-space:nowrap;padding:.4rem .75rem;font-size:.72rem}
+
+  /* Bookings panel header — stack */
+  #panel-bookings > div:first-child{flex-direction:column;align-items:stretch !important}
+  #panel-bookings > div:first-child > div:last-child{width:100%}
+  .search-bar{max-width:100% !important;flex:1}
+
+  /* Toast — bottom left on mobile */
+  #toast{bottom:72px;right:.75rem;left:.75rem}
+  .toast-item{font-size:.78rem;padding:.6rem .9rem}
+
+  /* Install banner — above bottom nav */
+  #installBanner{bottom:64px !important}
+
+  /* Bottom navigation bar */
+  .bottom-nav{
+    display:flex;
+    position:fixed;
+    bottom:0;left:0;right:0;
+    height:64px;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    z-index:200;
+    align-items:stretch;
+  }
+  .bnav-item{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    cursor:pointer;
+    color:var(--muted);
+    font-size:.58rem;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    transition:color .15s;
+    position:relative;
+    border:none;
+    background:none;
+    padding:.5rem .25rem;
+  }
+  .bnav-item.active{color:var(--amber)}
+  .bnav-item svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+  .bnav-badge{
+    position:absolute;
+    top:6px;right:calc(50% - 18px);
+    background:var(--amber);color:#000;
+    font-size:.55rem;font-weight:800;
+    padding:.1rem .3rem;border-radius:50px;
+    min-width:16px;text-align:center;
+    line-height:1.4;
+  }
 }
 </style>
 </head>
@@ -285,6 +417,31 @@ tr:hover td{background:rgba(255,255,255,.02)}
   <button onclick="installPWA()" style="background:#f59e0b;color:#000;font-weight:700;font-size:.82rem;padding:8px 16px;border-radius:8px;border:none;cursor:pointer;white-space:nowrap;">Install App</button>
   <button onclick="dismissInstallBanner()" style="background:transparent;color:#666;font-size:1.2rem;padding:4px 8px;border:none;cursor:pointer;line-height:1;">&times;</button>
 </div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bnav-item active" id="bnav-dashboard" onclick="showPanel('dashboard',this);updateBottomNav('dashboard')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    Home
+  </button>
+  <button class="bnav-item" id="bnav-bookings" onclick="showPanel('bookings',this);updateBottomNav('bookings')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span class="bnav-badge" id="bnav-badge" style="display:none">0</span>
+    Bookings
+  </button>
+  <button class="bnav-item" id="bnav-schedule" onclick="showPanel('schedule',this);updateBottomNav('schedule')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Schedule
+  </button>
+  <button class="bnav-item" id="bnav-customers" onclick="showPanel('customers',this);updateBottomNav('customers')">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    Customers
+  </button>
+  <button class="bnav-item" id="bnav-settings" onclick="showPanel('settings',this);updateBottomNav('settings')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    More
+  </button>
+</nav>
 
 <div class="layout">
 
@@ -780,13 +937,14 @@ function sendCustomerNotification(b, status){
     name: b.name||'Customer',
     time: dateStr+' at '+timeStr,
     message: body,
+    subject: subject,
     to_email: b.email,
     reply_to: ADMIN_EMAIL
   }).then(()=>{
-    toast('Customer notified by email','success');
+    toast('Customer notified by email ✓','success');
   }).catch(e=>{
     console.warn('EmailJS error:',e);
-    toast('Email notification failed — no email on file?','error');
+    toast('Customer email failed','error');
   });
 }
 
@@ -905,8 +1063,9 @@ function showPanel(id,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
-  if(el)el.classList.add('active');
+  if(el&&el.classList.contains('nav-item'))el.classList.add('active');
   document.getElementById('topbarTitle').textContent=panelTitles[id]||id;
+  updateBottomNav(id);
   if(id==='bookings')renderBookings();
   if(id==='customers')renderCustomers();
   if(id==='pricing')renderPricing();
@@ -961,6 +1120,18 @@ function updatePendingBadge(){
   const n=getBookings().filter(b=>b.status==='pending').length;
   const el=document.getElementById('pendingBadge');
   if(el){el.textContent=n;el.style.display=n?'inline':'none';}
+  const bnb=document.getElementById('bnav-badge');
+  if(bnb){bnb.textContent=n;bnb.style.display=n?'inline':'none';}
+}
+function updateBottomNav(id){
+  document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('bnav-'+id);
+  if(el)el.classList.add('active');
+  else{
+    // settings/pricing/discounts map to 'settings' bnav item
+    const s=document.getElementById('bnav-settings');
+    if(s)s.classList.add('active');
+  }
 }
 
 
@@ -1006,6 +1177,7 @@ function renderBookings(){
   if(bookingFilter!=='all')bookings=bookings.filter(b=>b.status===bookingFilter);
   if(bookingSearch)bookings=bookings.filter(b=>`${b.name||''} ${b.phone||''} ${b.email||''} ${b.pkg||''}`.toLowerCase().includes(bookingSearch.toLowerCase()));
   bookings.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  // Desktop table rows
   const tbody=document.getElementById('bookings-body');
   tbody.innerHTML=bookings.length?bookings.map(b=>`
     <tr>
@@ -1026,6 +1198,44 @@ function renderBookings(){
         </div>
       </td>
     </tr>`).join(''):`<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:2rem">No bookings found.</td></tr>`;
+  // Mobile booking cards
+  let mobileWrap=document.getElementById('bookings-cards-mobile');
+  if(!mobileWrap){
+    mobileWrap=document.createElement('div');
+    mobileWrap.id='bookings-cards-mobile';
+    mobileWrap.style.cssText='display:none';
+    document.querySelector('#panel-bookings .card').appendChild(mobileWrap);
+  }
+  mobileWrap.innerHTML=bookings.length?bookings.map(b=>`
+    <div class="booking-card">
+      <div class="booking-card-top">
+        <div>
+          <div class="booking-card-name">${b.name||'—'}</div>
+          <div class="booking-card-phone">${b.phone||'—'}</div>
+        </div>
+        ${statusBadge(b.status)}
+      </div>
+      <div class="booking-card-mid">
+        <span class="booking-card-svc">${b.pkg||'—'} • ${b.svc_opt||'Full'}</span>
+        <span class="booking-card-date">${formatDate(b.booking_date)} ${b.booking_time?'@ '+b.booking_time:''}</span>
+        <span class="booking-card-price">$${b.total||0}</span>
+      </div>
+      <div class="booking-card-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openBookingDetail('${b.id}')">View Details</button>
+        ${b.status==='pending'?`<button class="btn btn-success btn-sm" onclick="quickStatus('${b.id}','confirmed')">Confirm</button>`:''}
+        ${b.status==='confirmed'?`<button class="btn btn-success btn-sm" onclick="quickStatus('${b.id}','completed')">Done</button>`:''}
+        ${b.status!=='cancelled'&&b.status!=='completed'?`<button class="btn btn-danger btn-sm" onclick="quickStatus('${b.id}','cancelled')">Cancel</button>`:''}
+      </div>
+    </div>`).join(''):`<div style="text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No bookings found.</div>`;
+  // Show cards on mobile, table on desktop
+  const isMobile=window.innerWidth<=640;
+  if(isMobile){
+    document.querySelector('#panel-bookings .table-wrap').style.display='none';
+    mobileWrap.style.display='block';
+  } else {
+    document.querySelector('#panel-bookings .table-wrap').style.display='';
+    mobileWrap.style.display='none';
+  }
 }
 function filterBookings(f,el){
   bookingFilter=f;
@@ -1582,6 +1792,10 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
   // Set today as default date in new booking form
   document.getElementById('nb-date').value=new Date().toISOString().slice(0,10);
+  // Re-render bookings on resize (handles rotation between card/table view)
+  window.addEventListener('resize',()=>{
+    if(document.getElementById('panel-bookings').classList.contains('active'))renderBookings();
+  });
 });
 </script>
 </body>

@@ -2049,6 +2049,8 @@ ${bk.notes?`*Notes:* ${bk.notes}`:''}`;
     emailjs.send('service_sx766qn','template_36lco3h',{
       name: bk.fname+' '+bk.lname,
       time: (bk.date||'TBD')+' at '+(bk.time||'TBD'),
+      subject: 'New Booking Request — '+bk.fname+' '+bk.lname,
+      to_email: 'sarpreetsingh625@gmail.com',
       message: 'New Booking Request\n\nCustomer: '+bk.fname+' '+bk.lname+'\nPhone: '+bk.phone+'\nEmail: '+(bk.email||'N/A')+'\nPackage: '+bk.pkg+' ('+svcLabel2+')\nVehicle: '+bk.vehType+'\nDate: '+(bk.date||'TBD')+' at '+(bk.time||'TBD')+'\nAddress: '+(bk.addr||'')+', '+(bk.city||'')+' '+(bk.postal||'')+'\nTotal: $'+total+'\nNotes: '+(bk.notes||'None')
     }).catch(e=>console.warn('EmailJS error:',e));
     showBookingSuccess(bk);
